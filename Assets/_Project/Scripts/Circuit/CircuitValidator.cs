@@ -14,6 +14,8 @@ public sealed class CircuitValidator : MonoBehaviour
     public event Action<CircuitValidationResult>
         ValidationChanged;
 
+    public CircuitValidationResult LastResult { get; private set; }
+
     private void OnEnable()
     {
         if (connectionManager != null)
@@ -21,6 +23,11 @@ public sealed class CircuitValidator : MonoBehaviour
             connectionManager.ConnectionsChanged +=
                 Validate;
         }
+    }
+
+    private void Start()
+    {
+        Validate();
     }
 
     private void OnDisable()
@@ -44,7 +51,9 @@ public sealed class CircuitValidator : MonoBehaviour
             circuitDefinition.RequiredConnections;
 
         int correctCount = 0;
+        int incorrectCount = 0;
 
+        // Gerekli bağlantıların kaç tanesi var?
         foreach (RequiredConnection requirement in required)
         {
             bool exists =
@@ -59,25 +68,56 @@ public sealed class CircuitValidator : MonoBehaviour
             }
         }
 
-        CircuitValidationResult result =
+        // Oyuncunun yaptığı bağlantılardan
+        // kaç tanesi bu devrede istenmiyor?
+        foreach (Connection connection
+                 in connectionManager.Connections)
+        {
+            bool requiredConnection =
+                circuitDefinition.IsRequiredConnection(
+                    connection.TerminalA.TerminalId,
+                    connection.TerminalB.TerminalId
+                );
+
+            if (!requiredConnection)
+            {
+                incorrectCount++;
+            }
+        }
+
+        int missingCount =
+            required.Length - correctCount;
+
+        LastResult =
             new CircuitValidationResult(
                 correctCount,
+                missingCount,
+                incorrectCount,
                 required.Length
             );
 
         Debug.Log(
-            $"Devre kontrolü: " +
-            $"{result.CorrectConnections}/" +
-            $"{result.RequiredConnections}"
+            $"DEVRE KONTROLÜ | " +
+            $"Doğru: {LastResult.CorrectConnections} | " +
+            $"Eksik: {LastResult.MissingConnections} | " +
+            $"Yanlış: {LastResult.IncorrectConnections}"
         );
 
-        if (result.IsValid)
+        if (LastResult.IsValid)
         {
             Debug.Log(
-                "DEVRE TAMAMLANDI ✓"
+                "DEVRE DOĞRU VE TAMAMLANDI ✓"
+            );
+        }
+        else
+        {
+            Debug.Log(
+                "DEVRE HENÜZ GEÇERLİ DEĞİL."
             );
         }
 
-        ValidationChanged?.Invoke(result);
+        ValidationChanged?.Invoke(
+            LastResult
+        );
     }
 }

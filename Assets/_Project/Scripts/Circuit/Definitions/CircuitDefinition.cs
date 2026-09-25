@@ -22,4 +22,26 @@ public sealed class CircuitDefinition : ScriptableObject
 
     public RequiredConnection[] RequiredConnections =>
         requiredConnections;
+
+    public bool IsRequiredConnection(
+string terminalIdA,
+string terminalIdB)
+    {
+        foreach (RequiredConnection requirement
+                 in requiredConnections)
+        {
+            bool forward =
+                requirement.terminalIdA == terminalIdA &&
+                requirement.terminalIdB == terminalIdB;
+
+            bool reverse =
+                requirement.terminalIdA == terminalIdB &&
+                requirement.terminalIdB == terminalIdA;
+
+            if (forward || reverse)
+                return true;
+        }
+
+        return false;
+    }
 }

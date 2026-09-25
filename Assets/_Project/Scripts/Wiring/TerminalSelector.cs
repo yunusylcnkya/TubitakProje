@@ -13,7 +13,11 @@ public sealed class TerminalSelector : MonoBehaviour
     [SerializeField]
     private LayerMask terminalMask;
 
+
+    private TerminalHighlight currentHighlight;
+
     private Terminal currentTerminal;
+
 
     public Terminal CurrentTerminal =>
         currentTerminal;
@@ -25,7 +29,14 @@ public sealed class TerminalSelector : MonoBehaviour
 
     private void DetectTerminal()
     {
+        if (currentHighlight != null)
+        {
+            currentHighlight.SetHighlighted(false);
+            currentHighlight = null;
+        }
+
         currentTerminal = null;
+
 
         Ray ray = new Ray(
             playerCamera.transform.position,
@@ -43,6 +54,17 @@ public sealed class TerminalSelector : MonoBehaviour
         }
 
         currentTerminal =
-            hit.collider.GetComponentInParent<Terminal>();
+    hit.collider.GetComponentInParent<Terminal>();
+
+        if (currentTerminal != null)
+        {
+            currentHighlight =
+                currentTerminal.GetComponent<TerminalHighlight>();
+
+            if (currentHighlight != null)
+            {
+                currentHighlight.SetHighlighted(true);
+            }
+        }
     }
 }

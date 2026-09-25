@@ -31,9 +31,12 @@ public sealed class WireController : MonoBehaviour
 
     private Terminal startTerminal;
     private Wire activeWire;
+    public Terminal StartTerminal =>
+        startTerminal;
 
     public bool IsWiring =>
         activeWire != null;
+    public bool HasValidRouteSurface { get; private set; }
 
     private void Update()
     {
@@ -310,6 +313,7 @@ public sealed class WireController : MonoBehaviour
     {
         if (!IsWiring)
             return;
+        HasValidRouteSurface = false;
 
         // Önce terminal kontrol edilir.
         Terminal terminal =
@@ -341,6 +345,7 @@ public sealed class WireController : MonoBehaviour
                 wireSurfaceMask,
                 QueryTriggerInteraction.Ignore))
         {
+            HasValidRouteSurface = true;
             activeWire.UpdatePreview(
                 hit.point
             );

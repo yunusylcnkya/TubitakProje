@@ -1,20 +1,33 @@
 using UnityEngine;
 
-public sealed class PlacementSlot : MonoBehaviour, IInteractable
+public sealed class PlacementSlot :
+    MonoBehaviour,
+    IInteractable,
+    IInteractionInfo
 {
     [Header("Slot")]
-    [SerializeField] private Transform placementPoint;
+    [SerializeField]
+    private Transform placementPoint;
+
+    [Header("Identity")]
+    [SerializeField]
+    private string displayName =
+        "Equipment Slot";
 
     [Header("Accepted Equipment")]
-    [SerializeField] private string acceptedEquipmentName;
+    [SerializeField]
+    private string acceptedEquipmentName;
 
     private Equipment placedEquipment;
 
-    public bool IsOccupied => placedEquipment != null;
+    public bool IsOccupied =>
+        placedEquipment != null;
 
-    public string InteractionPrompt => "Ekipmanı Yerleştir";
+    public string InteractionPrompt =>
+        "Ekipmanı Yerleştir";
 
-    public bool CanInteract(InteractionContext context)
+    public bool CanInteract(
+        InteractionContext context)
     {
         if (IsOccupied)
             return false;
@@ -30,13 +43,15 @@ public sealed class PlacementSlot : MonoBehaviour, IInteractable
         );
     }
 
-    public void Interact(InteractionContext context)
+    public void Interact(
+        InteractionContext context)
     {
         if (!CanInteract(context))
             return;
 
         Equipment equipment =
-            context.EquipmentHolder.ReleaseForPlacement();
+            context.EquipmentHolder
+                .ReleaseForPlacement();
 
         if (equipment == null)
             return;
@@ -44,7 +59,8 @@ public sealed class PlacementSlot : MonoBehaviour, IInteractable
         Place(equipment);
     }
 
-    public bool CanAccept(Equipment equipment)
+    public bool CanAccept(
+        Equipment equipment)
     {
         if (equipment == null)
             return false;
@@ -53,11 +69,15 @@ public sealed class PlacementSlot : MonoBehaviour, IInteractable
                acceptedEquipmentName;
     }
 
-    private void Place(Equipment equipment)
+    private void Place(
+        Equipment equipment)
     {
-        placedEquipment = equipment;
+        placedEquipment =
+            equipment;
 
-        equipment.transform.SetParent(placementPoint);
+        equipment.transform.SetParent(
+            placementPoint
+        );
 
         equipment.transform.localPosition =
             Vector3.zero;
@@ -68,7 +88,49 @@ public sealed class PlacementSlot : MonoBehaviour, IInteractable
         equipment.SetPlaced();
 
         Debug.Log(
-            $"{equipment.DisplayName} slota yerleştirildi."
+            $"{equipment.DisplayName} " +
+            $"{displayName} üzerine yerleştirildi."
         );
+    }
+
+    // ==============================
+    // UI
+    // ==============================
+
+    public string GetInteractionTitle(
+        InteractionContext context)
+    {
+        return displayName;
+    }
+
+    public string GetInteractionAction(
+        InteractionContext context)
+    {
+        if (IsOccupied)
+        {
+            return "Slot dolu";
+        }
+
+        if (context.EquipmentHolder == null)
+        {
+            return string.Empty;
+        }
+
+        if (!context.EquipmentHolder.HasEquipment)
+        {
+            return "Yerleştirilecek ekipman gerekli";
+        }
+
+        Equipment equipment =
+            context.EquipmentHolder.CurrentEquipment;
+
+        if (!CanAccept(equipment))
+        {
+            return
+                $"{equipment.DisplayName} " +
+                "buraya yerleştirilemez";
+        }
+
+        return "[E] Yerleştir";
     }
 }

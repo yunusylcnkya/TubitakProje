@@ -1,24 +1,34 @@
 using UnityEngine;
 
-public class Equipment : MonoBehaviour, IInteractable
+public class Equipment :
+    MonoBehaviour,
+    IInteractable,
+    IInteractionInfo
 {
     [Header("Identity")]
-    [SerializeField] private string displayName = "Equipment";
+    [SerializeField]
+    private string displayName = "Equipment";
 
     [Header("Physics")]
-    [SerializeField] private Rigidbody equipmentRigidbody;
+    [SerializeField]
+    private Rigidbody equipmentRigidbody;
 
-    private EquipmentState currentState = EquipmentState.World;
+    private EquipmentState currentState =
+        EquipmentState.World;
 
-    public string DisplayName => displayName;
-    public EquipmentState CurrentState => currentState;
+    public string DisplayName =>
+        displayName;
+
+    public EquipmentState CurrentState =>
+        currentState;
 
     public string InteractionPrompt =>
         currentState == EquipmentState.World
             ? $"{displayName} - Al"
             : string.Empty;
 
-    public bool CanInteract(InteractionContext context)
+    public bool CanInteract(
+        InteractionContext context)
     {
         if (currentState != EquipmentState.World)
             return false;
@@ -29,7 +39,8 @@ public class Equipment : MonoBehaviour, IInteractable
         return !context.EquipmentHolder.HasEquipment;
     }
 
-    public void Interact(InteractionContext context)
+    public void Interact(
+        InteractionContext context)
     {
         if (!CanInteract(context))
             return;
@@ -39,42 +50,90 @@ public class Equipment : MonoBehaviour, IInteractable
 
     public bool CanBePickedUp()
     {
-        return currentState == EquipmentState.World;
+        return currentState ==
+               EquipmentState.World;
     }
 
     public void SetHeld()
     {
-        currentState = EquipmentState.Held;
+        currentState =
+            EquipmentState.Held;
 
-        SetPhysicsState(isKinematic: true);
+        SetPhysicsState(true);
     }
 
     public void SetWorld()
     {
-        currentState = EquipmentState.World;
+        currentState =
+            EquipmentState.World;
 
-        SetPhysicsState(isKinematic: false);
+        SetPhysicsState(false);
     }
 
     public void SetPlaced()
     {
-        currentState = EquipmentState.Placed;
+        currentState =
+            EquipmentState.Placed;
 
-        SetPhysicsState(isKinematic: true);
+        SetPhysicsState(true);
     }
 
-    private void SetPhysicsState(bool isKinematic)
+    private void SetPhysicsState(
+        bool isKinematic)
     {
         if (equipmentRigidbody == null)
             return;
 
-        equipmentRigidbody.isKinematic = isKinematic;
-        equipmentRigidbody.useGravity = !isKinematic;
+        equipmentRigidbody.isKinematic =
+            isKinematic;
+
+        equipmentRigidbody.useGravity =
+            !isKinematic;
 
         if (!isKinematic)
         {
-            equipmentRigidbody.linearVelocity = Vector3.zero;
-            equipmentRigidbody.angularVelocity = Vector3.zero;
+            equipmentRigidbody.linearVelocity =
+                Vector3.zero;
+
+            equipmentRigidbody.angularVelocity =
+                Vector3.zero;
+        }
+    }
+
+    // ==============================
+    // UI
+    // ==============================
+
+    public string GetInteractionTitle(
+        InteractionContext context)
+    {
+        return displayName;
+    }
+
+    public string GetInteractionAction(
+        InteractionContext context)
+    {
+        switch (currentState)
+        {
+            case EquipmentState.World:
+
+                if (context.EquipmentHolder != null &&
+                    context.EquipmentHolder.HasEquipment)
+                {
+                    return
+                        "Önce elinizdeki ekipmanı bırakın";
+                }
+
+                return "[E] Al";
+
+            case EquipmentState.Held:
+                return "Elde";
+
+            case EquipmentState.Placed:
+                return "Yerleştirildi";
+
+            default:
+                return string.Empty;
         }
     }
 }

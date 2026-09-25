@@ -4,6 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public sealed class Wire : MonoBehaviour
 {
+    [SerializeField, Min(0.001f)]
+    private float colliderWidth = 0.04f;
+
+    private readonly List<GameObject> segmentObjects =
+        new List<GameObject>();
+
     private LineRenderer lineRenderer;
 
     private readonly List<Vector3> routePoints =
@@ -104,6 +110,8 @@ public sealed class Wire : MonoBehaviour
 
         RefreshRenderer();
 
+        RebuildSegmentColliders();
+
         return true;
     }
 
@@ -157,5 +165,102 @@ public sealed class Wire : MonoBehaviour
         lineRenderer.SetPositions(
             routePoints.ToArray()
         );
+    }
+
+    private void RebuildSegmentColliders()
+    {
+        ClearSegmentColliders();
+
+        if (!IsCompleted)
+            return;
+
+        if (routePoints.Count < 2)
+            return;
+
+        for (int i = 0; i < routePoints.Count - 1; i++)
+        {
+            Vector3 start =
+                routePoints[i];
+
+            Vector3 end =
+                routePoints[i + 1];
+
+            CreateSegmentCollider(
+                start,
+                end,
+                i
+            );
+        }
+    }
+    private void CreateSegmentCollider(
+        Vector3 start,
+        Vector3 end,
+        int index)
+    {
+        Vector3 direction =
+            end - start;
+
+        float length =
+            direction.magnitude;
+
+        if (length <= Mathf.Epsilon)
+            return;
+
+        GameObject segment =
+            new GameObject(
+                $"WireSegment_{index}"
+            );
+
+        segment.transform.SetParent(
+            transform
+        );
+
+        segment.transform.position =
+            (start + end) * 0.5f;
+
+        segment.transform.rotation =
+            Quaternion.FromToRotation(
+                Vector3.forward,
+                direction.normalized
+            );
+
+        BoxCollider collider =
+            segment.AddComponent<BoxCollider>();
+
+        collider.size =
+            new Vector3(
+                colliderWidth,
+                colliderWidth,
+                length
+            );
+
+        WireSegment wireSegment =
+            segment.AddComponent<WireSegment>();
+
+        wireSegment.Initialize(this);
+
+        int wireLayer =
+            LayerMask.NameToLayer("Wire");
+
+        if (wireLayer >= 0)
+        {
+            segment.layer = wireLayer;
+        }
+
+        segmentObjects.Add(segment);
+    }
+
+    private void ClearSegmentColliders()
+    {
+        foreach (GameObject segment
+                 in segmentObjects)
+        {
+            if (segment != null)
+            {
+                Destroy(segment);
+            }
+        }
+
+        segmentObjects.Clear();
     }
 }

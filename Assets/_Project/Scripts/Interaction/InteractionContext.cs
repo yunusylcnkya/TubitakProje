@@ -3,6 +3,7 @@ using UnityEngine;
 public readonly struct InteractionContext
 {
     public GameObject Interactor { get; }
+
     public EquipmentHolder EquipmentHolder { get; }
 
     public InteractionContext(

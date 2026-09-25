@@ -3,8 +3,11 @@ using UnityEngine;
 public sealed class PlayerInteractor : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Camera playerCamera;
-    [SerializeField] private EquipmentHolder equipmentHolder;
+    [SerializeField]
+    private Camera playerCamera;
+
+    [SerializeField]
+    private EquipmentHolder equipmentHolder;
 
     [Header("Interaction Settings")]
     [SerializeField, Min(0.1f)]
@@ -15,11 +18,29 @@ public sealed class PlayerInteractor : MonoBehaviour
 
     private IInteractable currentInteractable;
 
-    private InteractionContext Context =>
+    public IInteractable CurrentInteractable =>
+        currentInteractable;
+
+    public InteractionContext Context =>
         new InteractionContext(
             gameObject,
             equipmentHolder
         );
+
+    private void Awake()
+    {
+        if (equipmentHolder == null)
+        {
+            equipmentHolder =
+                GetComponentInChildren<EquipmentHolder>();
+        }
+
+        if (playerCamera == null)
+        {
+            playerCamera =
+                GetComponentInChildren<Camera>();
+        }
+    }
 
     private void Update()
     {
@@ -36,7 +57,7 @@ public sealed class PlayerInteractor : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            equipmentHolder.DropCurrent();
+            equipmentHolder?.DropCurrent();
         }
     }
 
@@ -44,15 +65,12 @@ public sealed class PlayerInteractor : MonoBehaviour
     {
         currentInteractable = null;
 
+        if (playerCamera == null)
+            return;
+
         Ray ray = new Ray(
             playerCamera.transform.position,
             playerCamera.transform.forward
-        );
-
-        Debug.DrawRay(
-            ray.origin,
-            ray.direction * interactionDistance,
-            Color.green
         );
 
         if (!Physics.Raycast(
@@ -74,7 +92,8 @@ public sealed class PlayerInteractor : MonoBehaviour
         if (currentInteractable == null)
             return;
 
-        InteractionContext context = Context;
+        InteractionContext context =
+            Context;
 
         if (!currentInteractable.CanInteract(context))
             return;
