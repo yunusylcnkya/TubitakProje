@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af6ae2e3fed98d42b8166fa2fefcf74, type: 3}
+  m_Name: SC_24V_SignalLamp
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
+  scenarioId: SCENARIO_24V_LAMP
+  displayName: "24V Sinyal Lambas\u0131 Devresi"
+  description: "24V DC g\xFC\xE7 kayna\u011F\u0131 kullanarak\n  sinyal lambas\u0131n\u0131n ba\u011Flant\u0131s\u0131n\u0131 tamamlay\u0131n\u0131z."
+  steps:
+  - stepId: STEP_PLACE_PSU
+    instruction: "G\xFC\xE7 kayna\u011F\u0131n\u0131 panoya yerle\u015Ftirin."
+    stepType: 0
+    equipmentId: EQ_PSU_24V
+    slotId: SLOT_PSU
+    terminalIdA: 
+    terminalIdB: 
+  - stepId: STEP_PLACE_LAMP
+    instruction: "Sinyal lambas\u0131n\u0131 panoya yerle\u015Ftirin."
+    stepType: 0
+    equipmentId: EQ_SIGNAL_LAMP
+    slotId: SLOT_LAMP
+    terminalIdA: 
+    terminalIdB: 
+  - stepId: STEP_CONNECT_POSITIVE
+    instruction: " +24V terminalini A1 terminaline ba\u011Flay\u0131n."
+    stepType: 1
+    equipmentId: 
+    slotId: 
+    terminalIdA: PSU_24V
+    terminalIdB: LAMP_A1
+  - stepId: STEP_CONNECT_NEGATIVE
+    instruction: "0V terminalini A2 terminaline ba\u011Flay\u0131n."
+    stepType: 1
+    equipmentId: 
+    slotId: 
+    terminalIdA: PSU_0V
+    terminalIdB: LAMP_A2
+  - stepId: STEP_VALIDATE
+    instruction: "Devreyi do\u011Fru \u015Fekilde tamamlay\u0131n."
+    stepType: 2
+    equipmentId: 
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 

@@ -5,26 +5,69 @@ public sealed class PlacementSlot :
     IInteractable,
     IInteractionInfo
 {
+    [Header("Systems")]
+    [SerializeField]
+    private PlacementManager placementManager;
+
     [Header("Slot")]
     [SerializeField]
     private Transform placementPoint;
 
     [Header("Identity")]
     [SerializeField]
-    private string displayName =
-        "Equipment Slot";
+    private string slotId;
+
+    [SerializeField]
+    private string displayName = "Equipment Slot";
 
     [Header("Accepted Equipment")]
     [SerializeField]
-    private string acceptedEquipmentName;
+    private string acceptedEquipmentId;
 
     private Equipment placedEquipment;
+
+    public string SlotId => slotId;
 
     public bool IsOccupied =>
         placedEquipment != null;
 
     public string InteractionPrompt =>
         "Ekipmanı Yerleştir";
+
+    // -----------------------------------------
+    // TEK DOĞRULUK KAYNAĞI
+    // -----------------------------------------
+
+    public bool CanAccept(Equipment equipment)
+    {
+        if (equipment == null)
+            return false;
+
+        string equipmentId =
+            equipment.EquipmentId?.Trim();
+
+        string acceptedId =
+            acceptedEquipmentId?.Trim();
+
+        bool result =
+            string.Equals(
+                equipmentId,
+                acceptedId,
+                System.StringComparison.Ordinal
+            );
+
+        Debug.Log(
+            $"Equipment=[{equipmentId}] Length={equipmentId?.Length} | " +
+            $"Slot=[{acceptedId}] Length={acceptedId?.Length} | " +
+            $"Result={result}"
+        );
+
+        return result;
+    }
+
+    // -----------------------------------------
+    // INTERACTION
+    // -----------------------------------------
 
     public bool CanInteract(
         InteractionContext context)
@@ -38,9 +81,10 @@ public sealed class PlacementSlot :
         if (!context.EquipmentHolder.HasEquipment)
             return false;
 
-        return CanAccept(
-            context.EquipmentHolder.CurrentEquipment
-        );
+        Equipment equipment =
+            context.EquipmentHolder.CurrentEquipment;
+
+        return CanAccept(equipment);
     }
 
     public void Interact(
@@ -59,43 +103,46 @@ public sealed class PlacementSlot :
         Place(equipment);
     }
 
-    public bool CanAccept(
-        Equipment equipment)
+    // -----------------------------------------
+    // PLACEMENT
+    // -----------------------------------------
+
+    private void Place(Equipment equipment)
     {
-        if (equipment == null)
-            return false;
+        placedEquipment = equipment;
 
-        return equipment.DisplayName ==
-               acceptedEquipmentName;
-    }
+        Transform equipmentTransform =
+            equipment.transform;
 
-    private void Place(
-        Equipment equipment)
-    {
-        placedEquipment =
-            equipment;
-
-        equipment.transform.SetParent(
+        equipmentTransform.SetParent(
             placementPoint
         );
 
-        equipment.transform.localPosition =
+        equipmentTransform.localPosition =
             Vector3.zero;
 
-        equipment.transform.localRotation =
+        equipmentTransform.localRotation =
             Quaternion.identity;
 
         equipment.SetPlaced();
 
+        if (placementManager != null)
+        {
+            placementManager.RegisterPlacement(
+                this,
+                equipment
+            );
+        }
+
         Debug.Log(
-            $"{equipment.DisplayName} " +
-            $"{displayName} üzerine yerleştirildi."
+            $"PLACED: {equipment.EquipmentId} " +
+            $"→ {slotId}"
         );
     }
 
-    // ==============================
+    // -----------------------------------------
     // UI
-    // ==============================
+    // -----------------------------------------
 
     public string GetInteractionTitle(
         InteractionContext context)
@@ -124,7 +171,23 @@ public sealed class PlacementSlot :
         Equipment equipment =
             context.EquipmentHolder.CurrentEquipment;
 
-        if (!CanAccept(equipment))
+        if (equipment == null)
+        {
+            return string.Empty;
+        }
+
+        bool canAccept =
+            CanAccept(equipment);
+
+        Debug.Log(
+            $"UI SLOT CHECK | " +
+            $"Slot: {gameObject.name} | " +
+            $"Equipment: '{equipment.EquipmentId}' | " +
+            $"Accepts: '{acceptedEquipmentId}' | " +
+            $"CanAccept: {canAccept}"
+        );
+
+        if (!canAccept)
         {
             return
                 $"{equipment.DisplayName} " +

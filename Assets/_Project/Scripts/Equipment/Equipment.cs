@@ -7,6 +7,9 @@ public class Equipment :
 {
     [Header("Identity")]
     [SerializeField]
+    private string equipmentId;
+
+    [SerializeField]
     private string displayName = "Equipment";
 
     [Header("Physics")]
@@ -15,6 +18,9 @@ public class Equipment :
 
     private EquipmentState currentState =
         EquipmentState.World;
+
+    public string EquipmentId =>
+    equipmentId?.Trim();
 
     public string DisplayName =>
         displayName;
