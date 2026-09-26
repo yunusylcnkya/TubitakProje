@@ -1,24 +1,37 @@
 using UnityEngine;
 
-public sealed class SignalLampBehaviour : MonoBehaviour
+public sealed class SignalLampBehaviour :
+    MonoBehaviour
 {
-    [Header("References")]
+    [Header("Electrical")]
     [SerializeField]
-    private CircuitValidator circuitValidator;
+    private ElectricalSimulationSystem
+        electricalSimulation;
 
     [SerializeField]
-    private Renderer lampRenderer;
+    private Terminal positiveTerminal;
+
+    [SerializeField]
+    private Terminal negativeTerminal;
+
+    [SerializeField]
+    private bool polaritySensitive = true;
 
     [Header("Visual")]
     [SerializeField]
+    private Renderer lampRenderer;
+
+    [SerializeField]
     private Color offColor =
-        new Color(0.2f, 0.2f, 0.2f);
+        Color.black;
 
     [SerializeField]
     private Color onColor =
         Color.green;
 
     private Material runtimeMaterial;
+
+    public bool IsOn { get; private set; }
 
     private void Awake()
     {
@@ -31,31 +44,113 @@ public sealed class SignalLampBehaviour : MonoBehaviour
 
     private void OnEnable()
     {
-        if (circuitValidator != null)
+        if (electricalSimulation != null)
         {
-            circuitValidator.ValidationChanged +=
-                HandleValidationChanged;
+            electricalSimulation
+                .SimulationChanged +=
+                HandleSimulationChanged;
         }
     }
 
     private void Start()
     {
-        TurnOff();
+        RefreshFromCurrentSimulation();
     }
 
     private void OnDisable()
     {
-        if (circuitValidator != null)
+        if (electricalSimulation != null)
         {
-            circuitValidator.ValidationChanged -=
-                HandleValidationChanged;
+            electricalSimulation
+                .SimulationChanged -=
+                HandleSimulationChanged;
         }
     }
 
-    private void HandleValidationChanged(
-        CircuitValidationResult result)
+    private void HandleSimulationChanged(
+        ElectricalSimulationSnapshot snapshot)
     {
-        if (result.IsValid)
+        ApplyElectricalState(snapshot);
+    }
+
+    private void RefreshFromCurrentSimulation()
+    {
+        if (electricalSimulation == null)
+        {
+            TurnOff();
+            return;
+        }
+
+        ApplyElectricalState(
+            electricalSimulation.LastSnapshot
+        );
+    }
+
+    private void ApplyElectricalState(
+        ElectricalSimulationSnapshot snapshot)
+    {
+        if (snapshot == null)
+        {
+            TurnOff();
+            return;
+        }
+
+        if (snapshot.HasShortCircuit)
+        {
+            TurnOff();
+            return;
+        }
+
+        bool powered;
+
+        if (polaritySensitive)
+        {
+            powered =
+                snapshot.HasPotential(
+                    positiveTerminal,
+                    ElectricalPotentialFlags
+                        .DCPositive
+                )
+                &&
+                snapshot.HasPotential(
+                    negativeTerminal,
+                    ElectricalPotentialFlags
+                        .DCNegative
+                );
+        }
+        else
+        {
+            bool normal =
+                snapshot.HasPotential(
+                    positiveTerminal,
+                    ElectricalPotentialFlags
+                        .DCPositive
+                )
+                &&
+                snapshot.HasPotential(
+                    negativeTerminal,
+                    ElectricalPotentialFlags
+                        .DCNegative
+                );
+
+            bool reversed =
+                snapshot.HasPotential(
+                    positiveTerminal,
+                    ElectricalPotentialFlags
+                        .DCNegative
+                )
+                &&
+                snapshot.HasPotential(
+                    negativeTerminal,
+                    ElectricalPotentialFlags
+                        .DCPositive
+                );
+
+            powered =
+                normal || reversed;
+        }
+
+        if (powered)
         {
             TurnOn();
         }
@@ -67,27 +162,23 @@ public sealed class SignalLampBehaviour : MonoBehaviour
 
     private void TurnOn()
     {
-        if (runtimeMaterial == null)
-            return;
+        IsOn = true;
 
-        runtimeMaterial.color =
-            onColor;
-
-        Debug.Log(
-            "Signal Lamp ON"
-        );
+        if (runtimeMaterial != null)
+        {
+            runtimeMaterial.color =
+                onColor;
+        }
     }
 
     private void TurnOff()
     {
-        if (runtimeMaterial == null)
-            return;
+        IsOn = false;
 
-        runtimeMaterial.color =
-            offColor;
-
-        Debug.Log(
-            "Signal Lamp OFF"
-        );
+        if (runtimeMaterial != null)
+        {
+            runtimeMaterial.color =
+                offColor;
+        }
     }
 }

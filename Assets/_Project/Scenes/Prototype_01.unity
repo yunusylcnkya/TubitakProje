@@ -2044,7 +2044,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8b04e8ba7ea734f95ccefda7ed33cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SignalLampBehaviour
-  circuitValidator: {fileID: 888505118}
+  electricalSimulation: {fileID: 1268906073}
+  positiveTerminal: {fileID: 981310096}
+  negativeTerminal: {fileID: 474732361}
+  polaritySensitive: 1
   lampRenderer: {fileID: 697687094}
   offColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   onColor: {r: 0, g: 1, b: 0, a: 1}
@@ -2204,6 +2207,7 @@ Transform:
   - {fileID: 888505116}
   - {fileID: 198317645}
   - {fileID: 479999174}
+  - {fileID: 1268906072}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697687092
@@ -3330,37 +3334,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104882755}
   m_CullTransparentMesh: 1
---- !u!1 &1128141312
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1128141313}
-  m_Layer: 0
-  m_Name: SignalLamp
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1128141313
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1128141312}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1332188496}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1224253345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3491,6 +3464,54 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 9005220659476430821, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
   m_PrefabInstance: {fileID: 1224253345}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1268906071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1268906072}
+  - component: {fileID: 1268906073}
+  m_Layer: 0
+  m_Name: ElectricalSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1268906072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268906071}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 679453120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1268906073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268906071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b08fa7a00e8356041a1e81dc31d1ff69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ElectricalSimulationSystem
+  connectionManager: {fileID: 888505117}
+  placementManager: {fileID: 198317646}
+  dcPowerSources:
+  - {fileID: 1438326025}
 --- !u!1 &1287871456
 GameObject:
   m_ObjectHideFlags: 0
@@ -3779,9 +3800,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1438326022}
-  - {fileID: 1835389199}
   - {fileID: 622587034}
-  - {fileID: 1128141313}
   m_Father: {fileID: 908219903}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1438326021
@@ -3795,6 +3814,7 @@ GameObject:
   - component: {fileID: 1438326022}
   - component: {fileID: 1438326023}
   - component: {fileID: 1438326024}
+  - component: {fileID: 1438326025}
   m_Layer: 6
   m_Name: PowerSupply
   m_TagString: Untagged
@@ -3860,6 +3880,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1438326025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438326021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3913fe7b8e7178344a9b62369abc59fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DCPowerSource
+  owner: {fileID: 1438326023}
+  positiveTerminal: {fileID: 1558226357}
+  negativeTerminal: {fileID: 944208707}
 --- !u!1001 &1456966494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4726,37 +4761,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1728787505}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1835389198
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1835389199}
-  m_Layer: 0
-  m_Name: PowerSupply
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1835389199
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835389198}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1332188496}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1840860551
 GameObject:
   m_ObjectHideFlags: 0
