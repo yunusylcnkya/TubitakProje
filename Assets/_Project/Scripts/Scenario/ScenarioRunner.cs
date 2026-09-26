@@ -256,7 +256,7 @@ public sealed class ScenarioRunner :
 
                 return placementManager
                     .IsEquipmentPlaced(
-                        step.EquipmentId,
+                        step.Equipment,
                         step.SlotId
                     );
 

@@ -54,7 +54,7 @@ public sealed class ScenarioUIController :
 
             if (completed)
             {
-                symbol = "✓";
+                symbol = "+";
             }
             else if (current)
             {

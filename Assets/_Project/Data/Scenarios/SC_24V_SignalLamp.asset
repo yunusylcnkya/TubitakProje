@@ -19,35 +19,35 @@ MonoBehaviour:
   - stepId: STEP_PLACE_PSU
     instruction: "G\xFC\xE7 kayna\u011F\u0131n\u0131 panoya yerle\u015Ftirin."
     stepType: 0
-    equipmentId: EQ_PSU_24V
+    equipment: {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
     slotId: SLOT_PSU
     terminalIdA: 
     terminalIdB: 
   - stepId: STEP_PLACE_LAMP
     instruction: "Sinyal lambas\u0131n\u0131 panoya yerle\u015Ftirin."
     stepType: 0
-    equipmentId: EQ_SIGNAL_LAMP
+    equipment: {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}
     slotId: SLOT_LAMP
     terminalIdA: 
     terminalIdB: 
   - stepId: STEP_CONNECT_POSITIVE
     instruction: " +24V terminalini A1 terminaline ba\u011Flay\u0131n."
     stepType: 1
-    equipmentId: 
+    equipment: {fileID: 0}
     slotId: 
     terminalIdA: PSU_24V
     terminalIdB: LAMP_A1
   - stepId: STEP_CONNECT_NEGATIVE
     instruction: "0V terminalini A2 terminaline ba\u011Flay\u0131n."
     stepType: 1
-    equipmentId: 
+    equipment: {fileID: 0}
     slotId: 
     terminalIdA: PSU_0V
     terminalIdB: LAMP_A2
   - stepId: STEP_VALIDATE
     instruction: "Devreyi do\u011Fru \u015Fekilde tamamlay\u0131n."
     stepType: 2
-    equipmentId: 
+    equipment: {fileID: 0}
     slotId: 
     terminalIdA: 
     terminalIdB: 

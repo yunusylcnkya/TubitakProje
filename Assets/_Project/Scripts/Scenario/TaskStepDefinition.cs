@@ -18,7 +18,7 @@ public sealed class TaskStepDefinition
 
     [Header("Equipment Placement")]
     [SerializeField]
-    private string equipmentId;
+    private EquipmentDefinition equipment;
 
     [SerializeField]
     private string slotId;
@@ -39,15 +39,15 @@ public sealed class TaskStepDefinition
     public TaskStepType StepType =>
         stepType;
 
-    public string EquipmentId =>
-        equipmentId;
+    public EquipmentDefinition Equipment =>
+        equipment;
 
     public string SlotId =>
-        slotId;
+        slotId?.Trim();
 
     public string TerminalIdA =>
-        terminalIdA;
+        terminalIdA?.Trim();
 
     public string TerminalIdB =>
-        terminalIdB;
+        terminalIdB?.Trim();
 }

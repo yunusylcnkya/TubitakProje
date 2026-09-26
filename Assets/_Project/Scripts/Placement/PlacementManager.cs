@@ -11,55 +11,56 @@ public sealed class PlacementManager :
 
     public event Action PlacementsChanged;
 
+    // =========================================
+    // REGISTER
+    // =========================================
+
     public void RegisterPlacement(
-     PlacementSlot slot,
-     Equipment equipment)
+        PlacementSlot slot,
+        Equipment equipment)
     {
         if (slot == null ||
             equipment == null)
         {
-            Debug.LogError(
-                "RegisterPlacement: Slot veya Equipment NULL"
-            );
-
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(slot.SlotId))
+        if (string.IsNullOrWhiteSpace(
+                slot.SlotId))
         {
             Debug.LogError(
-                $"SlotId tanımlanmamış: {slot.name}",
+                "PlacementSlot için SlotId tanımlanmamış.",
                 slot
             );
 
             return;
         }
 
-        string slotId =
-            slot.SlotId.Trim();
-
-        string equipmentId =
-            equipment.EquipmentId?.Trim();
-
-        placedEquipmentBySlot[slotId] =
-            equipment;
+        placedEquipmentBySlot[
+            slot.SlotId
+        ] = equipment;
 
         Debug.Log(
             $"PLACEMENT REGISTERED | " +
-            $"Slot: '{slotId}' | " +
-            $"Equipment: '{equipmentId}'"
+            $"Slot: {slot.SlotId} | " +
+            $"Equipment: {equipment.DisplayName}"
         );
 
         PlacementsChanged?.Invoke();
     }
 
+    // =========================================
+    // QUERY
+    // =========================================
+
     public bool IsEquipmentPlaced(
-     string equipmentId,
-     string slotId)
+        EquipmentDefinition definition,
+        string slotId)
     {
+        if (definition == null)
+            return false;
+
         if (string.IsNullOrWhiteSpace(
-                equipmentId) ||
-            string.IsNullOrWhiteSpace(
                 slotId))
         {
             return false;
@@ -68,39 +69,36 @@ public sealed class PlacementManager :
         string normalizedSlotId =
             slotId.Trim();
 
-        string normalizedEquipmentId =
-            equipmentId.Trim();
-
         if (!placedEquipmentBySlot.TryGetValue(
                 normalizedSlotId,
                 out Equipment equipment))
         {
-            Debug.Log(
-                $"PLACEMENT CHECK FALSE | " +
-                $"Slot kayıtlı değil: '{normalizedSlotId}'"
-            );
-
             return false;
         }
 
         if (equipment == null)
             return false;
 
-        bool result =
-            string.Equals(
-                equipment.EquipmentId?.Trim(),
-                normalizedEquipmentId,
-                System.StringComparison.Ordinal
-            );
+        return equipment.Definition ==
+               definition;
+    }
 
-        Debug.Log(
-            $"PLACEMENT CHECK | " +
-            $"Beklenen Equipment: '{normalizedEquipmentId}' | " +
-            $"Bulunan Equipment: '{equipment.EquipmentId?.Trim()}' | " +
-            $"Slot: '{normalizedSlotId}' | " +
-            $"Result: {result}"
-        );
+    // =========================================
+    // REMOVE
+    // =========================================
 
-        return result;
+    public void UnregisterPlacement(
+        PlacementSlot slot)
+    {
+        if (slot == null)
+            return;
+
+        if (!placedEquipmentBySlot.Remove(
+                slot.SlotId))
+        {
+            return;
+        }
+
+        PlacementsChanged?.Invoke();
     }
 }

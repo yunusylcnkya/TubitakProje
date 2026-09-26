@@ -5,12 +5,9 @@ public class Equipment :
     IInteractable,
     IInteractionInfo
 {
-    [Header("Identity")]
+    [Header("Definition")]
     [SerializeField]
-    private string equipmentId;
-
-    [SerializeField]
-    private string displayName = "Equipment";
+    private EquipmentDefinition definition;
 
     [Header("Physics")]
     [SerializeField]
@@ -19,19 +16,35 @@ public class Equipment :
     private EquipmentState currentState =
         EquipmentState.World;
 
+    // =========================================
+    // PUBLIC DATA
+    // =========================================
+
+    public EquipmentDefinition Definition =>
+        definition;
+
     public string EquipmentId =>
-    equipmentId?.Trim();
+        definition != null
+            ? definition.EquipmentId
+            : string.Empty;
 
     public string DisplayName =>
-        displayName;
+        definition != null
+            ? definition.DisplayName
+            : gameObject.name;
 
     public EquipmentState CurrentState =>
         currentState;
 
+    // IInteractable'ın mevcut sözleşmesi
     public string InteractionPrompt =>
         currentState == EquipmentState.World
-            ? $"{displayName} - Al"
+            ? $"{DisplayName} - Al"
             : string.Empty;
+
+    // =========================================
+    // INTERACTION
+    // =========================================
 
     public bool CanInteract(
         InteractionContext context)
@@ -53,6 +66,10 @@ public class Equipment :
 
         context.EquipmentHolder.TryPickup(this);
     }
+
+    // =========================================
+    // EQUIPMENT STATE
+    // =========================================
 
     public bool CanBePickedUp()
     {
@@ -84,6 +101,10 @@ public class Equipment :
         SetPhysicsState(true);
     }
 
+    // =========================================
+    // PHYSICS
+    // =========================================
+
     private void SetPhysicsState(
         bool isKinematic)
     {
@@ -106,14 +127,14 @@ public class Equipment :
         }
     }
 
-    // ==============================
+    // =========================================
     // UI
-    // ==============================
+    // =========================================
 
     public string GetInteractionTitle(
         InteractionContext context)
     {
-        return displayName;
+        return DisplayName;
     }
 
     public string GetInteractionAction(

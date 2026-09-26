@@ -22,11 +22,12 @@ public sealed class PlacementSlot :
 
     [Header("Accepted Equipment")]
     [SerializeField]
-    private string acceptedEquipmentId;
+    private EquipmentDefinition acceptedEquipment;
 
     private Equipment placedEquipment;
 
-    public string SlotId => slotId;
+    public string SlotId =>
+        slotId?.Trim();
 
     public bool IsOccupied =>
         placedEquipment != null;
@@ -34,40 +35,29 @@ public sealed class PlacementSlot :
     public string InteractionPrompt =>
         "Ekipmanı Yerleştir";
 
-    // -----------------------------------------
-    // TEK DOĞRULUK KAYNAĞI
-    // -----------------------------------------
+    // =========================================
+    // ACCEPTANCE
+    // =========================================
 
-    public bool CanAccept(Equipment equipment)
+    public bool CanAccept(
+        Equipment equipment)
     {
         if (equipment == null)
             return false;
 
-        string equipmentId =
-            equipment.EquipmentId?.Trim();
+        if (equipment.Definition == null)
+            return false;
 
-        string acceptedId =
-            acceptedEquipmentId?.Trim();
+        if (acceptedEquipment == null)
+            return false;
 
-        bool result =
-            string.Equals(
-                equipmentId,
-                acceptedId,
-                System.StringComparison.Ordinal
-            );
-
-        Debug.Log(
-            $"Equipment=[{equipmentId}] Length={equipmentId?.Length} | " +
-            $"Slot=[{acceptedId}] Length={acceptedId?.Length} | " +
-            $"Result={result}"
-        );
-
-        return result;
+        return equipment.Definition ==
+               acceptedEquipment;
     }
 
-    // -----------------------------------------
+    // =========================================
     // INTERACTION
-    // -----------------------------------------
+    // =========================================
 
     public bool CanInteract(
         InteractionContext context)
@@ -103,11 +93,12 @@ public sealed class PlacementSlot :
         Place(equipment);
     }
 
-    // -----------------------------------------
+    // =========================================
     // PLACEMENT
-    // -----------------------------------------
+    // =========================================
 
-    private void Place(Equipment equipment)
+    private void Place(
+        Equipment equipment)
     {
         placedEquipment = equipment;
 
@@ -135,14 +126,14 @@ public sealed class PlacementSlot :
         }
 
         Debug.Log(
-            $"PLACED: {equipment.EquipmentId} " +
-            $"→ {slotId}"
+            $"PLACED | " +
+            $"{equipment.DisplayName} -> {SlotId}"
         );
     }
 
-    // -----------------------------------------
+    // =========================================
     // UI
-    // -----------------------------------------
+    // =========================================
 
     public string GetInteractionTitle(
         InteractionContext context)
@@ -176,18 +167,7 @@ public sealed class PlacementSlot :
             return string.Empty;
         }
 
-        bool canAccept =
-            CanAccept(equipment);
-
-        Debug.Log(
-            $"UI SLOT CHECK | " +
-            $"Slot: {gameObject.name} | " +
-            $"Equipment: '{equipment.EquipmentId}' | " +
-            $"Accepts: '{acceptedEquipmentId}' | " +
-            $"CanAccept: {canAccept}"
-        );
-
-        if (!canAccept)
+        if (!CanAccept(equipment))
         {
             return
                 $"{equipment.DisplayName} " +
@@ -195,5 +175,14 @@ public sealed class PlacementSlot :
         }
 
         return "[E] Yerleştir";
+    }
+
+    private void OnValidate()
+    {
+        if (!string.IsNullOrWhiteSpace(slotId))
+        {
+            slotId =
+                slotId.Trim();
+        }
     }
 }
