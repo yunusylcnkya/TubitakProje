@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public sealed class PlayerInteractor : MonoBehaviour
+public sealed class PlayerInteractor :
+    MonoBehaviour
 {
     [Header("References")]
     [SerializeField]
@@ -18,6 +19,9 @@ public sealed class PlayerInteractor : MonoBehaviour
 
     private IInteractable currentInteractable;
 
+    private IHoldInteractable
+        activeHoldInteractable;
+
     public IInteractable CurrentInteractable =>
         currentInteractable;
 
@@ -32,7 +36,8 @@ public sealed class PlayerInteractor : MonoBehaviour
         if (equipmentHolder == null)
         {
             equipmentHolder =
-                GetComponentInChildren<EquipmentHolder>();
+                GetComponentInChildren<
+                    EquipmentHolder>();
         }
 
         if (playerCamera == null)
@@ -48,17 +53,71 @@ public sealed class PlayerInteractor : MonoBehaviour
         HandleInput();
     }
 
+    private void OnDisable()
+    {
+        EndHoldInteraction();
+    }
+
     private void HandleInput()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            TryInteract();
+            BeginInteraction();
+        }
+
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            EndHoldInteraction();
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
             equipmentHolder?.DropCurrent();
         }
+    }
+
+    private void BeginInteraction()
+    {
+        if (currentInteractable == null)
+            return;
+
+        InteractionContext context =
+            Context;
+
+        if (!currentInteractable
+                .CanInteract(context))
+        {
+            return;
+        }
+
+        if (currentInteractable
+            is IHoldInteractable holdInteractable)
+        {
+            activeHoldInteractable =
+                holdInteractable;
+
+            activeHoldInteractable.BeginHold(
+                context
+            );
+
+            return;
+        }
+
+        currentInteractable.Interact(
+            context
+        );
+    }
+
+    private void EndHoldInteraction()
+    {
+        if (activeHoldInteractable == null)
+            return;
+
+        activeHoldInteractable.EndHold(
+            Context
+        );
+
+        activeHoldInteractable = null;
     }
 
     private void DetectInteractable()
@@ -68,10 +127,11 @@ public sealed class PlayerInteractor : MonoBehaviour
         if (playerCamera == null)
             return;
 
-        Ray ray = new Ray(
-            playerCamera.transform.position,
-            playerCamera.transform.forward
-        );
+        Ray ray =
+            new Ray(
+                playerCamera.transform.position,
+                playerCamera.transform.forward
+            );
 
         if (!Physics.Raycast(
                 ray,
@@ -84,20 +144,8 @@ public sealed class PlayerInteractor : MonoBehaviour
         }
 
         currentInteractable =
-            hit.collider.GetComponentInParent<IInteractable>();
-    }
-
-    private void TryInteract()
-    {
-        if (currentInteractable == null)
-            return;
-
-        InteractionContext context =
-            Context;
-
-        if (!currentInteractable.CanInteract(context))
-            return;
-
-        currentInteractable.Interact(context);
+            hit.collider
+                .GetComponentInParent<
+                    IInteractable>();
     }
 }
