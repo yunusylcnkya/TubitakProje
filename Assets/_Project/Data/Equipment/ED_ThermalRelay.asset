@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e7ebf03319c5041a052415c91a87a2, type: 3}
+  m_Name: ED_ThermalRelay
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentDefinition
+  equipmentId: EQ_THERMAL_RELAY
+  displayName: "Termik A\u015F\u0131r\u0131 Ak\u0131m R\xF6lesi "
+  category: 1
+  description: "Motoru a\u015F\u0131r\u0131 y\xFCk durumuna kar\u015F\u0131 korur.\n95-96 NC yard\u0131mc\u0131 konta\u011F\u0131 \xFCzerinden\nkontakt\xF6r bobin devresini keser."
+  specifications: []
+  icon: {fileID: 0}

@@ -12,13 +12,19 @@ public sealed class ElectricalSimulationSystem :
     [SerializeField]
     private PlacementManager placementManager;
 
-    [Header("Power Sources")]
+    [Header("DC Power Sources")]
     [SerializeField]
     private DCPowerSource[] dcPowerSources;
 
+    [Header("Three Phase Power Sources")]
+    [SerializeField]
+    private ThreePhasePowerSource[]
+        threePhasePowerSources;
+
     [Header("Electrical Devices")]
     [SerializeField]
-    private ElectricalDeviceBase[] electricalDevices;
+    private ElectricalDeviceBase[]
+        electricalDevices;
 
     [Header("Solver")]
     [SerializeField, Min(1)]
@@ -175,8 +181,7 @@ public sealed class ElectricalSimulationSystem :
                 BuildSnapshot();
         }
 
-        LastSnapshot =
-            snapshot;
+        LastSnapshot = snapshot;
 
         SimulationChanged?.Invoke(
             LastSnapshot
@@ -187,7 +192,7 @@ public sealed class ElectricalSimulationSystem :
         {
             Debug.LogWarning(
                 "ELECTRICAL FAULT: " +
-                "DC kısa devre algılandı.",
+                "Kısa devre algılandı.",
                 this
             );
         }
@@ -210,17 +215,21 @@ public sealed class ElectricalSimulationSystem :
                     Terminal,
                     ElectricalPotentialFlags>();
 
+        // =============================
+        // DC SOURCES
+        // =============================
+
         if (dcPowerSources != null)
         {
             foreach (
                 DCPowerSource source
                 in dcPowerSources)
             {
-                if (source == null)
+                if (source == null ||
+                    !source.IsActive)
+                {
                     continue;
-
-                if (!source.IsActive)
-                    continue;
+                }
 
                 PropagatePotential(
                     source.PositiveTerminal,
@@ -234,6 +243,45 @@ public sealed class ElectricalSimulationSystem :
                     source.NegativeTerminal,
                     ElectricalPotentialFlags
                         .DCNegative,
+                    adjacency,
+                    states
+                );
+            }
+        }
+
+        // =============================
+        // THREE PHASE SOURCES
+        // =============================
+
+        if (threePhasePowerSources != null)
+        {
+            foreach (
+                ThreePhasePowerSource source
+                in threePhasePowerSources)
+            {
+                if (source == null ||
+                    !source.IsActive)
+                {
+                    continue;
+                }
+
+                PropagatePotential(
+                    source.PhaseL1Terminal,
+                    ElectricalPotentialFlags.PhaseL1,
+                    adjacency,
+                    states
+                );
+
+                PropagatePotential(
+                    source.PhaseL2Terminal,
+                    ElectricalPotentialFlags.PhaseL2,
+                    adjacency,
+                    states
+                );
+
+                PropagatePotential(
+                    source.PhaseL3Terminal,
+                    ElectricalPotentialFlags.PhaseL3,
                     adjacency,
                     states
                 );
@@ -263,7 +311,7 @@ public sealed class ElectricalSimulationSystem :
                     Terminal,
                     List<Terminal>>();
 
-        // KABLOLAR
+        // Fiziksel kablolar
         if (connectionManager != null)
         {
             IReadOnlyList<Connection>
@@ -289,7 +337,7 @@ public sealed class ElectricalSimulationSystem :
             }
         }
 
-        // CİHAZ İÇ BAĞLANTILARI
+        // Cihaz iç bağlantıları
         if (electricalDevices != null)
         {
             List<ElectricalLink> links =
@@ -299,11 +347,11 @@ public sealed class ElectricalSimulationSystem :
                 ElectricalDeviceBase device
                 in electricalDevices)
             {
-                if (device == null)
+                if (device == null ||
+                    !device.isActiveAndEnabled)
+                {
                     continue;
-
-                if (!device.isActiveAndEnabled)
-                    continue;
+                }
 
                 device.CollectActiveLinks(
                     links
@@ -401,13 +449,8 @@ public sealed class ElectricalSimulationSystem :
         HashSet<Terminal> visited =
             new HashSet<Terminal>();
 
-        queue.Enqueue(
-            sourceTerminal
-        );
-
-        visited.Add(
-            sourceTerminal
-        );
+        queue.Enqueue(sourceTerminal);
+        visited.Add(sourceTerminal);
 
         while (queue.Count > 0)
         {
@@ -437,7 +480,9 @@ public sealed class ElectricalSimulationSystem :
 
                 if (visited.Add(neighbour))
                 {
-                    queue.Enqueue(neighbour);
+                    queue.Enqueue(
+                        neighbour
+                    );
                 }
             }
         }
@@ -479,11 +524,11 @@ public sealed class ElectricalSimulationSystem :
             ElectricalDeviceBase device
             in electricalDevices)
         {
-            if (device == null)
+            if (device == null ||
+                !device.isActiveAndEnabled)
+            {
                 continue;
-
-            if (!device.isActiveAndEnabled)
-                continue;
+            }
 
             if (device.EvaluateState(snapshot))
             {
@@ -507,17 +552,39 @@ public sealed class ElectricalSimulationSystem :
             pair
             in states)
         {
-            bool positive =
-                (pair.Value &
-                    ElectricalPotentialFlags
-                        .DCPositive) != 0;
+            int sourcePotentialCount = 0;
 
-            bool negative =
-                (pair.Value &
-                    ElectricalPotentialFlags
-                        .DCNegative) != 0;
+            if ((pair.Value &
+                 ElectricalPotentialFlags.DCPositive) != 0)
+            {
+                sourcePotentialCount++;
+            }
 
-            if (positive && negative)
+            if ((pair.Value &
+                 ElectricalPotentialFlags.DCNegative) != 0)
+            {
+                sourcePotentialCount++;
+            }
+
+            if ((pair.Value &
+                 ElectricalPotentialFlags.PhaseL1) != 0)
+            {
+                sourcePotentialCount++;
+            }
+
+            if ((pair.Value &
+                 ElectricalPotentialFlags.PhaseL2) != 0)
+            {
+                sourcePotentialCount++;
+            }
+
+            if ((pair.Value &
+                 ElectricalPotentialFlags.PhaseL3) != 0)
+            {
+                sourcePotentialCount++;
+            }
+
+            if (sourcePotentialCount > 1)
             {
                 return true;
             }
@@ -533,10 +600,9 @@ public sealed class ElectricalSimulationSystem :
         if (LastSnapshot == null)
             return false;
 
-        return
-            LastSnapshot.HasPotential(
-                terminal,
-                potential
-            );
+        return LastSnapshot.HasPotential(
+            terminal,
+            potential
+        );
     }
 }

@@ -15,4 +15,7 @@ MonoBehaviour:
   styles:
   - {fileID: 11400000, guid: c942aab7fc33bc346bf47b4cea1e0a7b, type: 2}
   - {fileID: 11400000, guid: b2fa702db0c4f274abc464baad1ca025, type: 2}
+  - {fileID: 11400000, guid: d7eb9efd50346cd4399f039a5683b158, type: 2}
+  - {fileID: 11400000, guid: d78fbd9ace8ea6a4697a9f2e6aa9ee6b, type: 2}
+  - {fileID: 11400000, guid: b0ea3902d16bf9f4499fe3ff784e1878, type: 2}
   defaultStyle: {fileID: 11400000, guid: c942aab7fc33bc346bf47b4cea1e0a7b, type: 2}

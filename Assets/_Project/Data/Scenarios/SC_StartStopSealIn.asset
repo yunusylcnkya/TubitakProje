@@ -80,7 +80,7 @@ MonoBehaviour:
     terminalIdA: S0_12
     terminalIdB: S1_13
   - stepId: STEP_WIRE_START_COIL
-    instruction: "TART butonunun 14 terminalini kontakt\xF6r\xFCn A1 bobin terminaline ba\u011Flay\u0131n."
+    instruction: "START butonunun 14 terminalini kontakt\xF6r\xFCn A1 bobin terminaline ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
