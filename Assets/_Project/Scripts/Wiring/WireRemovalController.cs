@@ -12,6 +12,9 @@ public sealed class WireRemovalController : MonoBehaviour
     [SerializeField]
     private EquipmentHolder equipmentHolder;
 
+    [SerializeField]
+    private ElectricalSafetySystem safetySystem;
+
     [Header("Detection")]
     [SerializeField, Min(0.1f)]
     private float detectionDistance = 5f;
@@ -20,7 +23,9 @@ public sealed class WireRemovalController : MonoBehaviour
     private LayerMask wireMask;
 
     private Wire currentWire;
-    public Wire CurrentWire => currentWire;
+
+    public Wire CurrentWire =>
+        currentWire;
 
     private void Update()
     {
@@ -62,6 +67,9 @@ public sealed class WireRemovalController : MonoBehaviour
 
     private void HandleInput()
     {
+        if (!Input.GetKeyDown(KeyCode.R))
+            return;
+
         if (currentWire == null)
             return;
 
@@ -71,10 +79,7 @@ public sealed class WireRemovalController : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RemoveCurrentWire();
-        }
+        RemoveCurrentWire();
     }
 
     private void RemoveCurrentWire()
@@ -84,6 +89,18 @@ public sealed class WireRemovalController : MonoBehaviour
 
         Wire wireToRemove =
             currentWire;
+
+        // Önce güvenlik kontrolü
+        if (safetySystem != null)
+        {
+            bool authorized =
+                safetySystem.AuthorizeWireRemoval(
+                    wireToRemove
+                );
+
+            if (!authorized)
+                return;
+        }
 
         Terminal start =
             wireToRemove.StartTerminal;

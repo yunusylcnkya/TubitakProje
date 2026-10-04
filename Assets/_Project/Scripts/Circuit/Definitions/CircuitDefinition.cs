@@ -1,10 +1,11 @@
 using UnityEngine;
 
 [CreateAssetMenu(
-    fileName = "CircuitDefinition",
+    fileName = "CD_Circuit",
     menuName = "Industrial Automation/Circuit/Circuit Definition"
 )]
-public sealed class CircuitDefinition : ScriptableObject
+public sealed class CircuitDefinition :
+    ScriptableObject
 {
     [Header("Identity")]
     [SerializeField]
@@ -15,33 +16,56 @@ public sealed class CircuitDefinition : ScriptableObject
 
     [Header("Required Connections")]
     [SerializeField]
-    private RequiredConnection[] requiredConnections;
-
-    public string CircuitId => circuitId;
-    public string DisplayName => displayName;
-
-    public RequiredConnection[] RequiredConnections =>
+    private RequiredConnection[]
         requiredConnections;
 
+    public string CircuitId =>
+        circuitId?.Trim();
+
+    public string DisplayName =>
+        displayName;
+
+    public RequiredConnection[]
+        RequiredConnections =>
+            requiredConnections;
+
+    public int RequiredConnectionCount =>
+        requiredConnections != null
+            ? requiredConnections.Length
+            : 0;
+
     public bool IsRequiredConnection(
-string terminalIdA,
-string terminalIdB)
+        string terminalIdA,
+        string terminalIdB)
     {
-        foreach (RequiredConnection requirement
-                 in requiredConnections)
+        if (requiredConnections == null)
+            return false;
+
+        foreach (
+            RequiredConnection required
+            in requiredConnections)
         {
-            bool forward =
-                requirement.terminalIdA == terminalIdA &&
-                requirement.terminalIdB == terminalIdB;
+            if (required == null)
+                continue;
 
-            bool reverse =
-                requirement.terminalIdA == terminalIdB &&
-                requirement.terminalIdB == terminalIdA;
-
-            if (forward || reverse)
+            if (required.Matches(
+                    terminalIdA,
+                    terminalIdB))
+            {
                 return true;
+            }
         }
 
         return false;
+    }
+
+    private void OnValidate()
+    {
+        if (!string.IsNullOrWhiteSpace(
+                circuitId))
+        {
+            circuitId =
+                circuitId.Trim();
+        }
     }
 }

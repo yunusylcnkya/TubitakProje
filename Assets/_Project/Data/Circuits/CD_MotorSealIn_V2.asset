@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68c8d0c262ae7d246935fae0be50c970, type: 3}
+  m_Name: CD_MotorSealIn_V2
+  m_EditorClassIdentifier: Assembly-CSharp::CircuitDefinition
+  circuitId: CIRCUIT_MOTOR_SEAL_IN_V2
+  displayName: "\xDC\xE7 Fazl\u0131 Motor START-STOP M\xFCh\xFCrleme Devresi"
+  requiredConnections:
+  - terminalIdA: PSU_24V
+    terminalIdB: F1_1
+  - terminalIdA: F1_2
+    terminalIdB: S0_11
+  - terminalIdA: S0_12
+    terminalIdB: S1_13
+  - terminalIdA: S1_14
+    terminalIdB: FR1_95
+  - terminalIdA: S0_12
+    terminalIdB: K1_13
+  - terminalIdA: K1_14
+    terminalIdB: FR1_95
+  - terminalIdA: FR1_96
+    terminalIdB: K1_A1
+  - terminalIdA: K1_A2
+    terminalIdB: PSU_0V
+  - terminalIdA: F1_2
+    terminalIdB: K1_23
+  - terminalIdA: K1_24
+    terminalIdB: LAMP_A1
+  - terminalIdA: LAMP_A2
+    terminalIdB: PSU_0V
+  - terminalIdA: SOURCE_L1
+    terminalIdB: K1_1L1
+  - terminalIdA: SOURCE_L2
+    terminalIdB: K1_3L2
+  - terminalIdA: SOURCE_L3
+    terminalIdB: K1_5L3
+  - terminalIdA: K1_2T1
+    terminalIdB: FR1_1L1
+  - terminalIdA: K1_4T2
+    terminalIdB: FR1_3L2
+  - terminalIdA: K1_6T3
+    terminalIdB: FR1_5L3
+  - terminalIdA: FR1_2T1
+    terminalIdB: M1_U1
+  - terminalIdA: FR1_4T2
+    terminalIdB: M1_V1
+  - terminalIdA: FR1_6T3
+    terminalIdB: M1_W1

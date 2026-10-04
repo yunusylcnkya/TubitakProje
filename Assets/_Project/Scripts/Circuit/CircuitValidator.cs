@@ -14,7 +14,16 @@ public sealed class CircuitValidator : MonoBehaviour
     public event Action<CircuitValidationResult>
         ValidationChanged;
 
-    public CircuitValidationResult LastResult { get; private set; }
+    public CircuitValidationResult LastResult
+    {
+        get;
+        private set;
+    }
+
+    // Stage 16 FaultSystem buradan
+    // aktif CircuitDefinition'a ulaşacak.
+    public CircuitDefinition Definition =>
+        circuitDefinition;
 
     private void OnEnable()
     {
@@ -50,16 +59,35 @@ public sealed class CircuitValidator : MonoBehaviour
         RequiredConnection[] required =
             circuitDefinition.RequiredConnections;
 
+        if (required == null)
+        {
+            Debug.LogWarning(
+                "CircuitDefinition içerisinde " +
+                "Required Connections tanımlanmamış.",
+                circuitDefinition
+            );
+
+            return;
+        }
+
         int correctCount = 0;
         int incorrectCount = 0;
 
-        // Gerekli bağlantıların kaç tanesi var?
-        foreach (RequiredConnection requirement in required)
+        // =====================================
+        // GEREKLİ BAĞLANTILAR
+        // =====================================
+
+        foreach (
+            RequiredConnection requirement
+            in required)
         {
+            if (requirement == null)
+                continue;
+
             bool exists =
                 connectionManager.HasConnection(
-                    requirement.terminalIdA,
-                    requirement.terminalIdB
+                    requirement.TerminalIdA,
+                    requirement.TerminalIdB
                 );
 
             if (exists)
@@ -68,11 +96,23 @@ public sealed class CircuitValidator : MonoBehaviour
             }
         }
 
-        // Oyuncunun yaptığı bağlantılardan
-        // kaç tanesi bu devrede istenmiyor?
-        foreach (Connection connection
-                 in connectionManager.Connections)
+        // =====================================
+        // OYUNCUNUN YAPTIĞI YANLIŞ BAĞLANTILAR
+        // =====================================
+
+        foreach (
+            Connection connection
+            in connectionManager.Connections)
         {
+            if (connection == null)
+                continue;
+
+            if (connection.TerminalA == null ||
+                connection.TerminalB == null)
+            {
+                continue;
+            }
+
             bool requiredConnection =
                 circuitDefinition.IsRequiredConnection(
                     connection.TerminalA.TerminalId,

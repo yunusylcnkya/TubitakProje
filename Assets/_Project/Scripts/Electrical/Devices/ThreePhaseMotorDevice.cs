@@ -31,6 +31,15 @@ public sealed class ThreePhaseMotorDevice :
         rotationDirection =
             MotorRotationDirection.Stopped;
 
+    public Terminal TerminalU1 =>
+        terminalU1;
+
+    public Terminal TerminalV1 =>
+        terminalV1;
+
+    public Terminal TerminalW1 =>
+        terminalW1;
+
     public MotorRotationDirection
         RotationDirection =>
             rotationDirection;
