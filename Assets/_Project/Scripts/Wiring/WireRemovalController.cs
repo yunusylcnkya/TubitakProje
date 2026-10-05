@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public sealed class WireRemovalController : MonoBehaviour
 {
+    public event Action<Wire> WireRemoved;
+
     [Header("References")]
     [SerializeField]
     private Camera playerCamera;
@@ -26,6 +29,7 @@ public sealed class WireRemovalController : MonoBehaviour
 
     public Wire CurrentWire =>
         currentWire;
+
 
     private void Update()
     {
@@ -130,6 +134,8 @@ public sealed class WireRemovalController : MonoBehaviour
         }
 
         currentWire = null;
+
+        WireRemoved?.Invoke(wireToRemove);
 
         Destroy(
             wireToRemove.gameObject

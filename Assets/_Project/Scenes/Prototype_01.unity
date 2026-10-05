@@ -1653,6 +1653,7 @@ MonoBehaviour:
   lineType: 2
   owner: {fileID: 622587036}
   connectionPoint: {fileID: 234399350}
+  maxConnections: 1
 --- !u!114 &474732362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3040,6 +3041,7 @@ MonoBehaviour:
   lineType: 2
   owner: {fileID: 1438326023}
   connectionPoint: {fileID: 1717829263}
+  maxConnections: 1
 --- !u!135 &944208708
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3151,6 +3153,7 @@ MonoBehaviour:
   lineType: 1
   owner: {fileID: 622587036}
   connectionPoint: {fileID: 337728230}
+  maxConnections: 1
 --- !u!114 &981310097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3512,6 +3515,8 @@ MonoBehaviour:
   placementManager: {fileID: 198317646}
   dcPowerSources:
   - {fileID: 1438326025}
+  electricalDevices: []
+  maxSolverIterations: 12
 --- !u!1 &1287871456
 GameObject:
   m_ObjectHideFlags: 0
@@ -4258,6 +4263,7 @@ MonoBehaviour:
   lineType: 1
   owner: {fileID: 1438326023}
   connectionPoint: {fileID: 668973828}
+  maxConnections: 1
 --- !u!135 &1558226358
 SphereCollider:
   m_ObjectHideFlags: 0

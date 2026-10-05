@@ -1725,6 +1725,7 @@ MonoBehaviour:
   playerCamera: {fileID: 1224253351}
   connectionManager: {fileID: 888505117}
   equipmentHolder: {fileID: 507938268}
+  safetySystem: {fileID: 0}
   detectionDistance: 5
   wireMask:
     serializedVersion: 2
@@ -3517,6 +3518,7 @@ MonoBehaviour:
   owner: {fileID: 515354777}
   inputTerminal: {fileID: 1713732083}
   outputTerminal: {fileID: 62670499}
+  autoTripOnDCShortCircuit: 1
   isBlown: 0
 --- !u!65 &515354780
 BoxCollider:
@@ -7962,6 +7964,7 @@ MonoBehaviour:
   placementManager: {fileID: 198317646}
   dcPowerSources:
   - {fileID: 1438326025}
+  threePhasePowerSources: []
   electricalDevices:
   - {fileID: 515354779}
   - {fileID: 14735514}
