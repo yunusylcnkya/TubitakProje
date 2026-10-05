@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd393cb4c6dd2b84e8ebebfee2f6e06a, type: 3}
+  m_Name: TM_01_PowerLamp
+  m_EditorClassIdentifier: Assembly-CSharp::TrainingModuleDefinition
+  moduleId: TRAINING_01_POWER_LAMP
+  order: 1
+  displayName: 24V DC Lamba Devresi
+  description: "24V DC g\xFC\xE7 kayna\u011F\u0131n\u0131n pozitif ve negatif\nterminallerini kullanarak bir sinyal lambas\u0131n\u0131n\ndo\u011Fru \u015Fekilde beslenmesini \xF6\u011Fretir.\n\xD6\u011Frenci temel terminal ve kablo ba\u011Flant\u0131lar\u0131n\u0131\nuygulamal\u0131 olarak ger\xE7ekle\u015Ftirir."
+  difficulty: 0
+  sceneName: Training_01_PowerLamp
+  availableEquipment:
+  - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
+  - {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}

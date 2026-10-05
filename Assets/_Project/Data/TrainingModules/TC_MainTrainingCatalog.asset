@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6c5e278af9ece4582d76c6220ac3ea, type: 3}
+  m_Name: TC_MainTrainingCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::TrainingModuleCatalog
+  modules:
+  - {fileID: 11400000, guid: b85ad8f195ce42548acbbba851168e5f, type: 2}
+  - {fileID: 11400000, guid: 7d10f3fc23bfaa146a2ad5f18451e7e6, type: 2}
+  - {fileID: 11400000, guid: c3b782b215353474cbd6326d21e9131a, type: 2}
+  - {fileID: 11400000, guid: 528a45d810a1b4a40b91bf7b274e5fe2, type: 2}

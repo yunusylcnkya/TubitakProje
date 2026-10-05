@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af6ae2e3fed98d42b8166fa2fefcf74, type: 3}
+  m_Name: SC_03_SealIn
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
+  scenarioId: SCENARIO_03_SEAL_IN
+  displayName: "START-STOP M\xFCh\xFCrleme Devresi"
+  description: 
+  steps:
+  - stepId: STEP_PLACE_PSU
+    instruction: "24V DC g\xFC\xE7 kayna\u011F\u0131n\u0131 yerle\u015Ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
+    slotId: SLOT_PSU
+    terminalIdA: 
+    terminalIdB: 
+  - stepId: STEP_PLACE_F1
+    instruction: "Kontrol devresi sigortas\u0131n\u0131 yerle\u015Ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
+    slotId: SLOT_F1
+    terminalIdA: 
+    terminalIdB: 
+  - stepId: STEP_PLACE_STOP
+    instruction: "STOP butonunu yerle\u015Ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: f39c6d29a8a2f9a439aa2fdaa0482641, type: 2}
+    slotId: SLOT_STOP
+    terminalIdA: 
+    terminalIdB: 
+  - stepId: STEP_PLACE_START
+    instruction: "START butonunu yerle\u015Ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
+    slotId: SLOT_START
+    terminalIdA: 
+    terminalIdB: 
+  - stepId: STEP_PLACE_K1
+    instruction: "Kontakt\xF6r\xFC yerle\u015Ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: ccd902fac2d76d9458a45263bcbdcb8d, type: 2}
+    slotId: SLOT_K1
+    terminalIdA: 
+    terminalIdB: 
+  - stepId: STEP_PLACE_LAMP
+    instruction: "Sinyal lambas\u0131n\u0131 yerle\u015Ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}
+    slotId: SLOT_LAMP
+    terminalIdA: 
+    terminalIdB: 
+  - stepId: STEP_WIRE_PSU_F1
+    instruction: "PSU +24V terminalini F1 giri\u015Fine ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: PSU_24V
+    terminalIdB: F1_1
+  - stepId: STEP_WIRE_F1_STOP
+    instruction: "Sigorta \xE7\u0131k\u0131\u015F\u0131n\u0131 STOP butonunun 11 terminaline ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: F1_2
+    terminalIdB: S0_11
+  - stepId: STEP_WIRE_STOP_START
+    instruction: "STOP \xE7\u0131k\u0131\u015F\u0131n\u0131 START butonunun 13 terminaline ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: S0_12
+    terminalIdB: S1_13
+  - stepId: STEP_WIRE_START_K1_A1
+    instruction: "START butonunun 14 terminalini kontakt\xF6r A1 bobin terminaline ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: S1_14
+    terminalIdB: K1_A1
+  - stepId: STEP_WIRE_STOP_12_K1_13
+    instruction: "STOP \xE7\u0131k\u0131\u015F\u0131n\u0131 kontakt\xF6r\xFCn 13 numaral\u0131 m\xFCh\xFCrleme konta\u011F\u0131na ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: S0_12
+    terminalIdB: K1_13
+  - stepId: STEP_WIRE_K1_14_K1_A1
+    instruction: "Kontakt\xF6r 14 terminalini A1 bobin terminaline ba\u011Flayarak m\xFCh\xFCrleme hatt\u0131n\u0131 tamamlay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: K1_14
+    terminalIdB: K1_A1
+  - stepId: STEP_WIRE_K1_A2_PSU_0V
+    instruction: "Kontakt\xF6r A2 terminalini PSU 0V terminaline ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: K1_A2
+    terminalIdB: PSU_0V
+  - stepId: STEP_WIRE_F1_2_K1_23
+    instruction: "Sigorta \xE7\u0131k\u0131\u015F\u0131n\u0131 kontakt\xF6r\xFCn 23 numaral\u0131 yard\u0131mc\u0131 konta\u011F\u0131na ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: F1_2
+    terminalIdB: K1_23
+  - stepId: STEP_WIRE_K1_24_LAMP_A1
+    instruction: "Kontakt\xF6r 24 terminalini lamban\u0131n A1 terminaline ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 'K1_24 '
+    terminalIdB: LAMP_A1
+  - stepId: STEP_WIRE_LAMP_A2_PSU_0V
+    instruction: "Lamban\u0131n A2 terminalini PSU 0V terminaline ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 'LAMP_A2 '
+    terminalIdB: PSU_0V
+  - stepId: STEP_VALIDATE
+    instruction: "Devre ba\u011Flant\u0131lar\u0131n\u0131 tamamlay\u0131n ve do\u011Frulay\u0131n."
+    stepType: 2
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
