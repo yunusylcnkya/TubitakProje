@@ -11343,6 +11343,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1392408053}
   - component: {fileID: 1392408054}
+  - component: {fileID: 1392408055}
   m_Layer: 0
   m_Name: 'AssessmentSystem       '
   m_TagString: Untagged
@@ -11383,6 +11384,20 @@ MonoBehaviour:
   safetySystem: {fileID: 1112561995}
   wireRemovalController: {fileID: 224118356}
   startAutomatically: 1
+--- !u!114 &1392408055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392408052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a65eb8406fa91564382687fd77d67e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrainingResultRecorder
+  assessmentSystem: {fileID: 1392408054}
+  fallbackModule: {fileID: 11400000, guid: c3b782b215353474cbd6326d21e9131a, type: 2}
 --- !u!1 &1415197835
 GameObject:
   m_ObjectHideFlags: 0

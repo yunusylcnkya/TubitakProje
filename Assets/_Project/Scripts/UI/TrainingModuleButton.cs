@@ -16,6 +16,9 @@ public sealed class TrainingModuleButton :
     [SerializeField]
     private TMP_Text difficultyText;
 
+    [SerializeField]
+    private TMP_Text progressText;
+
     private TrainingModuleDefinition
         module;
 
@@ -48,6 +51,8 @@ public sealed class TrainingModuleButton :
                 );
         }
 
+        RefreshProgress();
+
         if (button != null)
         {
             button.onClick
@@ -60,6 +65,61 @@ public sealed class TrainingModuleButton :
                     )
             );
         }
+    }
+
+    public void RefreshProgress()
+    {
+        if (progressText == null ||
+            module == null)
+        {
+            return;
+        }
+
+        if (SaveSystem.Instance == null ||
+            !SaveSystem.Instance.HasActiveStudent)
+        {
+            progressText.text =
+                string.Empty;
+
+            return;
+        }
+
+        ModuleProgressData progress =
+            SaveSystem.Instance
+                .GetModuleProgress(
+                    module.ModuleId
+                );
+
+        if (progress == null ||
+            progress.AttemptCount == 0)
+        {
+            progressText.text =
+                "Henüz başlanmadı";
+
+            return;
+        }
+
+        if (!progress.Completed)
+        {
+            progressText.text =
+                $"Devam ediyor • " +
+                $"En iyi: {progress.BestScore}/100";
+
+            return;
+        }
+
+        string timeText =
+            progress.HasBestTime
+                ? FormatTime(
+                    progress
+                        .BestSuccessfulTimeSeconds
+                )
+                : "--:--";
+
+        progressText.text =
+            $"Tamamlandı • " +
+            $"En iyi: {progress.BestScore}/100 • " +
+            $"{timeText}";
     }
 
     private string GetDifficultyText(
@@ -79,5 +139,21 @@ public sealed class TrainingModuleButton :
             default:
                 return difficulty.ToString();
         }
+    }
+
+    private string FormatTime(
+        float seconds)
+    {
+        TimeSpan time =
+            TimeSpan.FromSeconds(
+                Mathf.Max(
+                    0f,
+                    seconds
+                )
+            );
+
+        return
+            $"{(int)time.TotalMinutes:00}:" +
+            $"{time.Seconds:00}";
     }
 }
