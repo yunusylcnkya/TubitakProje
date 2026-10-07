@@ -1,7 +1,6 @@
 using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public sealed class ModuleSelectionController :
@@ -60,7 +59,17 @@ public sealed class ModuleSelectionController :
             );
         }
     }
+    public void ReturnToMainMenu()
+    {
+        TrainingModuleSession.Clear();
 
+        if (SceneLoader.Instance == null)
+            return;
+
+        SceneLoader.Instance.LoadScene(
+            SceneNames.MainMenu
+        );
+    }
     private void BuildModuleButtons()
     {
         if (catalog == null ||
@@ -238,6 +247,17 @@ public sealed class ModuleSelectionController :
             return;
         }
 
+        if (SceneLoader.Instance == null)
+        {
+            Debug.LogError(
+                "MODULE MENU | " +
+                "SceneLoader bulunamadı.",
+                this
+            );
+
+            return;
+        }
+
         TrainingModuleSession.SelectModule(
             selectedModule
         );
@@ -248,7 +268,7 @@ public sealed class ModuleSelectionController :
             $"{selectedModule.SceneName}"
         );
 
-        SceneManager.LoadScene(
+        SceneLoader.Instance.LoadScene(
             selectedModule.SceneName
         );
     }
