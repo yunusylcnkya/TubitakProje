@@ -7,11 +7,10 @@ public sealed class PauseController :
     [SerializeField]
     private GameObject pausePanel;
 
+    [SerializeField]
+    private GameObject settingsPanel;
+
     [Header("Player Behaviours")]
-    [Tooltip(
-        "Pause sırasında input almasını istemediğiniz " +
-        "Player componentlerini buraya ekleyin."
-    )]
     [SerializeField]
     private Behaviour[]
         behavioursToDisableWhilePaused;
@@ -36,6 +35,13 @@ public sealed class PauseController :
         if (!Input.GetKeyDown(
                 pauseKey))
         {
+            return;
+        }
+
+        if (settingsPanel != null &&
+            settingsPanel.activeSelf)
+        {
+            settingsPanel.SetActive(false);
             return;
         }
 
@@ -66,7 +72,16 @@ public sealed class PauseController :
 
         if (pausePanel != null)
         {
-            pausePanel.SetActive(true);
+            pausePanel.SetActive(
+                true
+            );
+        }
+
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(
+                false
+            );
         }
     }
 
@@ -76,6 +91,19 @@ public sealed class PauseController :
             return;
 
         ResumeInternal();
+    }
+
+    public void OpenSettings()
+    {
+        if (!isPaused)
+            return;
+
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(
+                true
+            );
+        }
     }
 
     public void RestartTraining()
@@ -131,7 +159,16 @@ public sealed class PauseController :
 
         if (pausePanel != null)
         {
-            pausePanel.SetActive(false);
+            pausePanel.SetActive(
+                false
+            );
+        }
+
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(
+                false
+            );
         }
     }
 
@@ -142,6 +179,13 @@ public sealed class PauseController :
         Time.timeScale = 1f;
 
         SetCursorForMenu();
+
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(
+                false
+            );
+        }
     }
 
     private void SetPlayerBehavioursEnabled(
