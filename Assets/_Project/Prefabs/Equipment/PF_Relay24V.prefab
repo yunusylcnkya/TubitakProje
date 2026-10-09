@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 9138359298794128457}
   - component: {fileID: 7606768179711906704}
   - component: {fileID: 1806810774053649140}
+  - component: {fileID: 6010844041333966257}
   m_Layer: 6
   m_Name: PF_Relay24V
   m_TagString: Untagged
@@ -237,6 +238,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HighlightTarget
   targetType: 1
   highlightVisual: {fileID: 842342834469836625}
+--- !u!114 &6010844041333966257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883169797971414616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725492105c1d65249b5957bc916d3244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RelayDevice
+  owner: {fileID: 721473565089688884}
+  coilA1: {fileID: 8871494663000227419}
+  coilA2: {fileID: 3880328482288431623}
+  polaritySensitive: 1
+  common11: {fileID: 3653918682389245599}
+  nc12: {fileID: 3592635799623510605}
+  no14: {fileID: 1815107203213874409}
+  common21: {fileID: 7169800954681512839}
+  nc22: {fileID: 3761204699495745258}
+  no24: {fileID: 4313594694901067880}
 --- !u!1 &1388528561989120578
 GameObject:
   m_ObjectHideFlags: 0
