@@ -1967,6 +1967,7 @@ GameObject:
   - component: {fileID: 228503993479726692}
   - component: {fileID: 1344931583381455303}
   - component: {fileID: 7469223484381725848}
+  - component: {fileID: 394279169059941860}
   m_Layer: 5
   m_Name: ApplyButton
   m_TagString: Untagged
@@ -2076,6 +2077,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &394279169059941860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028023770541112884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe0d1632fdc787499af310f91428dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAudio
+  button: {fileID: 7469223484381725848}
+  hoverCue: 0
+  clickCue: 1
+  ignoreWhenNotInteractable: 1
 --- !u!1 &2176002317088578503
 GameObject:
   m_ObjectHideFlags: 0
@@ -3206,6 +3223,7 @@ GameObject:
   - component: {fileID: 3745817831242048396}
   - component: {fileID: 3854125863414706342}
   - component: {fileID: 7919511503502283315}
+  - component: {fileID: 9117365127014934847}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -3315,6 +3333,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &9117365127014934847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4175028258997888286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe0d1632fdc787499af310f91428dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAudio
+  button: {fileID: 7919511503502283315}
+  hoverCue: 0
+  clickCue: 1
+  ignoreWhenNotInteractable: 1
 --- !u!1 &4193210448175663241
 GameObject:
   m_ObjectHideFlags: 0
@@ -3740,7 +3774,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5241065280451528249}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4937,6 +4971,7 @@ GameObject:
   - component: {fileID: 2403552814796726386}
   - component: {fileID: 6453539327484079499}
   - component: {fileID: 1046152960536053185}
+  - component: {fileID: 4296604066121402465}
   m_Layer: 5
   m_Name: DefaultsButton
   m_TagString: Untagged
@@ -5046,6 +5081,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4296604066121402465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8669304184820332876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe0d1632fdc787499af310f91428dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAudio
+  button: {fileID: 1046152960536053185}
+  hoverCue: 0
+  clickCue: 1
+  ignoreWhenNotInteractable: 1
 --- !u!1 &8770370162725971713
 GameObject:
   m_ObjectHideFlags: 0

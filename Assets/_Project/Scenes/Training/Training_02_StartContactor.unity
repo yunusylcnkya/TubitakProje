@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 14735516}
   - component: {fileID: 14735515}
   - component: {fileID: 14735514}
+  - component: {fileID: 14735517}
   m_Layer: 0
   m_Name: StopButton_S0
   m_TagString: Untagged
@@ -352,6 +353,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &14735517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14735512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4374c8f1821b73428ea88f7cba65a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentStateAudioFeedback
 --- !u!1 &29452782
 GameObject:
   m_ObjectHideFlags: 0
@@ -2522,6 +2535,7 @@ GameObject:
   - component: {fileID: 316060550}
   - component: {fileID: 316060549}
   - component: {fileID: 316060552}
+  - component: {fileID: 316060553}
   m_Layer: 6
   m_Name: ThreePhaseSupply
   m_TagString: Untagged
@@ -2626,6 +2640,18 @@ MonoBehaviour:
   phaseL1Terminal: {fileID: 1597935119}
   phaseL2Terminal: {fileID: 189941503}
   phaseL3Terminal: {fileID: 1385556110}
+--- !u!114 &316060553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316060547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4374c8f1821b73428ea88f7cba65a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentStateAudioFeedback
 --- !u!1 &337728229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2898,6 +2924,7 @@ GameObject:
   - component: {fileID: 353774620}
   - component: {fileID: 353774622}
   - component: {fileID: 353774623}
+  - component: {fileID: 353774624}
   m_Layer: 6
   m_Name: Motor_M1
   m_TagString: Untagged
@@ -3007,6 +3034,18 @@ MonoBehaviour:
   rotorVisual: {fileID: 2135679320}
   rotationAxis: {x: 1, y: 0, z: 0}
   rotationSpeed: 360
+--- !u!114 &353774624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353774618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4374c8f1821b73428ea88f7cba65a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentStateAudioFeedback
 --- !u!1 &356205728
 GameObject:
   m_ObjectHideFlags: 0
@@ -4211,6 +4250,7 @@ GameObject:
   - component: {fileID: 515354780}
   - component: {fileID: 515354777}
   - component: {fileID: 515354779}
+  - component: {fileID: 515354781}
   m_Layer: 6
   m_Name: Fuse_F1
   m_TagString: Untagged
@@ -4315,6 +4355,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.14, y: 0.3, z: 0.4127977}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &515354781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515354775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4374c8f1821b73428ea88f7cba65a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentStateAudioFeedback
 --- !u!1 &545937348
 GameObject:
   m_ObjectHideFlags: 0
@@ -4328,6 +4380,7 @@ GameObject:
   - component: {fileID: 545937351}
   - component: {fileID: 545937350}
   - component: {fileID: 545937353}
+  - component: {fileID: 545937354}
   m_Layer: 6
   m_Name: ThermalRelay_FR1
   m_TagString: Untagged
@@ -4443,6 +4496,18 @@ MonoBehaviour:
   auxiliary95: {fileID: 2113320255}
   auxiliary96: {fileID: 86112021}
   isTripped: 0
+--- !u!114 &545937354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545937348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4374c8f1821b73428ea88f7cba65a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentStateAudioFeedback
 --- !u!1 &556970931
 GameObject:
   m_ObjectHideFlags: 0
@@ -5023,6 +5088,7 @@ GameObject:
   - component: {fileID: 622587035}
   - component: {fileID: 622587037}
   - component: {fileID: 622587038}
+  - component: {fileID: 622587039}
   m_Layer: 6
   m_Name: SignalLamp
   m_TagString: Untagged
@@ -5128,6 +5194,18 @@ MonoBehaviour:
   lampRenderer: {fileID: 697687094}
   offColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   onColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &622587039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622587033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4374c8f1821b73428ea88f7cba65a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentStateAudioFeedback
 --- !u!1 &625951151
 GameObject:
   m_ObjectHideFlags: 0
@@ -5444,6 +5522,7 @@ GameObject:
   - component: {fileID: 672153768}
   - component: {fileID: 672153767}
   - component: {fileID: 672153769}
+  - component: {fileID: 672153770}
   m_Layer: 0
   m_Name: StartButton_S1
   m_TagString: Untagged
@@ -5528,6 +5607,18 @@ MonoBehaviour:
   terminalA: {fileID: 1390644609}
   terminalB: {fileID: 289498707}
   contactType: 0
+--- !u!114 &672153770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672153765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4374c8f1821b73428ea88f7cba65a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentStateAudioFeedback
 --- !u!1 &679453119
 GameObject:
   m_ObjectHideFlags: 0
@@ -7423,6 +7514,7 @@ GameObject:
   - component: {fileID: 888505116}
   - component: {fileID: 888505117}
   - component: {fileID: 888505118}
+  - component: {fileID: 888505119}
   m_Layer: 0
   m_Name: CircuitSystem
   m_TagString: Untagged
@@ -7471,6 +7563,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CircuitValidator
   connectionManager: {fileID: 888505117}
   circuitDefinition: {fileID: 11400000, guid: 5947c9e0b05844c45a1fd8ae60550b4d, type: 2}
+--- !u!114 &888505119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888505115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ac6000e2268b74d9f7bfbd1c744b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConnectionAudioBridge
+  connectionManager: {fileID: 888505117}
 --- !u!1 &890275015
 GameObject:
   m_ObjectHideFlags: 0
@@ -9002,6 +9107,8 @@ GameObject:
   - component: {fileID: 1112561993}
   - component: {fileID: 1112561994}
   - component: {fileID: 1112561995}
+  - component: {fileID: 1112561996}
+  - component: {fileID: 1112561997}
   m_Layer: 0
   m_Name: FaultSafetySystem
   m_TagString: Untagged
@@ -9057,6 +9164,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ElectricalSafetySystem
   electricalSimulation: {fileID: 1268906073}
   blockUnsafeActions: 0
+--- !u!114 &1112561996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112561992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c39ff33e3845b34fa6861a98b6f67f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SafetyAudioBridge
+  safetySystem: {fileID: 1112561995}
+--- !u!114 &1112561997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112561992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc9fd6aa4ae6b340afac2a95235ba01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FaultAudioBridge
+  faultSystem: {fileID: 1112561994}
 --- !u!1 &1112726852
 GameObject:
   m_ObjectHideFlags: 0
@@ -11329,6 +11462,7 @@ GameObject:
   - component: {fileID: 1392408053}
   - component: {fileID: 1392408054}
   - component: {fileID: 1392408055}
+  - component: {fileID: 1392408056}
   m_Layer: 0
   m_Name: 'AssessmentSystem       '
   m_TagString: Untagged
@@ -11383,6 +11517,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrainingResultRecorder
   assessmentSystem: {fileID: 1392408054}
   fallbackModule: {fileID: 11400000, guid: 7d10f3fc23bfaa146a2ad5f18451e7e6, type: 2}
+--- !u!114 &1392408056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392408052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6353ac6accfd9a640998cc2c433c87e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AssessmentAudioBridge
+  assessmentSystem: {fileID: 1392408054}
 --- !u!1 &1415197835
 GameObject:
   m_ObjectHideFlags: 0
@@ -11516,6 +11663,7 @@ GameObject:
   - component: {fileID: 1438326023}
   - component: {fileID: 1438326024}
   - component: {fileID: 1438326025}
+  - component: {fileID: 1438326026}
   m_Layer: 6
   m_Name: PowerSupply
   m_TagString: Untagged
@@ -11596,6 +11744,18 @@ MonoBehaviour:
   owner: {fileID: 1438326023}
   positiveTerminal: {fileID: 1558226357}
   negativeTerminal: {fileID: 944208707}
+--- !u!114 &1438326026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438326021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4374c8f1821b73428ea88f7cba65a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentStateAudioFeedback
 --- !u!1001 &1456966494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12644,6 +12804,7 @@ GameObject:
   - component: {fileID: 1613712902}
   - component: {fileID: 1613712901}
   - component: {fileID: 1613712900}
+  - component: {fileID: 1613712904}
   m_Layer: 6
   m_Name: Contactor_K1
   m_TagString: Untagged
@@ -12773,6 +12934,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Equipment
   definition: {fileID: 11400000, guid: ccd902fac2d76d9458a45263bcbdcb8d, type: 2}
   equipmentRigidbody: {fileID: 1613712902}
+--- !u!114 &1613712904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613712898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4374c8f1821b73428ea88f7cba65a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentStateAudioFeedback
 --- !u!1 &1618265938
 GameObject:
   m_ObjectHideFlags: 0
