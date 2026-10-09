@@ -115,4 +115,18 @@ public sealed class AudioManager :
             GameAudioCue.SafetyWarning
         );
     }
+    public bool TryGetEntry(
+    GameAudioCue cue,
+    out AudioCueEntry entry)
+    {
+        entry = null;
+
+        if (library == null)
+            return false;
+
+        return library.TryGetEntry(
+            cue,
+            out entry
+        );
+    }
 }

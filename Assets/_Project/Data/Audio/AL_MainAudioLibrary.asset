@@ -50,10 +50,50 @@ MonoBehaviour:
     volume: 1
     useUISource: 0
   - cue: 18
-    clip: {fileID: 8300000, guid: 40a53960573252e4e80f5c3e83532628, type: 3}
+    clip: {fileID: 8300000, guid: 1ccc526777778e94591011b0b1ff4a03, type: 3}
     volume: 1
     useUISource: 0
   - cue: 19
+    clip: {fileID: 8300000, guid: 40a53960573252e4e80f5c3e83532628, type: 3}
+    volume: 1
+    useUISource: 0
+  - cue: 7
+    clip: {fileID: 8300000, guid: 9aa377c6f35c2a548814ea34c5d06778, type: 3}
+    volume: 1
+    useUISource: 0
+  - cue: 8
+    clip: {fileID: 8300000, guid: 9dcdd29c4ff276c4490059675c60a2a7, type: 3}
+    volume: 1
+    useUISource: 0
+  - cue: 9
+    clip: {fileID: 8300000, guid: 95d737b5cf1e9f143a99450074cbc391, type: 3}
+    volume: 1
+    useUISource: 0
+  - cue: 10
+    clip: {fileID: 8300000, guid: 95d737b5cf1e9f143a99450074cbc391, type: 3}
+    volume: 1
+    useUISource: 0
+  - cue: 11
+    clip: {fileID: 8300000, guid: 95d737b5cf1e9f143a99450074cbc391, type: 3}
+    volume: 1
+    useUISource: 0
+  - cue: 13
+    clip: {fileID: 8300000, guid: e4ff4678c49a76247bc51d31c7b4d81e, type: 3}
+    volume: 1
+    useUISource: 0
+  - cue: 12
+    clip: {fileID: 8300000, guid: 59495976a245cba4490e0ad9e696bcb2, type: 3}
+    volume: 1
+    useUISource: 0
+  - cue: 15
+    clip: {fileID: 8300000, guid: e4ff4678c49a76247bc51d31c7b4d81e, type: 3}
+    volume: 1
+    useUISource: 0
+  - cue: 14
+    clip: {fileID: 8300000, guid: 0914c7fd39d0309428d18960ed8b5922, type: 3}
+    volume: 1
+    useUISource: 0
+  - cue: 20
     clip: {fileID: 8300000, guid: 59495976a245cba4490e0ad9e696bcb2, type: 3}
     volume: 1
     useUISource: 0

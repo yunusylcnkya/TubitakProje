@@ -20,6 +20,7 @@ public enum GameAudioCue
     FuseBlown,
 
     MotorStart,
+    MotorRunningLoop,
     MotorStop,
     MotorReverse,
 
