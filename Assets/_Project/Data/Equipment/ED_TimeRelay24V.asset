@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e7ebf03319c5041a052415c91a87a2, type: 3}
+  m_Name: ED_TimeRelay24V
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentDefinition
+  equipmentId: EQ_TIME_RELAY_24V
+  displayName: "24V DC Zaman R\xF6lesi"
+  category: 3
+  description: "24 V DC bobinli, gecikmeli \xE7al\u0131\u015Fan\nde\u011Fi\u015Ftirici konta\u011Fa sahip ON-delay zaman r\xF6lesi."
+  specifications:
+  - label: Bobin Gerilimi
+    value: 24 V DC
+  - label: Fonksiyon
+    value: TON / On Delay
+  - label: Fonksiyon
+    value: TON / On Delay
+  - label: "Kontak Yap\u0131s\u0131"
+    value: "1 De\u011Fi\u015Ftirici Kontak"
+  - label: 'Terminaller '
+    value: 15 / 16 / 18
+  icon: {fileID: 0}

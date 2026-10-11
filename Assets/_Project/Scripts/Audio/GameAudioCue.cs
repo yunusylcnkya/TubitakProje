@@ -16,6 +16,9 @@ public enum GameAudioCue
     ContactorEnergized,
     ContactorReleased,
 
+    RelayEnergized,
+    RelayReleased,
+
     ThermalTrip,
     FuseBlown,
 

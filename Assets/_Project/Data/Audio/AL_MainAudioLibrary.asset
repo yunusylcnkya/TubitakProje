@@ -97,3 +97,11 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 59495976a245cba4490e0ad9e696bcb2, type: 3}
     volume: 1
     useUISource: 0
+  - cue: 11
+    clip: {fileID: 8300000, guid: e4ff4678c49a76247bc51d31c7b4d81e, type: 3}
+    volume: 0.737
+    useUISource: 0
+  - cue: 12
+    clip: {fileID: 8300000, guid: e4ff4678c49a76247bc51d31c7b4d81e, type: 3}
+    volume: 0.5
+    useUISource: 0
