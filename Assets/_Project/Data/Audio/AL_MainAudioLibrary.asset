@@ -34,7 +34,7 @@ MonoBehaviour:
     volume: 1
     useUISource: 0
   - cue: 5
-    clip: {fileID: 8300000, guid: 1e14c3a228c757246b56697799433260, type: 3}
+    clip: {fileID: 8300000, guid: e4ff4678c49a76247bc51d31c7b4d81e, type: 3}
     volume: 1
     useUISource: 0
   - cue: 6
@@ -104,4 +104,24 @@ MonoBehaviour:
   - cue: 12
     clip: {fileID: 8300000, guid: e4ff4678c49a76247bc51d31c7b4d81e, type: 3}
     volume: 0.5
+    useUISource: 0
+  - cue: 13
+    clip: {fileID: 8300000, guid: e4ff4678c49a76247bc51d31c7b4d81e, type: 3}
+    volume: 0.5
+    useUISource: 0
+  - cue: 14
+    clip: {fileID: 8300000, guid: e4ff4678c49a76247bc51d31c7b4d81e, type: 3}
+    volume: 0.5
+    useUISource: 0
+  - cue: 15
+    clip: {fileID: 8300000, guid: e4ff4678c49a76247bc51d31c7b4d81e, type: 3}
+    volume: 0.329
+    useUISource: 0
+  - cue: 25
+    clip: {fileID: 8300000, guid: 59495976a245cba4490e0ad9e696bcb2, type: 3}
+    volume: 0.815
+    useUISource: 0
+  - cue: 24
+    clip: {fileID: 8300000, guid: 40a53960573252e4e80f5c3e83532628, type: 3}
+    volume: 0.815
     useUISource: 0

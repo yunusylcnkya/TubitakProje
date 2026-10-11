@@ -19,6 +19,10 @@ public enum GameAudioCue
     RelayEnergized,
     RelayReleased,
 
+    TimeRelayTimingStarted,
+    TimeRelayElapsed,
+    TimeRelayReset,
+
     ThermalTrip,
     FuseBlown,
 

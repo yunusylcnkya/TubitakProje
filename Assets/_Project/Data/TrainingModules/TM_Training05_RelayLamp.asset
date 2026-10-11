@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd393cb4c6dd2b84e8ebebfee2f6e06a, type: 3}
+  m_Name: TM_Training05_RelayLamp
+  m_EditorClassIdentifier: Assembly-CSharp::TrainingModuleDefinition
+  moduleId: Training_05_RelayLamp
+  order: 5
+  displayName: "Yard\u0131mc\u0131 R\xF6le ile Lamba Kontrol\xFC"
+  description: "24 V DC yard\u0131mc\u0131 r\xF6lenin bobin ve NO kontak\ndavran\u0131\u015F\u0131n\u0131 kullanarak sinyal lambas\u0131n\u0131 kontrol edin."
+  difficulty: 0
+  sceneName: Training_05_RelayLamp
+  availableEquipment:
+  - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
+  - {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
+  - {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
+  - {fileID: 11400000, guid: ccd902fac2d76d9458a45263bcbdcb8d, type: 2}
+  - {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}

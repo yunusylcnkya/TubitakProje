@@ -16,5 +16,9 @@ MonoBehaviour:
   displayName: "24V DC Yard\u0131mc\u0131 R\xF6le"
   category: 3
   description: "24 V DC bobin gerilimine sahip,\niki de\u011Fi\u015Ftirici yard\u0131mc\u0131 konta\u011F\u0131 bulunan\nelektromekanik kontrol r\xF6lesi."
-  specifications: []
+  specifications:
+  - label: 
+    value: 
+  - label: 
+    value: 
   icon: {fileID: 0}

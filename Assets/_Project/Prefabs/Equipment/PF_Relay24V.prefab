@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 1806810774053649140}
   - component: {fileID: 6010844041333966257}
   - component: {fileID: 1905760784819181466}
+  - component: {fileID: 1071003059299689764}
   m_Layer: 6
   m_Name: PF_Relay24V
   m_TagString: Untagged
@@ -275,6 +276,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RelayAudioBridge
   relay: {fileID: 6010844041333966257}
   debugLogs: 1
+--- !u!114 &1071003059299689764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883169797971414616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4374c8f1821b73428ea88f7cba65a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EquipmentStateAudioFeedback
 --- !u!1 &1388528561989120578
 GameObject:
   m_ObjectHideFlags: 0
