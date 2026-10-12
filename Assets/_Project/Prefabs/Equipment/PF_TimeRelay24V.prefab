@@ -680,7 +680,6 @@ GameObject:
   - component: {fileID: 9090533971962155752}
   - component: {fileID: 7674051897900284218}
   - component: {fileID: 7842808475164029985}
-  - component: {fileID: 4924413773610967653}
   - component: {fileID: 5879707763648560929}
   - component: {fileID: 7460778591462774855}
   - component: {fileID: 7805593350969371202}
@@ -785,20 +784,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HighlightTarget
   targetType: 1
   highlightVisual: {fileID: 5876131611193799545}
---- !u!114 &4924413773610967653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5502057143748070283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2059047af236348b896d7cda4170be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RelayAudioBridge
-  relay: {fileID: 0}
-  debugLogs: 1
 --- !u!114 &5879707763648560929
 MonoBehaviour:
   m_ObjectHideFlags: 0

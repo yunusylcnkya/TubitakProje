@@ -35,5 +35,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Training/Training_06_RelaySealIn.unity
     guid: 67aa534dc17053b42ad72d6952bebafd
+  - enabled: 1
+    path: Assets/_Project/Scenes/Training/Training_07_TimeRelayLamp.unity
+    guid: 85ce97a1930846f4eb80cc149d67817a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

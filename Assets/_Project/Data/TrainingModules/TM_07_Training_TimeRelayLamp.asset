@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd393cb4c6dd2b84e8ebebfee2f6e06a, type: 3}
+  m_Name: TM_07_Training_TimeRelayLamp
+  m_EditorClassIdentifier: Assembly-CSharp::TrainingModuleDefinition
+  moduleId: Training_05_RelayLamp
+  order: 7
+  displayName: "TON Zaman R\xF6lesi ile Gecikmeli Lamba"
+  description: "24 V DC TON zaman r\xF6lesinin bobinini enerjilendirerek\nayarlanan gecikme s\xFCresi sonunda NO konta\u011F\u0131n\u0131n\nde\u011Fi\u015Fmesini g\xF6zlemleyin ve sinyal lambas\u0131n\u0131\ngecikmeli olarak \xE7al\u0131\u015Ft\u0131r\u0131n."
+  difficulty: 1
+  sceneName: Training_07_TimeRelayLamp
+  availableEquipment:
+  - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
+  - {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
+  - {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
+  - {fileID: 11400000, guid: e9e9f98d70ef8d44881ce7af16783ecd, type: 2}
+  - {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}
