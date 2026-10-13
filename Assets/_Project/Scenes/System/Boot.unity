@@ -479,7 +479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6832385887270213522, guid: 2e8f494651c50a6498eda9d8990c186e, type: 3}
       propertyPath: minimumLoadingTime
-      value: 0.4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7504495463985669459, guid: 2e8f494651c50a6498eda9d8990c186e, type: 3}
       propertyPath: m_Type

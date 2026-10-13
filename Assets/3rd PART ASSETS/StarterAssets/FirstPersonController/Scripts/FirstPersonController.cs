@@ -64,7 +64,7 @@ namespace StarterAssets
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
 
-
+	
 #if ENABLE_INPUT_SYSTEM
 		private PlayerInput _playerInput;
 #endif
@@ -78,11 +78,11 @@ namespace StarterAssets
 		{
 			get
 			{
-#if ENABLE_INPUT_SYSTEM
+				#if ENABLE_INPUT_SYSTEM
 				return _playerInput.currentControlScheme == "KeyboardMouse";
-#else
+				#else
 				return false;
-#endif
+				#endif
 			}
 		}
 
@@ -131,66 +131,26 @@ namespace StarterAssets
 
 		private void CameraRotation()
 		{
-			// Look input varsa kamera döndür.
+			// if there is an input
 			if (_input.look.sqrMagnitude >= _threshold)
 			{
-				// Mouse input'unda Time.deltaTime kullanılmaz.
-				// Gamepad vb. cihazlarda deltaTime kullanılmaya devam eder.
-				float deltaTimeMultiplier =
-					IsCurrentDeviceMouse
-						? 1.0f
-						: Time.deltaTime;
+				//Don't multiply mouse input by Time.deltaTime
+				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+				
+				_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
+				_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
 
-				// Kullanıcının Settings menüsünden seçtiği
-				// kamera hassasiyet çarpanı.
-				float settingsSensitivity = 1.0f;
+				// clamp our pitch rotation
+				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-				if (global::SettingsSystem.Instance != null)
-				{
-					settingsSensitivity =
-						global::SettingsSystem.Instance
-							.MouseSensitivity;
-				}
+				// Update Cinemachine camera target pitch
+				CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
 
-				// Yukarı / aşağı kamera hareketi
-				_cinemachineTargetPitch +=
-					_input.look.y *
-					RotationSpeed *
-					settingsSensitivity *
-					deltaTimeMultiplier;
-
-				// Sağ / sol oyuncu dönüşü
-				_rotationVelocity =
-					_input.look.x *
-					RotationSpeed *
-					settingsSensitivity *
-					deltaTimeMultiplier;
-
-				// Yukarı / aşağı sınırla
-				_cinemachineTargetPitch =
-					ClampAngle(
-						_cinemachineTargetPitch,
-						BottomClamp,
-						TopClamp
-					);
-
-				// Cinemachine kamera target pitch
-				CinemachineCameraTarget
-					.transform
-					.localRotation =
-					Quaternion.Euler(
-						_cinemachineTargetPitch,
-						0.0f,
-						0.0f
-					);
-
-				// Oyuncuyu sağa / sola döndür
-				transform.Rotate(
-					Vector3.up *
-					_rotationVelocity
-				);
+				// rotate the player left and right
+				transform.Rotate(Vector3.up * _rotationVelocity);
 			}
 		}
+
 		private void Move()
 		{
 			// set target speed based on move speed, sprint speed and if sprint is pressed
