@@ -1738,6 +1738,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AssessmentAudioBridge
   assessmentSystem: {fileID: 1392408054}
+--- !u!1001 &1461619577
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2188787291027118591, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.006323
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188787291027118591, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188787291027118591, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 12.765
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188787291027118591, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188787291027118591, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188787291027118591, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188787291027118591, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188787291027118591, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188787291027118591, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188787291027118591, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8679418780512402231, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
+      propertyPath: m_Name
+      value: PowerSupplySlot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b9a327d9d227a7541a657ce53ac99c2c, type: 3}
 --- !u!1 &1569593620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,14 +2033,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3708604124931332221, guid: 17f78edf9b46e084d833dc67aef85aac, type: 3}
-      propertyPath: placementManager
-      value: 
-      objectReference: {fileID: 198317646}
-    - target: {fileID: 5219670007511000679, guid: 17f78edf9b46e084d833dc67aef85aac, type: 3}
-      propertyPath: placementManager
-      value: 
-      objectReference: {fileID: 198317646}
     - target: {fileID: 6128474856067903083, guid: 17f78edf9b46e084d833dc67aef85aac, type: 3}
       propertyPath: m_Name
       value: Pano
@@ -2514,3 +2563,4 @@ SceneRoots:
   - {fileID: 194146551}
   - {fileID: 1569593623}
   - {fileID: 1918047825}
+  - {fileID: 1461619577}
