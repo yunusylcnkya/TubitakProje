@@ -175,7 +175,7 @@ MonoBehaviour:
   lineType: 1
   owner: {fileID: 871960465969031365}
   connectionPoint: {fileID: 7383499558642399786}
-  maxConnections: 1
+  maxConnections: 2
 --- !u!135 &2865966759676030296
 SphereCollider:
   m_ObjectHideFlags: 0

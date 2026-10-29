@@ -13,14 +13,10 @@ public sealed class TerminalSelector : MonoBehaviour
     [SerializeField]
     private LayerMask terminalMask;
 
-
     private TerminalHighlight currentHighlight;
-
     private Terminal currentTerminal;
 
-
-    public Terminal CurrentTerminal =>
-        currentTerminal;
+    public Terminal CurrentTerminal => currentTerminal;
 
     private void Update()
     {
@@ -29,33 +25,44 @@ public sealed class TerminalSelector : MonoBehaviour
 
     private void DetectTerminal()
     {
-        if (currentHighlight != null)
+        Terminal detectedTerminal = null;
+
+        // Kamera atanmamışsa güvenli şekilde devam et.
+        if (playerCamera != null)
         {
-            currentHighlight.SetHighlighted(false);
-            currentHighlight = null;
-        }
+            Ray ray = new Ray(
+                playerCamera.transform.position,
+                playerCamera.transform.forward
+            );
 
-        currentTerminal = null;
-
-
-        Ray ray = new Ray(
-            playerCamera.transform.position,
-            playerCamera.transform.forward
-        );
-
-        if (!Physics.Raycast(
+            if (Physics.Raycast(
                 ray,
                 out RaycastHit hit,
                 detectionDistance,
                 terminalMask,
                 QueryTriggerInteraction.Ignore))
+            {
+                detectedTerminal =
+                    hit.collider.GetComponentInParent<Terminal>();
+            }
+        }
+
+        // Hedef değişmediyse vurgulamaya dokunma.
+        if (detectedTerminal == currentTerminal)
         {
             return;
         }
 
-        currentTerminal =
-    hit.collider.GetComponentInParent<Terminal>();
+        // Önceki terminalin vurgusunu yalnızca bir kez kapat.
+        if (currentHighlight != null)
+        {
+            currentHighlight.SetHighlighted(false);
+        }
 
+        currentHighlight = null;
+        currentTerminal = detectedTerminal;
+
+        // Yeni terminali yalnızca hedef değiştiğinde vurgula.
         if (currentTerminal != null)
         {
             currentHighlight =

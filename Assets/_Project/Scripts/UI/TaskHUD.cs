@@ -15,28 +15,21 @@ public sealed class TaskHUD : MonoBehaviour
     [SerializeField]
     private TMP_Text checklistText;
 
-    public void ShowProgress(
-        string scenarioTitle,
-        int completed,
-        int total,
-        string instruction)
+    public void ShowProgress(string scenarioTitle, int completed, int total, string instruction)
     {
         if (scenarioTitleText != null)
         {
-            scenarioTitleText.text =
-                scenarioTitle;
+            scenarioTitleText.text = scenarioTitle;
         }
 
         if (progressText != null)
         {
-            progressText.text =
-                $"Görev {completed + 1} / {total}";
+            progressText.text = $"Görev {completed + 1} / {total}";
         }
 
         if (currentStepText != null)
         {
-            currentStepText.text =
-                instruction;
+            currentStepText.text = instruction;
         }
     }
 
@@ -44,31 +37,25 @@ public sealed class TaskHUD : MonoBehaviour
     {
         if (checklistText != null)
         {
-            checklistText.text =
-                checklist;
+            checklistText.text = checklist;
         }
     }
 
-    public void ShowCompleted(
-        string scenarioTitle,
-        int total)
+    public void ShowCompleted(string scenarioTitle, int total)
     {
         if (scenarioTitleText != null)
         {
-            scenarioTitleText.text =
-                scenarioTitle;
+            scenarioTitleText.text = scenarioTitle;
         }
 
         if (progressText != null)
         {
-            progressText.text =
-                $"{total} / {total}";
+            progressText.text = $"{total} / {total}";
         }
 
         if (currentStepText != null)
         {
-            currentStepText.text =
-                "GÖREV TAMAMLANDI ✓";
+            currentStepText.text = "GÖREV TAMAMLANDI +";
         }
     }
 }

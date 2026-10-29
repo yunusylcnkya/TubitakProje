@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1673664302608334897}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0028}
   m_LocalScale: {x: 0.02, y: 0.01, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -115,7 +115,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003865665343770824}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -123,7 +123,7 @@ Transform:
   - {fileID: 1599599873560053167}
   - {fileID: 3287986788604878212}
   m_Father: {fileID: 8737852366515586431}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &2912673256133735340
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ Transform:
   m_GameObject: {fileID: 2912673256133735340}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1166, y: 0.0135, z: 0.0705}
+  m_LocalPosition: {x: 0.01776, y: -0.10848, z: 0.174}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -376,8 +376,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.26969862, y: 0.05510041, z: 0.15333913}
-  m_Center: {x: 0.00091695786, y: -0.00091709197, z: 0.054028384}
+  m_Size: {x: 0.056849003, y: 0.268466, z: 0.15333913}
+  m_Center: {x: 0.0006592274, y: 0.0006290674, z: 0.054028384}
 --- !u!114 &3225667754416329101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,7 +420,6 @@ GameObject:
   - component: {fileID: 3287986788604878212}
   - component: {fileID: 6955918347088010544}
   - component: {fileID: 6016757422033429417}
-  - component: {fileID: 7260821698365078376}
   m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
@@ -437,7 +436,7 @@ Transform:
   m_GameObject: {fileID: 7109579963543724658}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.2078}
+  m_LocalPosition: {x: 0, y: 0, z: 0.271}
   m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -500,27 +499,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7260821698365078376
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7109579963543724658}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7284477332964963933
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +527,7 @@ Transform:
   m_GameObject: {fileID: 7284477332964963933}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1163, y: 0.0129, z: 0.0699}
+  m_LocalPosition: {x: 0.0178, y: 0.1084, z: 0.1766}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -743,15 +721,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: db6b3ffe264099e48a689eeb5e113664, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.003
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db6b3ffe264099e48a689eeb5e113664, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.003
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db6b3ffe264099e48a689eeb5e113664, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.003
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db6b3ffe264099e48a689eeb5e113664, type: 3}
       propertyPath: m_LocalPosition.x
