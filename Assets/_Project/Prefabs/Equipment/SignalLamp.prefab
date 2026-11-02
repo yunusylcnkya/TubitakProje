@@ -393,7 +393,7 @@ MonoBehaviour:
   electricalSimulation: {fileID: 0}
   positiveTerminal: {fileID: 1069623695617715853}
   negativeTerminal: {fileID: 4346724625302508529}
-  polaritySensitive: 0
+  polaritySensitive: 1
   lampRenderer: {fileID: 6016757422033429417}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   onColor: {r: 0.26121312, g: 1, b: 0, a: 1}
