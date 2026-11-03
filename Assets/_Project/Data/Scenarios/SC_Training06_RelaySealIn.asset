@@ -80,7 +80,14 @@ MonoBehaviour:
     terminalIdA: 'S0_12 '
     terminalIdB: S1_13
   - stepId: STEP_WIRE_START_R1
-    instruction: "Stop butonunun 12 terminalini R\xF6lenin A1 bobin terminaline ba\u011Flay\u0131n."
+    instruction: "Start butonunun 14 terminalini R\xF6lenin A1 bobin terminaline ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: S1_14
+    terminalIdB: R1_A1
+  - stepId: STEP_WIRE_STOP_R1
+    instruction: "STOP \xE7\u0131k\u0131\u015F\u0131n\u0131 R\xF6lenin 11 terminaline ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
@@ -101,21 +108,21 @@ MonoBehaviour:
     terminalIdA: R1_A2
     terminalIdB: PSU_0V
   - stepId: STEP_WIRE_F1_R1
-    instruction: F1_2 R1_21
+    instruction: "Sigorta \xE7\u0131k\u0131\u015F\u0131n\u0131 r\xF6lenin 21 nolu konta\u011F\u0131na ba\u011Fla."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: F1_2
     terminalIdB: R1_21
   - stepId: STEP_WIRE_LAMP_RETURN
-    instruction: R1_24  LAMP_A1
+    instruction: "R\xF6lenin 24 nolu konta\u011F\u0131n\u0131 sinyal lambas\u0131 A1 konta\u011F\u0131na ba\u011Fla."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: R1_24
     terminalIdB: LAMP_A1
   - stepId: LAMP_A2_PSU_0V
-    instruction: LAMP_A2 PSU_0V
+    instruction: "Sinyal lambas\u0131 A2 konta\u011F\u0131n\u0131 g\xFC\xE7 kayna\u011F\u0131n\u0131n 0V terminaline ba\u011Fla."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 

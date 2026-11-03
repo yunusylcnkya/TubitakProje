@@ -1,7 +1,7 @@
+
 using UnityEngine;
 
-public sealed class PlayerInteractor :
-    MonoBehaviour
+public sealed class PlayerInteractor : MonoBehaviour
 {
     [Header("References")]
     [SerializeField]
@@ -18,26 +18,26 @@ public sealed class PlayerInteractor :
     private LayerMask interactionMask;
 
     private IInteractable currentInteractable;
+    private IHoldInteractable activeHoldInteractable;
 
-    private IHoldInteractable
-        activeHoldInteractable;
+    // Son algılanan Collider
+    private Collider lastDetectedCollider;
+
+    // Tekrar kullanılacak etkileşim bağlamı
+    private InteractionContext cachedContext;
 
     public IInteractable CurrentInteractable =>
         currentInteractable;
 
     public InteractionContext Context =>
-        new InteractionContext(
-            gameObject,
-            equipmentHolder
-        );
+        cachedContext;
 
     private void Awake()
     {
         if (equipmentHolder == null)
         {
             equipmentHolder =
-                GetComponentInChildren<
-                    EquipmentHolder>();
+                GetComponentInChildren<EquipmentHolder>();
         }
 
         if (playerCamera == null)
@@ -45,6 +45,11 @@ public sealed class PlayerInteractor :
             playerCamera =
                 GetComponentInChildren<Camera>();
         }
+
+        cachedContext = new InteractionContext(
+            gameObject,
+            equipmentHolder
+        );
     }
 
     private void Update()
@@ -56,6 +61,7 @@ public sealed class PlayerInteractor :
     private void OnDisable()
     {
         EndHoldInteraction();
+        ClearDetection();
     }
 
     private void HandleInput()
@@ -81,31 +87,20 @@ public sealed class PlayerInteractor :
         if (currentInteractable == null)
             return;
 
-        InteractionContext context =
-            Context;
+        InteractionContext context = Context;
 
-        if (!currentInteractable
-                .CanInteract(context))
+        if (!currentInteractable.CanInteract(context))
+            return;
+
+        if (currentInteractable is IHoldInteractable holdInteractable)
         {
+            activeHoldInteractable = holdInteractable;
+
+            activeHoldInteractable.BeginHold(context);
             return;
         }
 
-        if (currentInteractable
-            is IHoldInteractable holdInteractable)
-        {
-            activeHoldInteractable =
-                holdInteractable;
-
-            activeHoldInteractable.BeginHold(
-                context
-            );
-
-            return;
-        }
-
-        currentInteractable.Interact(
-            context
-        );
+        currentInteractable.Interact(context);
     }
 
     private void EndHoldInteraction()
@@ -113,39 +108,49 @@ public sealed class PlayerInteractor :
         if (activeHoldInteractable == null)
             return;
 
-        activeHoldInteractable.EndHold(
-            Context
-        );
-
+        activeHoldInteractable.EndHold(Context);
         activeHoldInteractable = null;
     }
 
     private void DetectInteractable()
     {
-        currentInteractable = null;
-
         if (playerCamera == null)
+        {
+            ClearDetection();
             return;
+        }
 
-        Ray ray =
-            new Ray(
-                playerCamera.transform.position,
-                playerCamera.transform.forward
-            );
+        Ray ray = new Ray(
+            playerCamera.transform.position,
+            playerCamera.transform.forward
+        );
 
         if (!Physics.Raycast(
-                ray,
-                out RaycastHit hit,
-                interactionDistance,
-                interactionMask,
-                QueryTriggerInteraction.Ignore))
+            ray,
+            out RaycastHit hit,
+            interactionDistance,
+            interactionMask,
+            QueryTriggerInteraction.Ignore))
+        {
+            ClearDetection();
+            return;
+        }
+
+        // Aynı Collider'a bakıyorsak tekrar arama.
+        if (hit.collider == lastDetectedCollider)
         {
             return;
         }
 
+        lastDetectedCollider = hit.collider;
+
         currentInteractable =
-            hit.collider
-                .GetComponentInParent<
-                    IInteractable>();
+            hit.collider.GetComponentInParent<IInteractable>();
+    }
+
+    private void ClearDetection()
+    {
+        lastDetectedCollider = null;
+        currentInteractable = null;
     }
 }

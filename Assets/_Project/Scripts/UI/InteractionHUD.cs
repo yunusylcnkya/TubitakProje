@@ -1,3 +1,4 @@
+
 using TMPro;
 using UnityEngine;
 
@@ -13,34 +14,46 @@ public sealed class InteractionHUD : MonoBehaviour
     [SerializeField]
     private TMP_Text actionText;
 
+    private string lastTarget;
+    private string lastAction;
+
     private void Awake()
     {
         Hide();
     }
 
-    public void Show(
-        string target,
-        string action)
+    public void Show(string target, string action)
     {
-        if (interactionPanel != null)
-        {
-            interactionPanel.SetActive(true);
-        }
+        target ??= string.Empty;
+        action ??= string.Empty;
 
-        if (targetText != null)
+        // Hedef metni değişmediyse tekrar güncelleme.
+        if (targetText != null && lastTarget != target)
         {
             targetText.text = target;
+            lastTarget = target;
         }
 
-        if (actionText != null)
+        // İşlem metni değişmediyse tekrar güncelleme.
+        if (actionText != null && lastAction != action)
         {
             actionText.text = action;
+            lastAction = action;
+        }
+
+        // Panel zaten aktifse SetActive çağırma.
+        if (interactionPanel != null &&
+            !interactionPanel.activeSelf)
+        {
+            interactionPanel.SetActive(true);
         }
     }
 
     public void Hide()
     {
-        if (interactionPanel != null)
+        // Panel zaten kapalıysa işlem yapma.
+        if (interactionPanel != null &&
+            interactionPanel.activeSelf)
         {
             interactionPanel.SetActive(false);
         }

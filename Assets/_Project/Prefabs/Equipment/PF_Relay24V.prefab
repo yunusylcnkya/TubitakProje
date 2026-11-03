@@ -90,37 +90,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.009983063
   m_Center: {x: -0.00009584427, y: 0, z: -0.000000014901161}
---- !u!1 &842342834469836625
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5696464086650502368}
-  m_Layer: 0
-  m_Name: HighlightVisual
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5696464086650502368
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842342834469836625}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1705845046054610170}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &883169797971414616
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +128,6 @@ Transform:
   m_Children:
   - {fileID: 3893106734440139932}
   - {fileID: 5702561654119836744}
-  - {fileID: 5696464086650502368}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &721473565089688884
@@ -237,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HighlightTarget
   targetType: 1
-  highlightVisual: {fileID: 842342834469836625}
+  highlightVisual: {fileID: 0}
 --- !u!114 &6010844041333966257
 MonoBehaviour:
   m_ObjectHideFlags: 0

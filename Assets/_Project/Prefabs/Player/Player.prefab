@@ -59,7 +59,6 @@ GameObject:
   - component: {fileID: 9018736475376402616}
   - component: {fileID: 4467360124507826289}
   - component: {fileID: 284504096223259825}
-  - component: {fileID: 2287162669105072882}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -181,23 +180,6 @@ MonoBehaviour:
   wireController: {fileID: 9018736475376402616}
   wireRemovalController: {fileID: 4467360124507826289}
   equipmentHolder: {fileID: 6093631315542694512}
---- !u!114 &2287162669105072882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7104980498172356557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b53609c918417834db62467981be4027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractionHighlightController
-  playerCamera: {fileID: 141649374989521239}
-  detectionDistance: 5
-  highlightMask:
-    serializedVersion: 2
-    m_Bits: 960
 --- !u!1001 &261268297220738201
 PrefabInstance:
   m_ObjectHideFlags: 0
