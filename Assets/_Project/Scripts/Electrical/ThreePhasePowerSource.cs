@@ -1,7 +1,7 @@
+
 using UnityEngine;
 
-public sealed class ThreePhasePowerSource :
-    MonoBehaviour
+public sealed class ThreePhasePowerSource : MonoBehaviour
 {
     [Header("Owner")]
     [SerializeField]
@@ -17,8 +17,14 @@ public sealed class ThreePhasePowerSource :
     [SerializeField]
     private Terminal phaseL3Terminal;
 
-    public Equipment Owner =>
-        owner;
+    [Header("Neutral and Earth")]
+    [SerializeField]
+    private Terminal neutralTerminal;
+
+    [SerializeField]
+    private Terminal protectiveEarthTerminal;
+
+    public Equipment Owner => owner;
 
     public Terminal PhaseL1Terminal =>
         phaseL1Terminal;
@@ -29,17 +35,21 @@ public sealed class ThreePhasePowerSource :
     public Terminal PhaseL3Terminal =>
         phaseL3Terminal;
 
+    public Terminal NeutralTerminal =>
+        neutralTerminal;
+
+    public Terminal ProtectiveEarthTerminal =>
+        protectiveEarthTerminal;
+
     public bool IsActive =>
         owner != null &&
-        owner.CurrentState ==
-            EquipmentState.Placed;
+        owner.CurrentState == EquipmentState.Placed;
 
     private void Awake()
     {
         if (owner == null)
         {
-            owner =
-                GetComponent<Equipment>();
+            owner = GetComponent<Equipment>();
         }
     }
 }

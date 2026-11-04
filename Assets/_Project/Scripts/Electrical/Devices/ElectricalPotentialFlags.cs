@@ -1,3 +1,4 @@
+
 using System;
 
 [Flags]
@@ -10,5 +11,8 @@ public enum ElectricalPotentialFlags
 
     PhaseL1 = 1 << 2,
     PhaseL2 = 1 << 3,
-    PhaseL3 = 1 << 4
+    PhaseL3 = 1 << 4,
+
+    Neutral = 1 << 5,
+    ProtectiveEarth = 1 << 6
 }

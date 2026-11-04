@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class Equipment :
@@ -16,9 +17,7 @@ public class Equipment :
     private EquipmentState currentState =
         EquipmentState.World;
 
-    // =========================================
-    // PUBLIC DATA
-    // =========================================
+    private IPlacedEquipmentControl placedControl;
 
     public EquipmentDefinition Definition =>
         definition;
@@ -36,19 +35,26 @@ public class Equipment :
     public EquipmentState CurrentState =>
         currentState;
 
-    // IInteractable'ın mevcut sözleşmesi
     public string InteractionPrompt =>
         currentState == EquipmentState.World
             ? $"{DisplayName} - Al"
             : string.Empty;
 
-    // =========================================
-    // INTERACTION
-    // =========================================
-
-    public bool CanInteract(
-        InteractionContext context)
+    private void Awake()
     {
+        // Kontrol bileşeni aynı GameObject üzerinde olmalı.
+        placedControl =
+            GetComponent<IPlacedEquipmentControl>();
+    }
+
+    public bool CanInteract(InteractionContext context)
+    {
+        if (currentState == EquipmentState.Placed)
+        {
+            return placedControl != null &&
+                   placedControl.CanUse(context);
+        }
+
         if (currentState != EquipmentState.World)
             return false;
 
@@ -58,64 +64,50 @@ public class Equipment :
         return !context.EquipmentHolder.HasEquipment;
     }
 
-    public void Interact(
-        InteractionContext context)
+    public void Interact(InteractionContext context)
     {
         if (!CanInteract(context))
             return;
 
+        if (currentState == EquipmentState.Placed)
+        {
+            placedControl.Use(context);
+            return;
+        }
+
         context.EquipmentHolder.TryPickup(this);
     }
 
-    // =========================================
-    // EQUIPMENT STATE
-    // =========================================
-
     public bool CanBePickedUp()
     {
-        return currentState ==
-               EquipmentState.World;
+        return currentState == EquipmentState.World;
     }
 
     public void SetHeld()
     {
-        currentState =
-            EquipmentState.Held;
-
+        currentState = EquipmentState.Held;
         SetPhysicsState(true);
     }
 
     public void SetWorld()
     {
-        currentState =
-            EquipmentState.World;
-
+        currentState = EquipmentState.World;
         SetPhysicsState(false);
     }
 
     public void SetPlaced()
     {
-        currentState =
-            EquipmentState.Placed;
-
+        currentState = EquipmentState.Placed;
         SetPhysicsState(true);
     }
 
-    // =========================================
-    // PHYSICS
-    // =========================================
-
-    private void SetPhysicsState(
-        bool isKinematic)
+    private void SetPhysicsState(bool isKinematic)
     {
         if (equipmentRigidbody == null)
             return;
 
-        equipmentRigidbody.isKinematic =
-            isKinematic;
-
-        equipmentRigidbody.useGravity =
-            !isKinematic;
+        equipmentRigidbody.isKinematic = isKinematic;
+        equipmentRigidbody.useGravity = !isKinematic;
 
         if (!isKinematic)
         {
@@ -126,10 +118,6 @@ public class Equipment :
                 Vector3.zero;
         }
     }
-
-    // =========================================
-    // UI
-    // =========================================
 
     public string GetInteractionTitle(
         InteractionContext context)
@@ -157,6 +145,12 @@ public class Equipment :
                 return "Elde";
 
             case EquipmentState.Placed:
+
+                if (placedControl != null)
+                {
+                    return placedControl.GetActionText(context);
+                }
+
                 return "Yerleştirildi";
 
             default:

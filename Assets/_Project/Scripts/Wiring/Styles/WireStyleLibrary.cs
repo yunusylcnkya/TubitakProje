@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 [CreateAssetMenu(
@@ -6,23 +7,34 @@ using UnityEngine;
 )]
 public sealed class WireStyleLibrary : ScriptableObject
 {
+    [Header("Wire Styles")]
     [SerializeField]
     private WireStyle[] styles;
 
+    [Header("Fallback")]
     [SerializeField]
     private WireStyle defaultStyle;
 
-    public WireStyle GetStyle(
-        ElectricalLineType lineType)
+    public WireStyle GetStyle(ElectricalLineType lineType)
     {
-        foreach (WireStyle style in styles)
+        if (styles != null)
         {
-            if (style == null)
-                continue;
+            foreach (WireStyle style in styles)
+            {
+                if (style == null)
+                    continue;
 
-            if (style.LineType == lineType)
-                return style;
+                if (style.LineType == lineType)
+                    return style;
+            }
         }
+
+        Debug.LogWarning(
+            $"WireStyleLibrary | " +
+            $"'{lineType}' için WireStyle bulunamadı. " +
+            $"Varsayılan stil kullanılacak.",
+            this
+        );
 
         return defaultStyle;
     }

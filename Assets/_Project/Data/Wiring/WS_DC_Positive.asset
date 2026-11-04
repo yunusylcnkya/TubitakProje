@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WS_DC_Positive
   m_EditorClassIdentifier: Assembly-CSharp::WireStyle
   lineType: 1
-  wireColor: {r: 1, g: 0, b: 0, a: 1}
+  wireColor: {r: 0.8980392, g: 0.22352941, b: 0.20784314, a: 1}
   width: 0.015
   material: {fileID: 2100000, guid: 607783d3b55e3f6418a2b750518d80fa, type: 2}

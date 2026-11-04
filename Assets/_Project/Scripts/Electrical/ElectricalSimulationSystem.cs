@@ -1,9 +1,9 @@
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class ElectricalSimulationSystem :
-    MonoBehaviour
+public sealed class ElectricalSimulationSystem : MonoBehaviour
 {
     [Header("Systems")]
     [SerializeField]
@@ -18,25 +18,24 @@ public sealed class ElectricalSimulationSystem :
 
     [Header("Three Phase Power Sources")]
     [SerializeField]
-    private ThreePhasePowerSource[]
-        threePhasePowerSources;
+    private ThreePhasePowerSource[] threePhasePowerSources;
 
     [Header("Electrical Devices")]
     [SerializeField]
-    private ElectricalDeviceBase[]
-        electricalDevices;
+    private ElectricalDeviceBase[] electricalDevices;
 
     [Header("Solver")]
     [SerializeField, Min(1)]
     private int maxSolverIterations = 12;
 
-    public event Action<
-        ElectricalSimulationSnapshot>
+    public event Action<ElectricalSimulationSnapshot>
         SimulationChanged;
 
-    public ElectricalSimulationSnapshot
-        LastSnapshot
-    { get; private set; }
+    public ElectricalSimulationSnapshot LastSnapshot
+    {
+        get;
+        private set;
+    }
 
     private bool isRecalculating;
     private bool recalculateRequested;
@@ -45,19 +44,16 @@ public sealed class ElectricalSimulationSystem :
     {
         if (connectionManager != null)
         {
-            connectionManager
-                .ConnectionsChanged +=
-                Recalculate;
+            connectionManager.ConnectionsChanged += Recalculate;
         }
 
         if (placementManager != null)
         {
-            placementManager
-                .PlacementsChanged +=
-                Recalculate;
+            placementManager.PlacementsChanged += Recalculate;
         }
 
         SubscribeDevices();
+        SubscribePowerSources();
     }
 
     private void Start()
@@ -69,19 +65,44 @@ public sealed class ElectricalSimulationSystem :
     {
         if (connectionManager != null)
         {
-            connectionManager
-                .ConnectionsChanged -=
-                Recalculate;
+            connectionManager.ConnectionsChanged -= Recalculate;
         }
 
         if (placementManager != null)
         {
-            placementManager
-                .PlacementsChanged -=
-                Recalculate;
+            placementManager.PlacementsChanged -= Recalculate;
         }
 
         UnsubscribeDevices();
+        UnsubscribePowerSources();
+    }
+
+    private void SubscribePowerSources()
+    {
+        if (dcPowerSources == null)
+            return;
+
+        foreach (DCPowerSource source in dcPowerSources)
+        {
+            if (source == null)
+                continue;
+
+            source.StateChanged += Recalculate;
+        }
+    }
+
+    private void UnsubscribePowerSources()
+    {
+        if (dcPowerSources == null)
+            return;
+
+        foreach (DCPowerSource source in dcPowerSources)
+        {
+            if (source == null)
+                continue;
+
+            source.StateChanged -= Recalculate;
+        }
     }
 
     private void SubscribeDevices()
@@ -89,15 +110,12 @@ public sealed class ElectricalSimulationSystem :
         if (electricalDevices == null)
             return;
 
-        foreach (
-            ElectricalDeviceBase device
-            in electricalDevices)
+        foreach (ElectricalDeviceBase device in electricalDevices)
         {
             if (device == null)
                 continue;
 
-            device.StateChanged +=
-                HandleDeviceStateChanged;
+            device.StateChanged += HandleDeviceStateChanged;
         }
     }
 
@@ -106,15 +124,12 @@ public sealed class ElectricalSimulationSystem :
         if (electricalDevices == null)
             return;
 
-        foreach (
-            ElectricalDeviceBase device
-            in electricalDevices)
+        foreach (ElectricalDeviceBase device in electricalDevices)
         {
             if (device == null)
                 continue;
 
-            device.StateChanged -=
-                HandleDeviceStateChanged;
+            device.StateChanged -= HandleDeviceStateChanged;
         }
     }
 
@@ -136,7 +151,6 @@ public sealed class ElectricalSimulationSystem :
         do
         {
             recalculateRequested = false;
-
             SolveUntilStable();
         }
         while (recalculateRequested);
@@ -146,21 +160,16 @@ public sealed class ElectricalSimulationSystem :
 
     private void SolveUntilStable()
     {
-        ElectricalSimulationSnapshot snapshot =
-            null;
-
+        ElectricalSimulationSnapshot snapshot = null;
         bool stable = false;
 
-        for (
-            int iteration = 0;
-            iteration < maxSolverIterations;
-            iteration++)
+        for (int iteration = 0;
+             iteration < maxSolverIterations;
+             iteration++)
         {
-            snapshot =
-                BuildSnapshot();
+            snapshot = BuildSnapshot();
 
-            bool deviceChanged =
-                EvaluateDevices(snapshot);
+            bool deviceChanged = EvaluateDevices(snapshot);
 
             if (!deviceChanged)
             {
@@ -177,15 +186,12 @@ public sealed class ElectricalSimulationSystem :
                 this
             );
 
-            snapshot =
-                BuildSnapshot();
+            snapshot = BuildSnapshot();
         }
 
         LastSnapshot = snapshot;
 
-        SimulationChanged?.Invoke(
-            LastSnapshot
-        );
+        SimulationChanged?.Invoke(LastSnapshot);
 
         if (LastSnapshot != null &&
             LastSnapshot.HasShortCircuit)
@@ -198,72 +204,26 @@ public sealed class ElectricalSimulationSystem :
         }
     }
 
-    private ElectricalSimulationSnapshot
-        BuildSnapshot()
+
+    private ElectricalSimulationSnapshot BuildSnapshot()
     {
-        Dictionary<
-            Terminal,
-            List<Terminal>>
-            adjacency =
-                BuildAdjacency();
+        Dictionary<Terminal, List<Terminal>> adjacency =
+            BuildAdjacency();
 
-        Dictionary<
-            Terminal,
-            ElectricalPotentialFlags>
-            states =
-                new Dictionary<
-                    Terminal,
-                    ElectricalPotentialFlags>();
+        Dictionary<Terminal, ElectricalPotentialFlags> states =
+            new Dictionary<Terminal, ElectricalPotentialFlags>();
 
-        // =============================
-        // DC SOURCES
-        // =============================
-
-        if (dcPowerSources != null)
-        {
-            foreach (
-                DCPowerSource source
-                in dcPowerSources)
-            {
-                if (source == null ||
-                    !source.IsActive)
-                {
-                    continue;
-                }
-
-                PropagatePotential(
-                    source.PositiveTerminal,
-                    ElectricalPotentialFlags
-                        .DCPositive,
-                    adjacency,
-                    states
-                );
-
-                PropagatePotential(
-                    source.NegativeTerminal,
-                    ElectricalPotentialFlags
-                        .DCNegative,
-                    adjacency,
-                    states
-                );
-            }
-        }
-
-        // =============================
-        // THREE PHASE SOURCES
-        // =============================
+        // =========================================
+        // 1. AC BESLEMEYİ HESAPLA
+        // =========================================
 
         if (threePhasePowerSources != null)
         {
-            foreach (
-                ThreePhasePowerSource source
-                in threePhasePowerSources)
+            foreach (ThreePhasePowerSource source
+                     in threePhasePowerSources)
             {
-                if (source == null ||
-                    !source.IsActive)
-                {
+                if (source == null || !source.IsActive)
                     continue;
-                }
 
                 PropagatePotential(
                     source.PhaseL1Terminal,
@@ -285,46 +245,102 @@ public sealed class ElectricalSimulationSystem :
                     adjacency,
                     states
                 );
+
+                PropagatePotential(
+                    source.NeutralTerminal,
+                    ElectricalPotentialFlags.Neutral,
+                    adjacency,
+                    states
+                );
+
+                PropagatePotential(
+                    source.ProtectiveEarthTerminal,
+                    ElectricalPotentialFlags.ProtectiveEarth,
+                    adjacency,
+                    states
+                );
             }
         }
+
+        bool hasACFault = DetectShortCircuit(states);
+
+        ElectricalSimulationSnapshot acSnapshot =
+            new ElectricalSimulationSnapshot(
+                states,
+                hasACFault
+            );
+
+        // =========================================
+        // 2. GÜÇ KAYNAKLARININ AC GİRİŞLERİNİ KONTROL ET
+        // =========================================
+
+        if (dcPowerSources != null)
+        {
+            foreach (DCPowerSource source in dcPowerSources)
+            {
+                if (source == null)
+                    continue;
+
+                source.EvaluateInputPower(acSnapshot);
+            }
+        }
+
+        // =========================================
+        // 3. AKTİF DC KAYNAKLARINI YAY
+        // =========================================
+
+        if (dcPowerSources != null)
+        {
+            foreach (DCPowerSource source in dcPowerSources)
+            {
+                if (source == null || !source.IsActive)
+                    continue;
+
+                PropagatePotential(
+                    source.PositiveTerminal,
+                    ElectricalPotentialFlags.DCPositive,
+                    adjacency,
+                    states
+                );
+
+                PropagatePotential(
+                    source.NegativeTerminal,
+                    ElectricalPotentialFlags.DCNegative,
+                    adjacency,
+                    states
+                );
+            }
+        }
+
+        // =========================================
+        // 4. TÜM DEVRE İÇİN HATA KONTROLÜ
+        // =========================================
 
         bool hasShortCircuit =
             DetectShortCircuit(states);
 
-        return
-            new ElectricalSimulationSnapshot(
-                states,
-                hasShortCircuit
-            );
+        return new ElectricalSimulationSnapshot(
+            states,
+            hasShortCircuit
+        );
     }
 
-    private Dictionary<
-        Terminal,
-        List<Terminal>>
+
+    private Dictionary<Terminal, List<Terminal>>
         BuildAdjacency()
     {
-        Dictionary<
-            Terminal,
-            List<Terminal>>
-            adjacency =
-                new Dictionary<
-                    Terminal,
-                    List<Terminal>>();
+        Dictionary<Terminal, List<Terminal>> adjacency =
+            new Dictionary<Terminal, List<Terminal>>();
 
-        // Fiziksel kablolar
+        // Physical wire connections
         if (connectionManager != null)
         {
-            IReadOnlyList<Connection>
-                connections =
-                    connectionManager.Connections;
+            IReadOnlyList<Connection> connections =
+                connectionManager.Connections;
 
-            for (
-                int i = 0;
-                i < connections.Count;
-                i++)
+            for (int i = 0; i < connections.Count; i++)
             {
-                Connection connection =
-                    connections[i];
+                Connection connection = connections[i];
 
                 if (connection == null)
                     continue;
@@ -337,15 +353,14 @@ public sealed class ElectricalSimulationSystem :
             }
         }
 
-        // Cihaz iç bağlantıları
+        // Internal device connections
         if (electricalDevices != null)
         {
             List<ElectricalLink> links =
                 new List<ElectricalLink>();
 
-            foreach (
-                ElectricalDeviceBase device
-                in electricalDevices)
+            foreach (ElectricalDeviceBase device
+                     in electricalDevices)
             {
                 if (device == null ||
                     !device.isActiveAndEnabled)
@@ -353,14 +368,10 @@ public sealed class ElectricalSimulationSystem :
                     continue;
                 }
 
-                device.CollectActiveLinks(
-                    links
-                );
+                device.CollectActiveLinks(links);
             }
 
-            foreach (
-                ElectricalLink link
-                in links)
+            foreach (ElectricalLink link in links)
             {
                 if (!link.IsValid)
                     continue;
@@ -377,49 +388,28 @@ public sealed class ElectricalSimulationSystem :
     }
 
     private void AddBidirectionalLink(
-        Dictionary<
-            Terminal,
-            List<Terminal>>
-            adjacency,
+        Dictionary<Terminal, List<Terminal>> adjacency,
         Terminal terminalA,
         Terminal terminalB)
     {
-        if (terminalA == null ||
-            terminalB == null)
-        {
+        if (terminalA == null || terminalB == null)
             return;
-        }
 
-        AddNeighbour(
-            adjacency,
-            terminalA,
-            terminalB
-        );
-
-        AddNeighbour(
-            adjacency,
-            terminalB,
-            terminalA
-        );
+        AddNeighbour(adjacency, terminalA, terminalB);
+        AddNeighbour(adjacency, terminalB, terminalA);
     }
 
     private void AddNeighbour(
-        Dictionary<
-            Terminal,
-            List<Terminal>>
-            adjacency,
+        Dictionary<Terminal, List<Terminal>> adjacency,
         Terminal source,
         Terminal target)
     {
         if (!adjacency.TryGetValue(
-                source,
-                out List<Terminal> neighbours))
+            source,
+            out List<Terminal> neighbours))
         {
-            neighbours =
-                new List<Terminal>();
-
-            adjacency[source] =
-                neighbours;
+            neighbours = new List<Terminal>();
+            adjacency[source] = neighbours;
         }
 
         if (!neighbours.Contains(target))
@@ -431,58 +421,39 @@ public sealed class ElectricalSimulationSystem :
     private void PropagatePotential(
         Terminal sourceTerminal,
         ElectricalPotentialFlags potential,
-        Dictionary<
-            Terminal,
-            List<Terminal>>
-            adjacency,
-        Dictionary<
-            Terminal,
-            ElectricalPotentialFlags>
-            states)
+        Dictionary<Terminal, List<Terminal>> adjacency,
+        Dictionary<Terminal, ElectricalPotentialFlags> states)
     {
         if (sourceTerminal == null)
             return;
 
-        Queue<Terminal> queue =
-            new Queue<Terminal>();
-
-        HashSet<Terminal> visited =
-            new HashSet<Terminal>();
+        Queue<Terminal> queue = new Queue<Terminal>();
+        HashSet<Terminal> visited = new HashSet<Terminal>();
 
         queue.Enqueue(sourceTerminal);
         visited.Add(sourceTerminal);
 
         while (queue.Count > 0)
         {
-            Terminal current =
-                queue.Dequeue();
+            Terminal current = queue.Dequeue();
 
-            AddPotential(
-                current,
-                potential,
-                states
-            );
+            AddPotential(current, potential, states);
 
             if (!adjacency.TryGetValue(
-                    current,
-                    out List<Terminal>
-                        neighbours))
+                current,
+                out List<Terminal> neighbours))
             {
                 continue;
             }
 
-            foreach (
-                Terminal neighbour
-                in neighbours)
+            foreach (Terminal neighbour in neighbours)
             {
                 if (neighbour == null)
                     continue;
 
                 if (visited.Add(neighbour))
                 {
-                    queue.Enqueue(
-                        neighbour
-                    );
+                    queue.Enqueue(neighbour);
                 }
             }
         }
@@ -491,25 +462,19 @@ public sealed class ElectricalSimulationSystem :
     private void AddPotential(
         Terminal terminal,
         ElectricalPotentialFlags potential,
-        Dictionary<
-            Terminal,
-            ElectricalPotentialFlags>
-            states)
+        Dictionary<Terminal, ElectricalPotentialFlags> states)
     {
         if (terminal == null)
             return;
 
         if (!states.TryGetValue(
-                terminal,
-                out ElectricalPotentialFlags
-                    current))
+            terminal,
+            out ElectricalPotentialFlags current))
         {
-            current =
-                ElectricalPotentialFlags.None;
+            current = ElectricalPotentialFlags.None;
         }
 
-        states[terminal] =
-            current | potential;
+        states[terminal] = current | potential;
     }
 
     private bool EvaluateDevices(
@@ -520,9 +485,8 @@ public sealed class ElectricalSimulationSystem :
 
         bool changed = false;
 
-        foreach (
-            ElectricalDeviceBase device
-            in electricalDevices)
+        foreach (ElectricalDeviceBase device
+                 in electricalDevices)
         {
             if (device == null ||
                 !device.isActiveAndEnabled)
@@ -540,54 +504,52 @@ public sealed class ElectricalSimulationSystem :
     }
 
     private bool DetectShortCircuit(
-        Dictionary<
-            Terminal,
-            ElectricalPotentialFlags>
-            states)
+        Dictionary<Terminal, ElectricalPotentialFlags> states)
     {
-        foreach (
-            KeyValuePair<
-                Terminal,
-                ElectricalPotentialFlags>
-            pair
-            in states)
+        foreach (KeyValuePair<
+            Terminal,
+            ElectricalPotentialFlags> pair in states)
         {
+            ElectricalPotentialFlags flags = pair.Value;
+
             int sourcePotentialCount = 0;
 
-            if ((pair.Value &
-                 ElectricalPotentialFlags.DCPositive) != 0)
-            {
+            if ((flags & ElectricalPotentialFlags.DCPositive) != 0)
                 sourcePotentialCount++;
-            }
 
-            if ((pair.Value &
-                 ElectricalPotentialFlags.DCNegative) != 0)
-            {
+            if ((flags & ElectricalPotentialFlags.DCNegative) != 0)
                 sourcePotentialCount++;
-            }
 
-            if ((pair.Value &
-                 ElectricalPotentialFlags.PhaseL1) != 0)
-            {
+            if ((flags & ElectricalPotentialFlags.PhaseL1) != 0)
                 sourcePotentialCount++;
-            }
 
-            if ((pair.Value &
-                 ElectricalPotentialFlags.PhaseL2) != 0)
-            {
+            if ((flags & ElectricalPotentialFlags.PhaseL2) != 0)
                 sourcePotentialCount++;
-            }
 
-            if ((pair.Value &
-                 ElectricalPotentialFlags.PhaseL3) != 0)
-            {
+            if ((flags & ElectricalPotentialFlags.PhaseL3) != 0)
                 sourcePotentialCount++;
-            }
+
+            if ((flags & ElectricalPotentialFlags.Neutral) != 0)
+                sourcePotentialCount++;
 
             if (sourcePotentialCount > 1)
-            {
                 return true;
-            }
+
+            // Protective Earth must not carry a live conductor.
+            ElectricalPotentialFlags liveConductors =
+                ElectricalPotentialFlags.DCPositive |
+                ElectricalPotentialFlags.PhaseL1 |
+                ElectricalPotentialFlags.PhaseL2 |
+                ElectricalPotentialFlags.PhaseL3;
+
+            bool hasEarth =
+                (flags & ElectricalPotentialFlags.ProtectiveEarth) != 0;
+
+            bool hasLiveConductor =
+                (flags & liveConductors) != 0;
+
+            if (hasEarth && hasLiveConductor)
+                return true;
         }
 
         return false;

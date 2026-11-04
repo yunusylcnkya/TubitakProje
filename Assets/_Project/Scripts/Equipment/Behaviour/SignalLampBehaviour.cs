@@ -1,12 +1,11 @@
+
 using UnityEngine;
 
-public sealed class SignalLampBehaviour :
-    MonoBehaviour
+public sealed class SignalLampBehaviour : MonoBehaviour
 {
     [Header("Electrical")]
     [SerializeField]
-    private ElectricalSimulationSystem
-        electricalSimulation;
+    private ElectricalSimulationSystem electricalSimulation;
 
     [SerializeField]
     private Terminal positiveTerminal;
@@ -17,39 +16,73 @@ public sealed class SignalLampBehaviour :
     [SerializeField]
     private bool polaritySensitive = true;
 
-    [Header("Visual")]
+    [Header("Lamp Visual")]
     [SerializeField]
     private Renderer lampRenderer;
 
     [SerializeField]
-    private Color offColor =
-        Color.black;
+    private Color offColor = Color.black;
 
     [SerializeField]
-    private Color onColor =
-        Color.green;
+    private Color onColor = Color.green;
+
+    [Header("Emission")]
+    [SerializeField, Min(0f)]
+    private float emissionIntensity = 3f;
+
+    [Header("Real Light")]
+    [SerializeField]
+    private Light pointLight;
+
+    [SerializeField, Min(0f)]
+    private float lightIntensity = 1.5f;
+
+    [SerializeField, Min(0.01f)]
+    private float lightRange = 0.5f;
 
     private Material runtimeMaterial;
 
+    private static readonly int BaseColorId =
+        Shader.PropertyToID("_BaseColor");
+
+    private static readonly int ColorId =
+        Shader.PropertyToID("_Color");
+
+    private static readonly int EmissionColorId =
+        Shader.PropertyToID("_EmissionColor");
+
     public bool IsOn { get; private set; }
+
+    // =========================================
+    // UNITY LIFECYCLE
+    // =========================================
 
     private void Awake()
     {
         if (lampRenderer != null)
         {
-            runtimeMaterial =
-                lampRenderer.material;
+            runtimeMaterial = lampRenderer.material;
+
+            if (runtimeMaterial != null &&
+                runtimeMaterial.HasProperty(EmissionColorId))
+            {
+                runtimeMaterial.EnableKeyword("_EMISSION");
+            }
         }
+
+        IsOn = false;
+        ApplyVisualState();
     }
 
     private void OnEnable()
     {
         if (electricalSimulation != null)
         {
-            electricalSimulation
-                .SimulationChanged +=
+            electricalSimulation.SimulationChanged +=
                 HandleSimulationChanged;
         }
+
+        RefreshFromCurrentSimulation();
     }
 
     private void Start()
@@ -61,11 +94,25 @@ public sealed class SignalLampBehaviour :
     {
         if (electricalSimulation != null)
         {
-            electricalSimulation
-                .SimulationChanged -=
+            electricalSimulation.SimulationChanged -=
                 HandleSimulationChanged;
         }
+
+        SetLampState(false);
     }
+
+    private void OnDestroy()
+    {
+        if (runtimeMaterial != null)
+        {
+            Destroy(runtimeMaterial);
+            runtimeMaterial = null;
+        }
+    }
+
+    // =========================================
+    // ELECTRICAL SIMULATION
+    // =========================================
 
     private void HandleSimulationChanged(
         ElectricalSimulationSnapshot snapshot)
@@ -77,7 +124,7 @@ public sealed class SignalLampBehaviour :
     {
         if (electricalSimulation == null)
         {
-            TurnOff();
+            SetLampState(false);
             return;
         }
 
@@ -89,96 +136,124 @@ public sealed class SignalLampBehaviour :
     private void ApplyElectricalState(
         ElectricalSimulationSnapshot snapshot)
     {
-        if (snapshot == null)
+        if (snapshot == null ||
+            snapshot.HasShortCircuit ||
+            positiveTerminal == null ||
+            negativeTerminal == null ||
+            positiveTerminal == negativeTerminal)
         {
-            TurnOff();
+            SetLampState(false);
             return;
         }
 
-        if (snapshot.HasShortCircuit)
+        bool normalPolarity =
+            snapshot.HasPotential(
+                positiveTerminal,
+                ElectricalPotentialFlags.DCPositive
+            )
+            &&
+            snapshot.HasPotential(
+                negativeTerminal,
+                ElectricalPotentialFlags.DCNegative
+            );
+
+        bool powered = normalPolarity;
+
+        if (!polaritySensitive)
         {
-            TurnOff();
+            bool reversedPolarity =
+                snapshot.HasPotential(
+                    positiveTerminal,
+                    ElectricalPotentialFlags.DCNegative
+                )
+                &&
+                snapshot.HasPotential(
+                    negativeTerminal,
+                    ElectricalPotentialFlags.DCPositive
+                );
+
+            powered =
+                normalPolarity || reversedPolarity;
+        }
+
+        SetLampState(powered);
+    }
+
+    // =========================================
+    // STATE CONTROL
+    // =========================================
+
+    private void SetLampState(bool shouldBeOn)
+    {
+        if (IsOn == shouldBeOn)
             return;
+
+        IsOn = shouldBeOn;
+
+        ApplyVisualState();
+    }
+
+    // =========================================
+    // VISUAL STATE
+    // =========================================
+
+    private void ApplyVisualState()
+    {
+        Color targetColor =
+            IsOn ? onColor : offColor;
+
+        UpdateMaterial(targetColor);
+
+        UpdatePointLight();
+    }
+
+    private void UpdateMaterial(Color targetColor)
+    {
+        if (runtimeMaterial == null)
+            return;
+
+        // URP/Lit uses _BaseColor.
+        if (runtimeMaterial.HasProperty(BaseColorId))
+        {
+            runtimeMaterial.SetColor(
+                BaseColorId,
+                targetColor
+            );
+        }
+        else if (runtimeMaterial.HasProperty(ColorId))
+        {
+            runtimeMaterial.SetColor(
+                ColorId,
+                targetColor
+            );
         }
 
-        bool powered;
-
-        if (polaritySensitive)
+        // HDR emission.
+        if (runtimeMaterial.HasProperty(EmissionColorId))
         {
-            powered =
-                snapshot.HasPotential(
-                    positiveTerminal,
-                    ElectricalPotentialFlags
-                        .DCPositive
-                )
-                &&
-                snapshot.HasPotential(
-                    negativeTerminal,
-                    ElectricalPotentialFlags
-                        .DCNegative
-                );
-        }
-        else
-        {
-            bool normal =
-                snapshot.HasPotential(
-                    positiveTerminal,
-                    ElectricalPotentialFlags
-                        .DCPositive
-                )
-                &&
-                snapshot.HasPotential(
-                    negativeTerminal,
-                    ElectricalPotentialFlags
-                        .DCNegative
-                );
+            Color emissionColor =
+                IsOn
+                    ? onColor * emissionIntensity
+                    : Color.black;
 
-            bool reversed =
-                snapshot.HasPotential(
-                    positiveTerminal,
-                    ElectricalPotentialFlags
-                        .DCNegative
-                )
-                &&
-                snapshot.HasPotential(
-                    negativeTerminal,
-                    ElectricalPotentialFlags
-                        .DCPositive
-                );
-
-            powered =
-                normal || reversed;
-        }
-
-        if (powered)
-        {
-            TurnOn();
-        }
-        else
-        {
-            TurnOff();
+            runtimeMaterial.SetColor(
+                EmissionColorId,
+                emissionColor
+            );
         }
     }
 
-    private void TurnOn()
+    private void UpdatePointLight()
     {
-        IsOn = true;
+        if (pointLight == null)
+            return;
 
-        if (runtimeMaterial != null)
-        {
-            runtimeMaterial.color =
-                onColor;
-        }
-    }
+        pointLight.color = onColor;
 
-    private void TurnOff()
-    {
-        IsOn = false;
+        pointLight.intensity = lightIntensity;
 
-        if (runtimeMaterial != null)
-        {
-            runtimeMaterial.color =
-                offColor;
-        }
+        pointLight.range = lightRange;
+
+        pointLight.enabled = IsOn;
     }
 }

@@ -414,6 +414,7 @@ RectTransform:
   - {fileID: 709428077}
   - {fileID: 1058781811}
   - {fileID: 689305146}
+  - {fileID: 256968526}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1024,6 +1025,119 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1365074835329541670, guid: 96bd6ab1b57f828429ff6a93c919b8fe, type: 3}
   m_PrefabInstance: {fileID: 211943935}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &256968525
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 122280541}
+    m_Modifications:
+    - target: {fileID: 2367251667294644990, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_Name
+      value: ConnectionFeedbackPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+--- !u!224 &256968526 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3841358683043457724, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+  m_PrefabInstance: {fileID: 256968525}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &256968527 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 778734647468292007, guid: 4f9a416c1ea52f547a5f63546231fe52, type: 3}
+  m_PrefabInstance: {fileID: 256968525}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2f08e4ae7c5f543ba0680fe7667649, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConnectionFeedbackUI
 --- !u!1001 &309648931
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2443,6 +2557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1356e26f3103b4e836bae7c1bd07b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConnectionManager
+  electricalSimulation: {fileID: 1268906073}
+  validationMode: 0
 --- !u!114 &888505118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4226,6 +4342,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: feedbackUI
+      value: 
+      objectReference: {fileID: 256968527}
+    - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: connectionManager
       value: 
       objectReference: {fileID: 888505117}
@@ -4708,7 +4828,7 @@ PrefabInstance:
     - target: {fileID: 3225667754416329101, guid: 3324c9ec1e7b5a74881c671a0ea77ca6, type: 3}
       propertyPath: electricalSimulation
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1268906073}
     - target: {fileID: 6274214926989133927, guid: 3324c9ec1e7b5a74881c671a0ea77ca6, type: 3}
       propertyPath: m_Name
       value: SignalLamp
