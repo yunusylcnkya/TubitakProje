@@ -1623,6 +1623,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7145038759771011506, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: connectionManager
+      value: 
+      objectReference: {fileID: 888505117}
     - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: connectionManager
       value: 

@@ -189,6 +189,7 @@ MonoBehaviour:
   wireController: {fileID: 9018736475376402616}
   wireRemovalController: {fileID: 4467360124507826289}
   equipmentHolder: {fileID: 6093631315542694512}
+  uiRefreshInterval: 0.03
 --- !u!114 &2903726546192464556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03d02ee2d6575144b334d71910cf0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WireManualRouter
-  channelSpacingGuide: {fileID: 0}
+  channelSpacingGuide: {fileID: 7145038759771011506}
   horizontalFirst: 0
   bendMode: 0
   chamferLength: 0.02
