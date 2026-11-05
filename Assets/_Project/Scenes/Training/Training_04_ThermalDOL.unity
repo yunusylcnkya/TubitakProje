@@ -4487,7 +4487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8530087540136623898, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: frontIsNegativeZ
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: feedbackUI
@@ -4499,7 +4499,11 @@ PrefabInstance:
       objectReference: {fileID: 888505117}
     - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: useGuidedManualRouting
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: allowFreeSpaceWaypoints
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

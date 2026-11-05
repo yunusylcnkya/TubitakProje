@@ -26,6 +26,9 @@ public sealed class WireController : MonoBehaviour
     [SerializeField] private WireManualRouter manualRouter;
     [SerializeField] private bool useGuidedManualRouting = true;
 
+    [Tooltip("Allow waypoints outside CableTray, on the manual routing XY plane.")]
+    [SerializeField] private bool allowFreeSpaceWaypoints = true;
+
     private Terminal startTerminal;
     private Wire activeWire;
     private Terminal previewTerminal;
@@ -39,6 +42,10 @@ public sealed class WireController : MonoBehaviour
     private bool AutoRoutingEnabled => useAutoRouting && autoRouter != null;
     private bool GuidedManualEnabled => !AutoRoutingEnabled &&
         useGuidedManualRouting && manualRouter != null;
+
+    private bool CurrentUse45 => manualRouter != null &&
+        manualRouter.Use45ForCurrentSegment(
+            Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
 
     private void Awake()
     {
@@ -59,6 +66,18 @@ public sealed class WireController : MonoBehaviour
     {
         if (equipmentHolder != null && equipmentHolder.HasEquipment)
             return;
+
+        if (IsWiring && GuidedManualEnabled && Input.GetKeyDown(KeyCode.Tab))
+        {
+            manualRouter.ToggleFirstAxis();
+            return;
+        }
+
+        if (IsWiring && GuidedManualEnabled && Input.GetKeyDown(KeyCode.B))
+        {
+            manualRouter.ToggleBendMode();
+            return;
+        }
 
         if (IsWiring && GuidedManualEnabled &&
             Input.GetKeyDown(KeyCode.Backspace))
@@ -134,36 +153,35 @@ public sealed class WireController : MonoBehaviour
         if (!IsWiring || AutoRoutingEnabled)
             return;
 
-        if (!TryGetRouteSurface(out RaycastHit hit, out WireSurface surface))
-        {
-            Debug.Log("Bu yüzeye kablo noktası eklenemez.");
-            return;
-        }
-
         if (GuidedManualEnabled)
         {
-            if (!manualRouter.TryCreateAnchor(surface, hit.point, startTerminal,
-                connectionManager.Connections, manualAnchors, out ManualWireAnchor anchor))
+            if (!TryGetManualPoint(out Vector3 position, out bool isChannel))
             {
-                Debug.LogWarning("Kanalda uygun boş kablo şeridi yok veya WireSurface/BoxCollider eksik.");
+                Debug.Log("Kablo noktasi secilemedi. Kamera ve routing Z duzlemini kontrol edin.");
                 return;
             }
 
-            if (manualAnchors.Count > 0 &&
-                Vector3.Distance(manualAnchors[manualAnchors.Count - 1].Position,
-                    anchor.Position) < 0.005f)
+            if (!manualRouter.TryCreateAnchor(position, startTerminal,
+                manualAnchors, CurrentUse45, out ManualWireAnchor anchor))
                 return;
 
             manualAnchors.Add(anchor);
             activeWire.SetRoutePreview(
                 manualRouter.BuildPreview(startTerminal, manualAnchors, null));
-            Debug.Log($"Manuel güzergâh noktası {manualAnchors.Count}: {surface.name}");
+
+            Debug.Log($"Manuel kablo noktasi {manualAnchors.Count}: " +
+                $"{anchor.Position} | " + (isChannel ? "kanal" : "serbest duzlem"));
             return;
         }
 
-        // Legacy free-point mode: kept for backward compatibility.
+        // Legacy free-point mode is unchanged.
+        if (!TryGetRouteSurface(out RaycastHit hit, out WireSurface surface))
+        {
+            Debug.Log("Bu yuzeye kablo noktasi eklenemez.");
+            return;
+        }
         activeWire.AddRoutePoint(hit.point);
-        Debug.Log($"Serbest kablo noktası eklendi: {surface.name}");
+        Debug.Log($"Serbest kablo noktasi eklendi: {surface.name}");
     }
 
     private void TryCompleteWire(Terminal targetTerminal)
@@ -184,12 +202,6 @@ public sealed class WireController : MonoBehaviour
                 $"'{targetTerminal.DisplayName}' terminali kullanılamıyor. " +
                 "Bağlantı kapasitesini ve ekipmanın yerleşim durumunu kontrol edin.",
                 false));
-            return;
-        }
-
-        if (GuidedManualEnabled && manualAnchors.Count == 0)
-        {
-            Debug.LogWarning("Önce kablo kanalına en az bir kez tıklayarak güzergâh seçin.");
             return;
         }
 
@@ -222,7 +234,8 @@ public sealed class WireController : MonoBehaviour
         else if (GuidedManualEnabled)
         {
             plannedRoute = manualRouter.BuildCompletionRoute(
-                startTerminal, targetTerminal, manualAnchors);
+                startTerminal, targetTerminal, manualAnchors,
+                manualRouter.HorizontalFirst, CurrentUse45);
             if (plannedRoute == null || plannedRoute.Count < 2)
             {
                 Debug.LogWarning("Manuel kablo güzergâhı oluşturulamadı.");
@@ -325,7 +338,8 @@ public sealed class WireController : MonoBehaviour
             else if (GuidedManualEnabled)
             {
                 List<Vector3> path = manualRouter.BuildCompletionRoute(
-                    startTerminal, terminal, manualAnchors);
+                    startTerminal, terminal, manualAnchors,
+                    manualRouter.HorizontalFirst, CurrentUse45);
                 if (path != null)
                     activeWire.SetRoutePreview(path);
             }
@@ -341,9 +355,9 @@ public sealed class WireController : MonoBehaviour
 
         if (GuidedManualEnabled)
         {
-            if (TryGetRouteSurface(out RaycastHit hit, out WireSurface surface) &&
-                manualRouter.TryCreateAnchor(surface, hit.point, startTerminal,
-                    connectionManager.Connections, manualAnchors, out ManualWireAnchor anchor))
+            if (TryGetManualPoint(out Vector3 position, out _) &&
+                manualRouter.TryCreateAnchor(position, startTerminal,
+                    manualAnchors, CurrentUse45, out ManualWireAnchor anchor))
             {
                 HasValidRouteSurface = true;
                 activeWire.SetRoutePreview(
@@ -370,6 +384,49 @@ public sealed class WireController : MonoBehaviour
         Vector3 fallbackPosition = playerCamera.transform.position +
             playerCamera.transform.forward * routeDistance;
         activeWire.UpdatePreview(fallbackPosition);
+    }
+
+    /// <summary>
+    /// Prefer the exact ray hit on a CableTray/WireSurface. If there is no
+    /// channel under the reticle, optionally intersect the routing XY plane.
+    /// No bounds-based snapping, lane occupancy or forced channel direction.
+    /// </summary>
+    private bool TryGetManualPoint(out Vector3 position, out bool isChannel)
+    {
+        position = default;
+        isChannel = false;
+
+        if (playerCamera == null || startTerminal == null || manualRouter == null)
+            return false;
+
+        Ray ray = new Ray(playerCamera.transform.position,
+            playerCamera.transform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, routeDistance,
+                wireSurfaceMask, QueryTriggerInteraction.Ignore))
+        {
+            WireSurface surface = hit.collider.GetComponentInParent<WireSurface>();
+            if (surface != null && surface.isActiveAndEnabled)
+            {
+                position = hit.point;
+                isChannel = true;
+                return true;
+            }
+        }
+
+        if (!allowFreeSpaceWaypoints)
+            return false;
+
+        float routingZ = manualRouter.GetRoutingZ(startTerminal);
+        Plane routingPlane = new Plane(Vector3.forward,
+            new Vector3(0f, 0f, routingZ));
+
+        if (!routingPlane.Raycast(ray, out float distance) ||
+            distance <= 0f || distance > routeDistance)
+            return false;
+
+        position = ray.GetPoint(distance);
+        return true;
     }
 
     private bool TryGetRouteSurface(out RaycastHit hit, out WireSurface surface)
