@@ -155,13 +155,13 @@ public sealed class WireController : MonoBehaviour
 
         if (GuidedManualEnabled)
         {
-            if (!TryGetManualPoint(out Vector3 position, out bool isChannel))
+            if (!TryGetManualPoint(out Vector3 position, out WireSurface channelSurface))
             {
                 Debug.Log("Kablo noktasi secilemedi. Kamera ve routing Z duzlemini kontrol edin.");
                 return;
             }
 
-            if (!manualRouter.TryCreateAnchor(position, startTerminal,
+            if (!manualRouter.TryCreateAnchor(position, channelSurface, startTerminal,
                 manualAnchors, CurrentUse45, out ManualWireAnchor anchor))
                 return;
 
@@ -170,7 +170,7 @@ public sealed class WireController : MonoBehaviour
                 manualRouter.BuildPreview(startTerminal, manualAnchors, null));
 
             Debug.Log($"Manuel kablo noktasi {manualAnchors.Count}: " +
-                $"{anchor.Position} | " + (isChannel ? "kanal" : "serbest duzlem"));
+                $"{anchor.Position} | " + (channelSurface != null ? "kanal ici" : "serbest duzlem"));
             return;
         }
 
@@ -355,8 +355,8 @@ public sealed class WireController : MonoBehaviour
 
         if (GuidedManualEnabled)
         {
-            if (TryGetManualPoint(out Vector3 position, out _) &&
-                manualRouter.TryCreateAnchor(position, startTerminal,
+            if (TryGetManualPoint(out Vector3 position, out WireSurface channelSurface) &&
+                manualRouter.TryCreateAnchor(position, channelSurface, startTerminal,
                     manualAnchors, CurrentUse45, out ManualWireAnchor anchor))
             {
                 HasValidRouteSurface = true;
@@ -391,10 +391,10 @@ public sealed class WireController : MonoBehaviour
     /// channel under the reticle, optionally intersect the routing XY plane.
     /// No bounds-based snapping, lane occupancy or forced channel direction.
     /// </summary>
-    private bool TryGetManualPoint(out Vector3 position, out bool isChannel)
+    private bool TryGetManualPoint(out Vector3 position, out WireSurface channelSurface)
     {
         position = default;
-        isChannel = false;
+        channelSurface = null;
 
         if (playerCamera == null || startTerminal == null || manualRouter == null)
             return false;
@@ -409,7 +409,7 @@ public sealed class WireController : MonoBehaviour
             if (surface != null && surface.isActiveAndEnabled)
             {
                 position = hit.point;
-                isChannel = true;
+                channelSurface = surface;
                 return true;
             }
         }

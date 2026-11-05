@@ -8,44 +8,58 @@ public enum ManualWireBendMode
 }
 
 /// <summary>
-/// A user-chosen endpoint. Corner preference and 45-degree style are captured
-/// when clicked, so later Tab/B presses never move previously committed bends.
+/// The exact player-selected XY waypoint, at the selected surface's Z depth.
+/// The turn choice is captured when clicked; future Tab/B changes cannot
+/// modify an already committed segment.
 /// </summary>
 public readonly struct ManualWireAnchor
 {
     public readonly Vector3 Position;
     public readonly bool HorizontalFirst;
     public readonly bool Use45DegreeCorner;
+    public readonly bool IsChannelAnchor;
 
     public ManualWireAnchor(Vector3 position, bool horizontalFirst,
-        bool use45DegreeCorner)
+        bool use45DegreeCorner, bool isChannelAnchor = false)
     {
         Position = position;
         HorizontalFirst = horizontalFirst;
         Use45DegreeCorner = use45DegreeCorner;
+        IsChannelAnchor = isChannelAnchor;
     }
 }
 
 /// <summary>
-/// v19.20.7.3: manual, exact-click wiring. No lane allocation, channel-center
-/// snapping, pathfinding, or collision-based routing. All route segments are
-/// horizontal, vertical, or an optional short 45-degree chamfer at an elbow.
+/// v19.20.7.5 - manual waypoints with a sloped channel entry and an optional
+/// orthogonal channel-to-terminal exit.
+/// The player chooses the XY route. WireSurface chooses the channel-bed Z.
+/// No lane reservation, auto pathfinding, or electrical logic changes.
 /// </summary>
 public sealed class WireManualRouter : MonoBehaviour
 {
     [Header("Manual routing controls")]
-    [Tooltip("Tab toggles which axis is drawn first for the NEXT segment.")]
     [SerializeField] private bool horizontalFirst = false;
-
-    [Tooltip("B toggles the default for NEXT segments; Shift temporarily inverts it.")]
     [SerializeField]
     private ManualWireBendMode bendMode =
         ManualWireBendMode.RightAngle90;
-
     [SerializeField, Min(0.001f)] private float chamferLength = 0.020f;
     [SerializeField, Min(0.0001f)] private float minWaypointSpacing = 0.003f;
 
-    [Header("Routing depth (world Z)")]
+    [Header("Terminal-to-channel slope")]
+    [Tooltip("Angle of the last XY segment when changing Z to enter or exit a tray.")]
+    [SerializeField, Range(10f, 80f)] private float entrySlopeAngle = 45f;
+    [Tooltip("Keep some of the last XY segment for a visible slope.")]
+    [SerializeField, Range(0.2f, 0.95f)] private float maxSlopeFraction = 0.85f;
+
+    [Header("Orthogonal channel-to-terminal exit")]
+    [Tooltip("After the last channel click, route up/down at 90 degrees, " +
+             "change depth, and enter the terminal along a short straight run.")]
+    [SerializeField] private bool useOrthogonalTerminalExit = true;
+    [Tooltip("Length of the final straight segment before entering the terminal " +
+             "(world units; 0.025 = 2.5 cm if 1 unit = 1 meter).")]
+    [SerializeField, Min(0.005f)] private float terminalStraightLength = 0.025f;
+
+    [Header("Free-space routing depth (world Z)")]
     [SerializeField, Min(0f)] private float frontOffset = 0.025f;
     [SerializeField] private bool frontIsNegativeZ = true;
     [SerializeField] private bool useFixedRoutingPlaneZ = false;
@@ -86,6 +100,7 @@ public sealed class WireManualRouter : MonoBehaviour
 
     public bool TryCreateAnchor(
         Vector3 clickedWorldPosition,
+        WireSurface surface,
         Terminal start,
         IReadOnlyList<ManualWireAnchor> committed,
         bool use45,
@@ -95,22 +110,29 @@ public sealed class WireManualRouter : MonoBehaviour
         if (start == null)
             return false;
 
-        float z = GetRoutingZ(start);
-        Vector3 position = new Vector3(
-            clickedWorldPosition.x, clickedWorldPosition.y, z);
+        Vector3 position;
+        if (surface != null)
+        {
+            if (!surface.TryGetRoutingPoint(clickedWorldPosition, out position))
+                return false;
+        }
+        else
+        {
+            position = new Vector3(clickedWorldPosition.x,
+                clickedWorldPosition.y, GetRoutingZ(start));
+        }
 
         Vector3 previous = committed != null && committed.Count > 0
             ? committed[committed.Count - 1].Position
-            : new Vector3(start.ConnectionPosition.x,
-                start.ConnectionPosition.y, z);
+            : start.ConnectionPosition;
 
-        // Only reject an accidental click on the SAME point. Never reject a
-        // point because a channel lane is occupied or the channel has turned.
-        if (Vector2.Distance(new Vector2(position.x, position.y),
-                new Vector2(previous.x, previous.y)) < minWaypointSpacing)
+        // Allow a second click at the same XY when it changes Z meaningfully;
+        // otherwise ignore duplicate waypoints.
+        if (Vector3.Distance(position, previous) < minWaypointSpacing)
             return false;
 
-        anchor = new ManualWireAnchor(position, horizontalFirst, use45);
+        anchor = new ManualWireAnchor(position, horizontalFirst, use45,
+            surface != null);
         return true;
     }
 
@@ -132,6 +154,7 @@ public sealed class WireManualRouter : MonoBehaviour
     {
         if (start == null || end == null || start == end)
             return null;
+
         return BuildRoute(start, end, committed, null,
             finalHorizontalFirst, finalUse45);
     }
@@ -147,47 +170,123 @@ public sealed class WireManualRouter : MonoBehaviour
         if (start == null)
             return null;
 
-        float z = GetRoutingZ(start);
-        Vector3 source = start.ConnectionPosition;
+        // Start at the actual terminal depth. Do not jump to a global plane.
         List<Vector3> points = new List<Vector3>();
-        AddPoint(points, source);
-        // Separate XY routing plane from terminal depth; no diagonal 3D line.
-        AddPoint(points, new Vector3(source.x, source.y, z));
+        AddPoint(points, start.ConnectionPosition);
 
         if (committed != null)
         {
             for (int i = 0; i < committed.Count; i++)
             {
-                ManualWireAnchor anchor = committed[i];
-                AddOrthogonalStep(points, anchor.Position,
-                    anchor.HorizontalFirst, anchor.Use45DegreeCorner);
+                ManualWireAnchor a = committed[i];
+                AddStep(points, a.Position,
+                    a.HorizontalFirst, a.Use45DegreeCorner);
             }
         }
 
         if (hovered.HasValue)
         {
-            ManualWireAnchor anchor = hovered.Value;
-            AddOrthogonalStep(points, anchor.Position,
-                anchor.HorizontalFirst, anchor.Use45DegreeCorner);
+            ManualWireAnchor a = hovered.Value;
+            AddStep(points, a.Position,
+                a.HorizontalFirst, a.Use45DegreeCorner);
         }
 
         if (end != null)
         {
-            Vector3 target = end.ConnectionPosition;
-            AddOrthogonalStep(points,
-                new Vector3(target.x, target.y, z),
-                finalHorizontalFirst, finalUse45);
-            AddPoint(points, target);
+            // Keep the existing sloped behavior for routes without a channel
+            // waypoint. For a channel exit, use the player's final channel
+            // waypoint and create an orthogonal terminal approach.
+            bool lastAnchorIsChannel = committed != null &&
+                committed.Count > 0 &&
+                committed[committed.Count - 1].IsChannelAnchor;
+
+            if (useOrthogonalTerminalExit && lastAnchorIsChannel)
+                AddOrthogonalTerminalExit(points, end.ConnectionPosition);
+            else
+                AddStep(points, end.ConnectionPosition,
+                    finalHorizontalFirst, finalUse45);
         }
 
-        // Wire.SetRoutePreview needs at least two points while starting.
         if (points.Count == 1)
             points.Add(points[0]);
         return points;
     }
 
-    private void AddOrthogonalStep(
-        List<Vector3> points, Vector3 destination,
+    /// <summary>
+    /// From the last user-selected channel point, travel horizontally to the
+    /// terminal's X, turn 90 degrees up/down, change Z depth at the end of
+    /// the rise, then enter the terminal on a short straight XY segment.
+    /// No automatic channel selection or lane snapping is introduced.
+    /// </summary>
+    private void AddOrthogonalTerminalExit(
+        List<Vector3> points, Vector3 terminalPosition)
+    {
+        if (points.Count == 0)
+        {
+            AddPoint(points, terminalPosition);
+            return;
+        }
+
+        Vector3 from = points[points.Count - 1];
+        float verticalDistance = terminalPosition.y - from.y;
+        float horizontalDistance = terminalPosition.x - from.x;
+
+        // Normal electrical-panel case: the channel is above or below the
+        // terminal. The final visible approach is vertical (Y axis).
+        if (Mathf.Abs(verticalDistance) >= 0.015f)
+        {
+            float direction = Mathf.Sign(verticalDistance);
+            float straight = Mathf.Min(terminalStraightLength,
+                Mathf.Abs(verticalDistance) * 0.40f);
+
+            // Stay at channel-bed depth until directly in line with the
+            // destination terminal. This creates a 90-degree XY corner.
+            AddPoint(points, new Vector3(
+                terminalPosition.x, from.y, from.z));
+
+            Vector3 beforeTerminal = new Vector3(
+                terminalPosition.x,
+                terminalPosition.y - direction * straight,
+                from.z);
+            AddPoint(points, beforeTerminal);
+
+            // Rise from channel-bed Z to the actual terminal connection Z.
+            AddPoint(points, new Vector3(
+                beforeTerminal.x, beforeTerminal.y, terminalPosition.z));
+
+            // Last segment is perfectly straight into the terminal.
+            AddPoint(points, terminalPosition);
+            return;
+        }
+
+        // If the terminal is level with the last channel waypoint, make
+        // the last visible approach horizontal instead of a tiny Y kink.
+        if (Mathf.Abs(horizontalDistance) >= 0.015f)
+        {
+            float direction = Mathf.Sign(horizontalDistance);
+            float straight = Mathf.Min(terminalStraightLength,
+                Mathf.Abs(horizontalDistance) * 0.40f);
+            Vector3 beforeTerminal = new Vector3(
+                terminalPosition.x - direction * straight,
+                terminalPosition.y,
+                from.z);
+
+            AddPoint(points, new Vector3(
+                from.x, terminalPosition.y, from.z));
+            AddPoint(points, beforeTerminal);
+            AddPoint(points, new Vector3(
+                beforeTerminal.x, beforeTerminal.y, terminalPosition.z));
+            AddPoint(points, terminalPosition);
+            return;
+        }
+
+        // Very close terminals: no room for a visible orthogonal exit.
+        AddPoint(points, new Vector3(
+            terminalPosition.x, terminalPosition.y, from.z));
+        AddPoint(points, terminalPosition);
+    }
+
+    private void AddStep(List<Vector3> points, Vector3 destination,
         bool horizontalBeforeVertical, bool use45)
     {
         if (points.Count == 0)
@@ -197,45 +296,67 @@ public sealed class WireManualRouter : MonoBehaviour
         }
 
         Vector3 from = points[points.Count - 1];
-        // All manual anchors use the same routing Z. Defensive depth handling.
-        if (Mathf.Abs(from.z - destination.z) > 0.0001f)
-        {
-            AddPoint(points, new Vector3(from.x, from.y, destination.z));
-            from = points[points.Count - 1];
-        }
-
         float dx = destination.x - from.x;
         float dy = destination.y - from.y;
-        if (Mathf.Abs(dx) < 0.0001f || Mathf.Abs(dy) < 0.0001f)
+        float dz = destination.z - from.z;
+        Vector3 flatTarget = new Vector3(destination.x, destination.y, from.z);
+
+        if (Mathf.Abs(dx) > 0.0001f && Mathf.Abs(dy) > 0.0001f)
+        {
+            Vector3 corner = horizontalBeforeVertical
+                ? new Vector3(destination.x, from.y, from.z)
+                : new Vector3(from.x, destination.y, from.z);
+
+            if (use45)
+            {
+                float cut = Mathf.Min(chamferLength,
+                    Mathf.Min(Mathf.Abs(dx), Mathf.Abs(dy)) * 0.35f);
+                if (cut >= 0.001f)
+                {
+                    Vector3 before = corner -
+                        (corner - from).normalized * cut;
+                    Vector3 after = corner +
+                        (flatTarget - corner).normalized * cut;
+                    AddPoint(points, before);
+                    AddPoint(points, after);
+                }
+                else
+                {
+                    AddPoint(points, corner);
+                }
+            }
+            else
+            {
+                AddPoint(points, corner);
+            }
+        }
+
+        if (Mathf.Abs(dz) < 0.0001f)
         {
             AddPoint(points, destination);
             return;
         }
 
-        // The clicked point is ALWAYS the endpoint, not the snapped channel
-        // center. Tab only changes the intermediate elbow, never the endpoint.
-        Vector3 corner = horizontalBeforeVertical
-            ? new Vector3(destination.x, from.y, destination.z)
-            : new Vector3(from.x, destination.y, destination.z);
+        // Slope along the final XY approach, rather than a sudden Z-only
+        // segment at the terminal or at the channel click.
+        Vector3 last = points[points.Count - 1];
+        float lastXYLength = Vector2.Distance(
+            new Vector2(last.x, last.y),
+            new Vector2(destination.x, destination.y));
 
-        if (use45)
+        if (lastXYLength > 0.003f)
         {
-            // Bevel ONLY this segment's generated elbow. Previously clicked
-            // anchors stay fixed when the user changes 45/90 for the next step.
-            float cut = Mathf.Min(chamferLength,
-                Mathf.Min(Mathf.Abs(dx), Mathf.Abs(dy)) * 0.35f);
-            if (cut >= 0.001f)
+            float radians = entrySlopeAngle * Mathf.Deg2Rad;
+            float idealRun = Mathf.Abs(dz) / Mathf.Tan(radians);
+            float run = Mathf.Min(idealRun, lastXYLength * maxSlopeFraction);
+            if (run > 0.001f)
             {
-                Vector3 before = corner - (corner - from).normalized * cut;
-                Vector3 after = corner + (destination - corner).normalized * cut;
-                AddPoint(points, before);
-                AddPoint(points, after);
-                AddPoint(points, destination);
-                return;
+                Vector3 approach = flatTarget -
+                    (flatTarget - last).normalized * run;
+                AddPoint(points, approach);
             }
         }
 
-        AddPoint(points, corner);
         AddPoint(points, destination);
     }
 

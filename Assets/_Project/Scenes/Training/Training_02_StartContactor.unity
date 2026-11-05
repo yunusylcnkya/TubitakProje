@@ -1678,6 +1678,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1356e26f3103b4e836bae7c1bd07b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConnectionManager
+  electricalSimulation: {fileID: 0}
+  validationMode: 0
 --- !u!114 &888505118
 MonoBehaviour:
   m_ObjectHideFlags: 0

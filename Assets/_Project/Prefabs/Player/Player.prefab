@@ -149,6 +149,7 @@ MonoBehaviour:
   useAutoRouting: 0
   manualRouter: {fileID: 8530087540136623898}
   useGuidedManualRouting: 1
+  allowFreeSpaceWaypoints: 1
 --- !u!114 &4467360124507826289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,14 +220,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03d02ee2d6575144b334d71910cf0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WireManualRouter
+  horizontalFirst: 0
   bendMode: 0
-  terminalStraightLength: 0.045
   chamferLength: 0.02
+  minWaypointSpacing: 0.003
+  entrySlopeAngle: 45
+  maxSlopeFraction: 0.75
+  useOrthogonalTerminalExit: 1
+  terminalStraightLength: 0.045
   frontOffset: 0.025
   frontIsNegativeZ: 1
-  lanesPerChannel: 3
-  laneSpacing: 0.022
-  laneEdgeMargin: 0.003
+  useFixedRoutingPlaneZ: 1
+  fixedRoutingPlaneZ: 0
 --- !u!1001 &261268297220738201
 PrefabInstance:
   m_ObjectHideFlags: 0
