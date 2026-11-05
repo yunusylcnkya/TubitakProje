@@ -61,6 +61,7 @@ GameObject:
   - component: {fileID: 284504096223259825}
   - component: {fileID: 2903726546192464556}
   - component: {fileID: 8530087540136623898}
+  - component: {fileID: 7145038759771011506}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -149,7 +150,7 @@ MonoBehaviour:
   useAutoRouting: 0
   manualRouter: {fileID: 8530087540136623898}
   useGuidedManualRouting: 1
-  allowFreeSpaceWaypoints: 1
+  allowFreeSpaceWaypoints: 0
 --- !u!114 &4467360124507826289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,18 +221,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03d02ee2d6575144b334d71910cf0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WireManualRouter
+  channelSpacingGuide: {fileID: 0}
   horizontalFirst: 0
   bendMode: 0
   chamferLength: 0.02
   minWaypointSpacing: 0.003
   entrySlopeAngle: 45
-  maxSlopeFraction: 0.75
+  maxSlopeFraction: 0.85
+  useOrthogonalTerminalEntry: 1
   useOrthogonalTerminalExit: 1
-  terminalStraightLength: 0.045
+  terminalStraightLength: 0.2
   frontOffset: 0.025
   frontIsNegativeZ: 1
   useFixedRoutingPlaneZ: 1
   fixedRoutingPlaneZ: 0
+--- !u!114 &7145038759771011506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104980498172356557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55114942b765d1341b26b3bc021074bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WireChannelSpacingGuide
+  enableSpacing: 1
+  connectionManager: {fileID: 0}
+  minimumSeparation: 0.022
+  candidateStep: 0.022
+  searchSteps: 3
+  sideWallMargin: 0.008
+  depthTolerance: 0.018
+  parallelSegmentMinLength: 0.015
+  preferPreviousTrack: 1
+  previousTrackTolerance: 0.01
+  logWhenNoRoom: 0
 --- !u!1001 &261268297220738201
 PrefabInstance:
   m_ObjectHideFlags: 0

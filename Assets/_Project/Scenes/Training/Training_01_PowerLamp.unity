@@ -1930,6 +1930,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5326584eecb8e5b429b89e4a8fd16141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractor
+--- !u!114 &1084665635 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7145038759771011506, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+  m_PrefabInstance: {fileID: 4173856005777411777}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55114942b765d1341b26b3bc021074bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WireChannelSpacingGuide
 --- !u!1 &1112561992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3464,34 +3475,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7145038759771011506, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: connectionManager
+      value: 
+      objectReference: {fileID: 888505117}
     - target: {fileID: 8530087540136623898, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
-      propertyPath: entrySlopeAngle
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 8530087540136623898, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
-      propertyPath: maxSlopeFraction
-      value: 0.85
-      objectReference: {fileID: 0}
+      propertyPath: channelSpacingGuide
+      value: 
+      objectReference: {fileID: 1084665635}
     - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: feedbackUI
       value: 
       objectReference: {fileID: 56549986}
     - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
-      propertyPath: useAutoRouting
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: connectionManager
       value: 
       objectReference: {fileID: 888505117}
-    - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
-      propertyPath: useGuidedManualRouting
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
-      propertyPath: allowFreeSpaceWaypoints
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

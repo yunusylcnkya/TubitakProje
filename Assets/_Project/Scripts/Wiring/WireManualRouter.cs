@@ -37,9 +37,13 @@ public readonly struct ManualWireAnchor
 /// </summary>
 public sealed class WireManualRouter : MonoBehaviour
 {
+    [Header("Optional channel spacing - v19.20.7.7")]
+    [SerializeField]
+    private WireChannelSpacingGuide channelSpacingGuide;
     [Header("Manual routing controls")]
     [SerializeField] private bool horizontalFirst = false;
-    [SerializeField] private ManualWireBendMode bendMode =
+    [SerializeField]
+    private ManualWireBendMode bendMode =
         ManualWireBendMode.RightAngle90;
     [SerializeField, Min(0.001f)] private float chamferLength = 0.020f;
     [SerializeField, Min(0.0001f)] private float minWaypointSpacing = 0.003f;
@@ -126,7 +130,13 @@ public sealed class WireManualRouter : MonoBehaviour
             position = new Vector3(clickedWorldPosition.x,
                 clickedWorldPosition.y, GetRoutingZ(start));
         }
-
+        if (surface != null &&
+            channelSpacingGuide != null &&
+            channelSpacingGuide.isActiveAndEnabled)
+        {
+            position = channelSpacingGuide.AdjustPoint(
+                surface, position, committed);
+        }
         Vector3 previous = committed != null && committed.Count > 0
             ? committed[committed.Count - 1].Position
             : start.ConnectionPosition;
