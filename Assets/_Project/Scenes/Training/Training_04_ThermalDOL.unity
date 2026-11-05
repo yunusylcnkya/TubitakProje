@@ -4481,6 +4481,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8530087540136623898, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: lanesPerChannel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8530087540136623898, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: frontIsNegativeZ
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: feedbackUI
       value: 
@@ -4489,6 +4497,10 @@ PrefabInstance:
       propertyPath: connectionManager
       value: 
       objectReference: {fileID: 888505117}
+    - target: {fileID: 9018736475376402616, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: useGuidedManualRouting
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

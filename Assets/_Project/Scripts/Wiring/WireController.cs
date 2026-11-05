@@ -1,83 +1,83 @@
-
+using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class WireController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField]
-    private Camera playerCamera;
-
-    [SerializeField]
-    private TerminalSelector terminalSelector;
-
-    [SerializeField]
-    private EquipmentHolder equipmentHolder;
-
-    [SerializeField]
-    private ConnectionManager connectionManager;
-
-    [SerializeField]
-    private ConnectionFeedbackUI feedbackUI;
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private TerminalSelector terminalSelector;
+    [SerializeField] private EquipmentHolder equipmentHolder;
+    [SerializeField] private ConnectionManager connectionManager;
+    [SerializeField] private ConnectionFeedbackUI feedbackUI;
 
     [Header("Wire")]
-    [SerializeField]
-    private Wire wirePrefab;
-
-    [SerializeField]
-    private WireStyleLibrary styleLibrary;
+    [SerializeField] private Wire wirePrefab;
+    [SerializeField] private WireStyleLibrary styleLibrary;
 
     [Header("Route Settings")]
-    [SerializeField, Min(0.1f)]
-    private float routeDistance = 5f;
+    [SerializeField, Min(0.1f)] private float routeDistance = 5f;
+    [SerializeField] private LayerMask wireSurfaceMask;
 
-    [SerializeField]
-    private LayerMask wireSurfaceMask;
+    [Header("Automatic Routing - optional")]
+    [SerializeField] private WireAutoRouter autoRouter;
+    [SerializeField] private bool useAutoRouting = false;
+
+    [Header("Guided Manual Routing - recommended")]
+    [SerializeField] private WireManualRouter manualRouter;
+    [SerializeField] private bool useGuidedManualRouting = true;
 
     private Terminal startTerminal;
     private Wire activeWire;
+    private Terminal previewTerminal;
+    private List<Vector3> previewRoute;
+    private readonly List<ManualWireAnchor> manualAnchors = new List<ManualWireAnchor>();
 
     public Terminal StartTerminal => startTerminal;
     public bool IsWiring => activeWire != null;
+    public bool HasValidRouteSurface { get; private set; }
 
-    public bool HasValidRouteSurface
+    private bool AutoRoutingEnabled => useAutoRouting && autoRouter != null;
+    private bool GuidedManualEnabled => !AutoRoutingEnabled &&
+        useGuidedManualRouting && manualRouter != null;
+
+    private void Awake()
     {
-        get;
-        private set;
+        if (autoRouter == null)
+            autoRouter = GetComponent<WireAutoRouter>();
+        if (manualRouter == null)
+            manualRouter = GetComponent<WireManualRouter>();
     }
 
     private void Update()
     {
         if (IsWiring)
-        {
             UpdateWirePreview();
-        }
-
         HandleInput();
     }
 
     private void HandleInput()
     {
-        if (equipmentHolder != null &&
-            equipmentHolder.HasEquipment)
+        if (equipmentHolder != null && equipmentHolder.HasEquipment)
+            return;
+
+        if (IsWiring && GuidedManualEnabled &&
+            Input.GetKeyDown(KeyCode.Backspace))
         {
+            UndoLastWaypoint();
             return;
         }
 
         if (Input.GetMouseButtonDown(0))
-        {
             HandleLeftClick();
-        }
 
         if (Input.GetMouseButtonDown(1))
-        {
             CancelWire();
-        }
     }
 
     private void HandleLeftClick()
     {
-        Terminal terminal =
-            terminalSelector.CurrentTerminal;
+        Terminal terminal = terminalSelector != null
+            ? terminalSelector.CurrentTerminal : null;
 
         if (!IsWiring)
         {
@@ -94,10 +94,6 @@ public sealed class WireController : MonoBehaviour
         TryAddRoutePoint();
     }
 
-    // =========================================
-    // START WIRE
-    // =========================================
-
     private void TryStartWire(Terminal terminal)
     {
         if (terminal == null)
@@ -105,256 +101,172 @@ public sealed class WireController : MonoBehaviour
 
         if (!terminal.IsAvailableForWiring)
         {
-            Debug.Log(
-                $"Terminal kullanılamıyor: {terminal.DisplayName}"
-            );
+            Debug.Log($"Terminal kullanılamıyor: {terminal.DisplayName}");
             return;
         }
 
-        if (wirePrefab == null)
+        if (wirePrefab == null || styleLibrary == null || connectionManager == null)
         {
-            Debug.LogError("Wire Prefab atanmadı.");
+            Debug.LogError("WireController: Wire Prefab, Style Library veya ConnectionManager eksik.");
             return;
         }
 
-        if (styleLibrary == null)
-        {
-            Debug.LogError("Wire Style Library atanmadı.");
-            return;
-        }
-
-        if (connectionManager == null)
-        {
-            Debug.LogError("ConnectionManager atanmadı.");
-            return;
-        }
-
-        WireStyle style =
-            styleLibrary.GetStyle(terminal.LineType);
-
+        WireStyle style = styleLibrary.GetStyle(terminal.LineType);
         if (style == null)
         {
-            Debug.LogError(
-                $"WireStyle bulunamadı: {terminal.LineType}"
-            );
+            Debug.LogError($"WireStyle bulunamadı: {terminal.LineType}");
             return;
         }
 
         startTerminal = terminal;
-
         activeWire = Instantiate(wirePrefab);
+        activeWire.Begin(startTerminal, style);
 
-        activeWire.Begin(
-            startTerminal,
-            style
-        );
+        previewTerminal = null;
+        previewRoute = null;
+        manualAnchors.Clear();
 
-        Debug.Log(
-            $"Kablo başladı | " +
-            $"Terminal: {startTerminal.TerminalId} | " +
-            $"Hat: {startTerminal.LineType}"
-        );
+        Debug.Log($"Kablo başladı | Terminal: {startTerminal.TerminalId} | Hat: {startTerminal.LineType}");
     }
-
-    // =========================================
-    // ADD ROUTE POINT
-    // =========================================
 
     private void TryAddRoutePoint()
     {
-        if (!IsWiring)
+        if (!IsWiring || AutoRoutingEnabled)
             return;
 
-        Ray ray = new Ray(
-            playerCamera.transform.position,
-            playerCamera.transform.forward
-        );
-
-        if (!Physics.Raycast(
-            ray,
-            out RaycastHit hit,
-            routeDistance,
-            wireSurfaceMask,
-            QueryTriggerInteraction.Ignore))
+        if (!TryGetRouteSurface(out RaycastHit hit, out WireSurface surface))
         {
-            Debug.Log(
-                "Bu yüzeye kablo noktası eklenemez."
-            );
+            Debug.Log("Bu yüzeye kablo noktası eklenemez.");
             return;
         }
 
-        WireSurface surface =
-            hit.collider.GetComponentInParent<WireSurface>();
-
-        if (surface == null)
+        if (GuidedManualEnabled)
         {
-            Debug.Log(
-                "Geçerli WireSurface bulunamadı."
-            );
+            if (!manualRouter.TryCreateAnchor(surface, hit.point, startTerminal,
+                connectionManager.Connections, manualAnchors, out ManualWireAnchor anchor))
+            {
+                Debug.LogWarning("Kanalda uygun boş kablo şeridi yok veya WireSurface/BoxCollider eksik.");
+                return;
+            }
+
+            if (manualAnchors.Count > 0 &&
+                Vector3.Distance(manualAnchors[manualAnchors.Count - 1].Position,
+                    anchor.Position) < 0.005f)
+                return;
+
+            manualAnchors.Add(anchor);
+            activeWire.SetRoutePreview(
+                manualRouter.BuildPreview(startTerminal, manualAnchors, null));
+            Debug.Log($"Manuel güzergâh noktası {manualAnchors.Count}: {surface.name}");
             return;
         }
 
+        // Legacy free-point mode: kept for backward compatibility.
         activeWire.AddRoutePoint(hit.point);
-
-        Debug.Log(
-            $"Kablo noktası eklendi: {surface.name}"
-        );
+        Debug.Log($"Serbest kablo noktası eklendi: {surface.name}");
     }
 
-    // =========================================
-    // COMPLETE WIRE
-    // =========================================
-
-    private void TryCompleteWire(
-        Terminal targetTerminal)
+    private void TryCompleteWire(Terminal targetTerminal)
     {
         if (!IsWiring || targetTerminal == null)
             return;
 
         if (targetTerminal == startTerminal)
         {
-            Debug.Log(
-                "Kablo aynı terminale bağlanamaz."
-            );
+            Debug.Log("Kablo aynı terminale bağlanamaz.");
             return;
         }
-
 
         if (!targetTerminal.IsAvailableForWiring)
         {
-            ConnectionValidationResult result =
-                new ConnectionValidationResult(
-                    ConnectionIssueSeverity.Warning,
-                    $"'{targetTerminal.DisplayName}' terminali " +
-                    "kullanılamıyor. Bağlantı kapasitesini " +
-                    "ve ekipmanın yerleşim durumunu kontrol edin.",
-                    false
-                );
-
-            ShowFeedback(result);
+            ShowFeedback(new ConnectionValidationResult(
+                ConnectionIssueSeverity.Warning,
+                $"'{targetTerminal.DisplayName}' terminali kullanılamıyor. " +
+                "Bağlantı kapasitesini ve ekipmanın yerleşim durumunu kontrol edin.",
+                false));
             return;
         }
 
+        if (GuidedManualEnabled && manualAnchors.Count == 0)
+        {
+            Debug.LogWarning("Önce kablo kanalına en az bir kez tıklayarak güzergâh seçin.");
+            return;
+        }
 
-        // 1. Electrical validation.
-        ConnectionValidationResult validation =
-            connectionManager.ValidateConnection(
-                startTerminal,
-                targetTerminal
-            );
-        Debug.Log(
-            $"[WIRE VALIDATION] " +
-            $"Start: {startTerminal.LineType} | " +
-            $"Target: {targetTerminal.LineType} | " +
-            $"Severity: {validation.Severity} | " +
-            $"Allowed: {validation.IsAllowed} | " +
-            $"Message: {validation.Message}",
-            this
-        );
+        ConnectionValidationResult validation = connectionManager.ValidateConnection(
+            startTerminal, targetTerminal);
+
+        Debug.Log($"[WIRE VALIDATION] Start: {startTerminal.LineType} | " +
+            $"Target: {targetTerminal.LineType} | Severity: {validation.Severity} | " +
+            $"Allowed: {validation.IsAllowed} | Message: {validation.Message}", this);
+
         if (!validation.IsAllowed)
         {
             ShowFeedback(validation);
-
-            Debug.LogWarning(
-                $"Bağlantı engellendi: {validation.Message}"
-            );
-
-            // Kablo preview olarak kalır.
-            // Oyuncu farklı terminal seçebilir.
+            Debug.LogWarning($"Bağlantı engellendi: {validation.Message}");
             return;
         }
 
-        // 2. Remember previous short-circuit state.
-        ElectricalSimulationSystem simulation =
-            connectionManager.ElectricalSimulation;
+        ElectricalSimulationSystem simulation = connectionManager.ElectricalSimulation;
+        bool hadShortCircuit = simulation != null &&
+            simulation.LastSnapshot != null && simulation.LastSnapshot.HasShortCircuit;
 
-        bool hadShortCircuit =
-            simulation != null &&
-            simulation.LastSnapshot != null &&
-            simulation.LastSnapshot.HasShortCircuit;
-
-        // 3. Complete wire geometry.
-        if (!activeWire.Complete(targetTerminal))
+        IReadOnlyList<Vector3> plannedRoute = null;
+        if (AutoRoutingEnabled)
         {
-            Debug.LogWarning(
-                "Wire tamamlanamadı."
-            );
+            plannedRoute = targetTerminal == previewTerminal && previewRoute != null
+                ? previewRoute
+                : autoRouter.BuildRoute(startTerminal, targetTerminal,
+                    connectionManager.Connections);
+        }
+        else if (GuidedManualEnabled)
+        {
+            plannedRoute = manualRouter.BuildCompletionRoute(
+                startTerminal, targetTerminal, manualAnchors);
+            if (plannedRoute == null || plannedRoute.Count < 2)
+            {
+                Debug.LogWarning("Manuel kablo güzergâhı oluşturulamadı.");
+                return;
+            }
+        }
+
+        if (!activeWire.Complete(targetTerminal, plannedRoute))
+        {
+            Debug.LogWarning("Wire tamamlanamadı.");
             return;
         }
 
-        // 4. Connect terminal references.
-        bool startConnected =
-            startTerminal.TryConnect(activeWire);
-
-        bool endConnected =
-            targetTerminal.TryConnect(activeWire);
-
+        bool startConnected = startTerminal.TryConnect(activeWire);
+        bool endConnected = targetTerminal.TryConnect(activeWire);
         if (!startConnected || !endConnected)
         {
-            RollbackConnection(
-                targetTerminal,
-                startConnected,
-                endConnected
-            );
-
-            Debug.LogWarning(
-                "Terminal bağlantısı tamamlanamadı."
-            );
-
+            RollbackConnection(targetTerminal, startConnected, endConnected);
+            Debug.LogWarning("Terminal bağlantısı tamamlanamadı.");
             return;
         }
 
-        // 5. Register in connection manager.
-        bool registered =
-            connectionManager.RegisterConnection(
-                startTerminal,
-                targetTerminal,
-                activeWire
-            );
-
+        bool registered = connectionManager.RegisterConnection(
+            startTerminal, targetTerminal, activeWire);
         if (!registered)
         {
-            RollbackConnection(
-                targetTerminal,
-                true,
-                true
-            );
-
-            Debug.LogWarning(
-                "ConnectionManager bağlantıyı kaydetmedi."
-            );
-
+            RollbackConnection(targetTerminal, true, true);
+            Debug.LogWarning("ConnectionManager bağlantıyı kaydetmedi.");
             return;
         }
 
-        Debug.Log(
-            $"Bağlantı tamamlandı | " +
-            $"{startTerminal.TerminalId} -> " +
-            $"{targetTerminal.TerminalId}"
-        );
+        Debug.Log($"Bağlantı tamamlandı | {startTerminal.TerminalId} -> " +
+            $"{targetTerminal.TerminalId}");
 
-        // 6. Inspect resulting simulation state.
-        bool newShortCircuit =
-            simulation != null &&
-            simulation.LastSnapshot != null &&
-            simulation.LastSnapshot.HasShortCircuit;
+        bool newShortCircuit = simulation != null &&
+            simulation.LastSnapshot != null && simulation.LastSnapshot.HasShortCircuit;
 
         if (!hadShortCircuit && newShortCircuit)
         {
-            string message =
-                validation.Severity == ConnectionIssueSeverity.Danger
-                    ? validation.Message +
-                      " Simülasyon kısa devre algıladı."
-                    : "Yeni bağlantı sonrasında " +
-                      "simülasyon kısa devre algıladı.";
-
-            ShowFeedback(
-                new ConnectionValidationResult(
-                    ConnectionIssueSeverity.Danger,
-                    message,
-                    true
-                )
-            );
+            string message = validation.Severity == ConnectionIssueSeverity.Danger
+                ? validation.Message + " Simülasyon kısa devre algıladı."
+                : "Yeni bağlantı sonrasında simülasyon kısa devre algıladı.";
+            ShowFeedback(new ConnectionValidationResult(
+                ConnectionIssueSeverity.Danger, message, true));
         }
         else
         {
@@ -364,56 +276,29 @@ public sealed class WireController : MonoBehaviour
         ResetWiringState();
     }
 
-    // =========================================
-    // ROLLBACK
-    // =========================================
-
-    private void RollbackConnection(
-        Terminal targetTerminal,
-        bool startConnected,
-        bool endConnected)
+    private void RollbackConnection(Terminal targetTerminal,
+        bool startConnected, bool endConnected)
     {
         if (activeWire != null)
         {
             if (startConnected && startTerminal != null)
-            {
                 startTerminal.Disconnect(activeWire);
-            }
-
             if (endConnected && targetTerminal != null)
-            {
                 targetTerminal.Disconnect(activeWire);
-            }
-
             Destroy(activeWire.gameObject);
         }
-
         ResetWiringState();
     }
 
-    // =========================================
-    // FEEDBACK
-    // =========================================
-
-    private void ShowFeedback(
-        ConnectionValidationResult result)
+    private void ShowFeedback(ConnectionValidationResult result)
     {
         if (result.Severity == ConnectionIssueSeverity.None)
             return;
-
         if (feedbackUI != null)
-        {
             feedbackUI.Show(result);
-        }
         else
-        {
             Debug.LogWarning(result.Message);
-        }
     }
-
-    // =========================================
-    // PREVIEW
-    // =========================================
 
     private void UpdateWirePreview()
     {
@@ -421,59 +306,106 @@ public sealed class WireController : MonoBehaviour
             return;
 
         HasValidRouteSurface = false;
+        Terminal terminal = terminalSelector != null
+            ? terminalSelector.CurrentTerminal : null;
 
-        Terminal terminal =
-            terminalSelector.CurrentTerminal;
-
-        if (terminal != null &&
-            terminal != startTerminal)
+        if (terminal != null && terminal != startTerminal)
         {
-            activeWire.UpdatePreview(
-                terminal.ConnectionPosition
-            );
-
+            if (AutoRoutingEnabled)
+            {
+                if (previewTerminal != terminal)
+                {
+                    previewRoute = autoRouter.BuildRoute(startTerminal,
+                        terminal, connectionManager.Connections);
+                    previewTerminal = terminal;
+                }
+                if (previewRoute != null)
+                    activeWire.SetRoutePreview(previewRoute);
+            }
+            else if (GuidedManualEnabled)
+            {
+                List<Vector3> path = manualRouter.BuildCompletionRoute(
+                    startTerminal, terminal, manualAnchors);
+                if (path != null)
+                    activeWire.SetRoutePreview(path);
+            }
+            else
+            {
+                activeWire.UpdatePreview(terminal.ConnectionPosition);
+            }
             return;
         }
 
-        Ray ray = new Ray(
-            playerCamera.transform.position,
-            playerCamera.transform.forward
-        );
+        previewTerminal = null;
+        previewRoute = null;
 
-        if (Physics.Raycast(
-            ray,
-            out RaycastHit hit,
-            routeDistance,
-            wireSurfaceMask,
-            QueryTriggerInteraction.Ignore))
+        if (GuidedManualEnabled)
+        {
+            if (TryGetRouteSurface(out RaycastHit hit, out WireSurface surface) &&
+                manualRouter.TryCreateAnchor(surface, hit.point, startTerminal,
+                    connectionManager.Connections, manualAnchors, out ManualWireAnchor anchor))
+            {
+                HasValidRouteSurface = true;
+                activeWire.SetRoutePreview(
+                    manualRouter.BuildPreview(startTerminal, manualAnchors, anchor));
+            }
+            else
+            {
+                activeWire.SetRoutePreview(
+                    manualRouter.BuildPreview(startTerminal, manualAnchors, null));
+            }
+            return;
+        }
+
+        Ray ray = new Ray(playerCamera.transform.position,
+            playerCamera.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit freeHit, routeDistance,
+            wireSurfaceMask, QueryTriggerInteraction.Ignore))
         {
             HasValidRouteSurface = true;
-
-            activeWire.UpdatePreview(hit.point);
+            activeWire.UpdatePreview(freeHit.point);
             return;
         }
 
-        Vector3 fallbackPosition =
-            playerCamera.transform.position +
-            playerCamera.transform.forward *
-            routeDistance;
-
+        Vector3 fallbackPosition = playerCamera.transform.position +
+            playerCamera.transform.forward * routeDistance;
         activeWire.UpdatePreview(fallbackPosition);
     }
 
-    // =========================================
-    // CANCEL
-    // =========================================
+    private bool TryGetRouteSurface(out RaycastHit hit, out WireSurface surface)
+    {
+        hit = default;
+        surface = null;
+        if (playerCamera == null)
+            return false;
+
+        Ray ray = new Ray(playerCamera.transform.position,
+            playerCamera.transform.forward);
+        if (!Physics.Raycast(ray, out hit, routeDistance,
+            wireSurfaceMask, QueryTriggerInteraction.Ignore))
+            return false;
+
+        surface = hit.collider.GetComponentInParent<WireSurface>();
+        return surface != null && surface.isActiveAndEnabled;
+    }
+
+    private void UndoLastWaypoint()
+    {
+        if (!GuidedManualEnabled || manualAnchors.Count == 0)
+            return;
+
+        manualAnchors.RemoveAt(manualAnchors.Count - 1);
+        activeWire.SetRoutePreview(
+            manualRouter.BuildPreview(startTerminal, manualAnchors, null));
+        Debug.Log($"Son kablo noktası geri alındı. Kalan: {manualAnchors.Count}");
+    }
 
     private void CancelWire()
     {
         if (!IsWiring)
             return;
-
         Destroy(activeWire.gameObject);
-
         ResetWiringState();
-
         Debug.Log("Kablo işlemi iptal edildi.");
     }
 
@@ -481,6 +413,9 @@ public sealed class WireController : MonoBehaviour
     {
         activeWire = null;
         startTerminal = null;
+        previewTerminal = null;
+        previewRoute = null;
+        manualAnchors.Clear();
         HasValidRouteSurface = false;
     }
 }

@@ -59,6 +59,8 @@ GameObject:
   - component: {fileID: 9018736475376402616}
   - component: {fileID: 4467360124507826289}
   - component: {fileID: 284504096223259825}
+  - component: {fileID: 2903726546192464556}
+  - component: {fileID: 8530087540136623898}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -136,12 +138,17 @@ MonoBehaviour:
   terminalSelector: {fileID: 8154251085487760527}
   equipmentHolder: {fileID: 6093631315542694512}
   connectionManager: {fileID: 0}
+  feedbackUI: {fileID: 0}
   wirePrefab: {fileID: 7791407630965083030, guid: 31af3b7374bec06499dbed2548a50d7e, type: 3}
   styleLibrary: {fileID: 11400000, guid: 599df374a1ea39f42a8605be46f636b2, type: 2}
   routeDistance: 5
   wireSurfaceMask:
     serializedVersion: 2
     m_Bits: 256
+  autoRouter: {fileID: 2903726546192464556}
+  useAutoRouting: 0
+  manualRouter: {fileID: 8530087540136623898}
+  useGuidedManualRouting: 1
 --- !u!114 &4467360124507826289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +187,46 @@ MonoBehaviour:
   wireController: {fileID: 9018736475376402616}
   wireRemovalController: {fileID: 4467360124507826289}
   equipmentHolder: {fileID: 6093631315542694512}
+--- !u!114 &2903726546192464556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104980498172356557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a190aa3f3b7cae4484722779a0b4d2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WireAutoRouter
+  bendMode: 0
+  terminalStraightLength: 0.045
+  chamferLength: 0.025
+  laneSpacing: 0.02
+  lanesPerChannel: 3
+  frontOffset: 0.025
+  depthLayerSpacing: 0.02
+  frontIsNegativeZ: 0
+--- !u!114 &8530087540136623898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104980498172356557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03d02ee2d6575144b334d71910cf0ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WireManualRouter
+  bendMode: 0
+  terminalStraightLength: 0.045
+  chamferLength: 0.02
+  frontOffset: 0.025
+  frontIsNegativeZ: 1
+  lanesPerChannel: 3
+  laneSpacing: 0.022
+  laneEdgeMargin: 0.003
 --- !u!1001 &261268297220738201
 PrefabInstance:
   m_ObjectHideFlags: 0
