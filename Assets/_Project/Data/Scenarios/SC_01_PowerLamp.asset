@@ -13,41 +13,143 @@ MonoBehaviour:
   m_Name: SC_01_PowerLamp
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
   scenarioId: SCENARIO_01_POWER_LAMP
-  displayName: 24V DC Lamba Devresi
-  description: "24V DC g\xFC\xE7 kayna\u011F\u0131 kullan\u0131larak\nbir sinyal lambas\u0131n\u0131n do\u011Fru polarite\nile beslenmesini \xF6\u011Freten ba\u015Flang\u0131\xE7 temrini."
+  displayName: "Temrin 01 - Sigortal\u0131 24V DC Sinyal Lambas\u0131"
+  description: "AC L1/N/PE giri\u015fli 24V DC g\u00fc\u00e7 kayna\u011f\u0131, F1 kontrol sigortas\u0131 ve DC sinyal lambas\u0131n\u0131 yerle\u015ftirme ve do\u011fru elektriksel ba\u011flant\u0131 kurma temrini. Son ad\u0131mda PSU ve F1 a\u00e7/kapa i\u015flemlerinin lamba durumuna etkisini otomatik test edin."
   steps:
+  - stepId: STEP_PLACE_3PH_SOURCE
+    instruction: "\u00dc\u00e7 fazl\u0131 \u015febeke kayna\u011f\u0131n\u0131 (L1, L2, L3, N, PE) kaynak yuvas\u0131na yerle\u015ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: 2063380e2c565b8499ba924598740076, type: 2}
+    slotId: SLOT_3PH_SOURCE
+    terminalIdA: 
+    terminalIdB: 
   - stepId: STEP_PLACE_PSU
-    instruction: "24V DC g\xFC\xE7 kayna\u011F\u0131n\u0131 yerle\u015Ftirin."
+    instruction: "24V DC g\u00fc\u00e7 kayna\u011f\u0131n\u0131 PSU yuvas\u0131na yerle\u015ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
     slotId: SLOT_PSU
     terminalIdA: 
     terminalIdB: 
+  - stepId: STEP_PLACE_FUSE
+    instruction: "F1 kontrol devresi sigortas\u0131n\u0131 yerle\u015ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
+    slotId: SLOT_F1
+    terminalIdA: 
+    terminalIdB: 
   - stepId: STEP_PLACE_LAMP
-    instruction: "Sinyal lambas\u0131n\u0131 yerle\u015Ftirin."
+    instruction: "Sinyal lambas\u0131n\u0131 lamba yuvas\u0131na yerle\u015ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}
     slotId: SLOT_LAMP
     terminalIdA: 
     terminalIdB: 
-  - stepId: STEP_WIRE_POSITIVE
-    instruction: "PSU +24V terminalini lamban\u0131n A1 terminaline ba\u011Flay\u0131n."
+  - stepId: STEP_WIRE_AC_L
+    instruction: "\u015eebeke L1 terminalini PSU AC L terminaline ba\u011flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_L1
+    terminalIdB: PSU_AC_L
+  - stepId: STEP_WIRE_AC_N
+    instruction: "\u015eebeke N terminalini PSU AC N terminaline ba\u011flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+  - stepId: STEP_WIRE_PE
+    instruction: "\u015eebeke PE terminalini PSU PE terminaline ba\u011flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
+  - stepId: STEP_WIRE_DC_FUSE
+    instruction: "PSU +24V terminalini F1 giri\u015f terminaline (1) ba\u011flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: PSU_24V
+    terminalIdB: F1_1
+  - stepId: STEP_WIRE_FUSE_LAMP
+    instruction: "F1 \u00e7\u0131k\u0131\u015f terminalini (2) lamban\u0131n A1 terminaline ba\u011flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: F1_2
     terminalIdB: LAMP_A1
   - stepId: STEP_WIRE_NEGATIVE
-    instruction: "Lamban\u0131n A2 terminalini PSU 0V terminaline ba\u011Flay\u0131n."
+    instruction: "Lamban\u0131n A2 terminalini PSU 0V terminaline ba\u011flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: LAMP_A2
     terminalIdB: PSU_0V
   - stepId: STEP_VALIDATE
-    instruction: "Devre ba\u011Flant\u0131lar\u0131n\u0131 tamamlay\u0131n ve do\u011Frulay\u0131n."
+    instruction: "T\u00fcm ba\u011flant\u0131lar\u0131 kontrol ederek devreyi do\u011frulay\u0131n. Sonraki g\u00f6revlerde lamban\u0131n yanma/s\u00f6nme davran\u0131\u015f\u0131n\u0131 otomatik test edeceksiniz."
     stepType: 2
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: 
     terminalIdB: 
+  - stepId: STEP_FUNCTIONAL_PSU_ON_FUSE_OFF
+    instruction: "PSU anahtar\u0131n\u0131 E ile a\u00e7\u0131n. F1 a\u00e7\u0131kken lamba s\u00f6n\u00fck kalmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 2
+    lampState: 2
+  - stepId: STEP_FUNCTIONAL_FUSE_ON_LAMP_ON
+    instruction: "F1 sigortas\u0131n\u0131 E ile kapat\u0131n; lamba yanmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+  - stepId: STEP_FUNCTIONAL_FUSE_OFF_LAMP_OFF
+    instruction: "F1 sigortas\u0131n\u0131 E ile a\u00e7\u0131n; lamba s\u00f6nmeli."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 2
+    lampState: 2
+  - stepId: STEP_FUNCTIONAL_FUSE_ON_AGAIN
+    instruction: "F1 sigortas\u0131n\u0131 yeniden kapat\u0131n; lamba tekrar yanmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+  - stepId: STEP_FUNCTIONAL_PSU_OFF_LAMP_OFF
+    instruction: "PSU anahtar\u0131n\u0131 E ile kapat\u0131n. F1 kapal\u0131 kals\u0131n; lamba s\u00f6nmeli."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 2
+    fuseState: 1
+    lampState: 2
+  - stepId: STEP_FUNCTIONAL_PSU_ON_LAMP_ON
+    instruction: "PSU anahtar\u0131n\u0131 yeniden a\u00e7\u0131n; F1 kapal\u0131yken lamba tekrar yanmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1

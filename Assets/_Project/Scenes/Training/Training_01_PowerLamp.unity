@@ -326,6 +326,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AssessmentUIController
   assessmentSystem: {fileID: 1392408054}
   reportHUD: {fileID: 1069082999}
+  requiredScenario: {fileID: 479999175}
+  requireScenarioCompletionForFinish: 1
   finishKey: 290
   resetKey: 291
 --- !u!114 &122280547
@@ -1089,6 +1091,10 @@ MonoBehaviour:
   connectionManager: {fileID: 888505117}
   circuitValidator: {fileID: 888505118}
   lockAfterCompletion: 1
+  functionalPowerSupply: {fileID: 1187056749}
+  functionalFuse: {fileID: 871172250}
+  functionalLamp: {fileID: 1173192564}
+  functionalSimulation: {fileID: 1268906073}
 --- !u!1001 &584575870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1790,6 +1796,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FuseSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 8245100582359040520, guid: cbf893839a64e3949a02956835631c1a, type: 3}
+      propertyPath: placementManager
+      value: 
+      objectReference: {fileID: 198317646}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2029,6 +2039,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FaultAudioBridge
   faultSystem: {fileID: 1112561994}
+--- !u!114 &1173192564 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3225667754416329101, guid: 3324c9ec1e7b5a74881c671a0ea77ca6, type: 3}
+  m_PrefabInstance: {fileID: 1998796210}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f8b04e8ba7ea734f95ccefda7ed33cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SignalLampBehaviour
 --- !u!1001 &1187056748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2378,6 +2399,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3023126591964109204, guid: 5705814234b31af46ac5250830de80b3, type: 3}
+      propertyPath: placementManager
+      value: 
+      objectReference: {fileID: 198317646}
     - target: {fileID: 8679418780512402231, guid: 5705814234b31af46ac5250830de80b3, type: 3}
       propertyPath: m_Name
       value: ThreePhaseSourceSlot
@@ -3472,6 +3497,10 @@ PrefabInstance:
     - target: {fileID: 7104980498172356557, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7145038759771011506, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: enableSpacing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7145038759771011506, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: connectionManager

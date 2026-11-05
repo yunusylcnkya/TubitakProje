@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrainingModuleDefinition
   moduleId: TRAINING_01_POWER_LAMP
   order: 1
-  displayName: 24V DC Lamba Devresi
-  description: "24V DC g\xFC\xE7 kayna\u011F\u0131n\u0131n pozitif ve negatif\nterminallerini kullanarak bir sinyal lambas\u0131n\u0131n\ndo\u011Fru \u015Fekilde beslenmesini \xF6\u011Fretir.\n\xD6\u011Frenci temel terminal ve kablo ba\u011Flant\u0131lar\u0131n\u0131\nuygulamal\u0131 olarak ger\xE7ekle\u015Ftirir."
+  displayName: "Temrin 01 - AC Beslemeli 24V DC Sinyal Lambas\u0131"
+  description: "\u00dc\u00e7 fazl\u0131 \u015febekeden L1, N ve PE ile 24V DC g\u00fc\u00e7 kayna\u011f\u0131n\u0131 besleyin. G\u00fc\u00e7 kayna\u011f\u0131n\u0131n +24V \u00e7\u0131k\u0131\u015f\u0131n\u0131 kontrol sigortas\u0131 \u00fczerinden sinyal lambas\u0131na ba\u011flay\u0131n. Anahtarlar\u0131 kullanarak lamban\u0131n yanma ve s\u00f6nme davran\u0131\u015f\u0131n\u0131 test edin."
   difficulty: 0
   sceneName: Training_01_PowerLamp
   availableEquipment:
+  - {fileID: 11400000, guid: 2063380e2c565b8499ba924598740076, type: 2}
   - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
+  - {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
   - {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}

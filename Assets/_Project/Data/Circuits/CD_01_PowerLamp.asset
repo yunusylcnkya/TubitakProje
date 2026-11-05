@@ -13,9 +13,17 @@ MonoBehaviour:
   m_Name: CD_01_PowerLamp
   m_EditorClassIdentifier: Assembly-CSharp::CircuitDefinition
   circuitId: CIRCUIT_01_POWER_LAMP
-  displayName: 24V DC Lamba Devresi
+  displayName: "24V DC - AC Giri\u015f ve Sigortal\u0131 Lamba Devresi"
   requiredConnections:
+  - terminalIdA: SOURCE_L1
+    terminalIdB: PSU_AC_L
+  - terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+  - terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
   - terminalIdA: PSU_24V
+    terminalIdB: F1_1
+  - terminalIdA: F1_2
     terminalIdB: LAMP_A1
   - terminalIdA: LAMP_A2
     terminalIdB: PSU_0V
