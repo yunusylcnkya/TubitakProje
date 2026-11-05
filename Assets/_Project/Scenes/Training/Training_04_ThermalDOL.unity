@@ -2637,7 +2637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CircuitValidator
   connectionManager: {fileID: 888505117}
-  circuitDefinition: {fileID: 11400000, guid: d571dea6bf33d7f4db44f6fb5c1d8227, type: 2}
+  circuitDefinition: {fileID: 11400000, guid: 0a58ae230208efa4f92c91ef5d43dc6e, type: 2}
 --- !u!114 &888505119
 MonoBehaviour:
   m_ObjectHideFlags: 0
