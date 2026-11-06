@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c8d0c262ae7d246935fae0be50c970, type: 3}
   m_Name: CD_Training06_RelaySealIn
   m_EditorClassIdentifier: Assembly-CSharp::CircuitDefinition
-  circuitId: CIRCUIT_02_START_CONTACTOR
-  displayName: "START Butonu ile Kontakt\xF6r Kontrol\xFC"
+  circuitId: CIRCUIT_06_RELAY_SEAL_IN
+  displayName: "Yard\u0131mc\u0131 R\u00f6le ile START-STOP M\u00fch\u00fcrleme Devresi"
   requiredConnections:
+  - terminalIdA: SOURCE_L1
+    terminalIdB: PSU_AC_L
+  - terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+  - terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
   - terminalIdA: PSU_24V
     terminalIdB: F1_1
   - terminalIdA: F1_2

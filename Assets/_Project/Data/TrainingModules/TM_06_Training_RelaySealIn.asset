@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrainingModuleDefinition
   moduleId: Training06_RelaySealIn
   order: 6
-  displayName: "Yard\u0131mc\u0131 R\xF6le ile m\xFCh\xFCrlemeli Lamba Kontrol\xFC"
-  description: "24 V DC yard\u0131mc\u0131 r\xF6lenin bobin ve NO kontak\ndavran\u0131\u015F\u0131n\u0131 kullanarak sinyal lambas\u0131n\u0131 kontrol edin."
+  displayName: "Yard\u0131mc\u0131 R\xF6le ile M\xFCh\xFCrlemeli Lamba Kontrol\xFC"
+  description: "\xDC\xE7 fazl\u0131 \u015Febekeden beslenen 24V DC g\xFC\xE7 kayna\u011F\u0131, START/STOP, R1 yard\u0131mc\u0131 r\xF6lesinin 11-14 m\xFCh\xFCrleme konta\u011F\u0131 ve 21-24 lamba konta\u011F\u0131yla devre kurun. STOP, F1 ve PSU kesintilerinde g\xFCvenli yeniden \xE7al\u0131\u015Ft\u0131rmay\u0131 do\u011Frulay\u0131n."
   difficulty: 1
   sceneName: Training_06_RelaySealIn
   availableEquipment:
+  - {fileID: 11400000, guid: 2063380e2c565b8499ba924598740076, type: 2}
   - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
   - {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
-  - {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
   - {fileID: 11400000, guid: f39c6d29a8a2f9a439aa2fdaa0482641, type: 2}
+  - {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
   - {fileID: 11400000, guid: dbcc38c19a3ddef4b95c38821bbf80a8, type: 2}
   - {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}
