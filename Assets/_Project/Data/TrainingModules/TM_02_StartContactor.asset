@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrainingModuleDefinition
   moduleId: TRAINING_02_START_CONTACTOR
   order: 2
-  displayName: "START Butonu ile Kontakt\xF6r Kontrol\xFC"
-  description: "START butonu kullan\u0131larak bir kontakt\xF6r\nbobininin enerjilendirilmesini ve kontakt\xF6r\xFCn\nnormalde a\xE7\u0131k yard\u0131mc\u0131 konta\u011F\u0131 \xFCzerinden bir\nsinyal lambas\u0131n\u0131n kontrol edilmesini \xF6\u011Fretir."
+  displayName: "Temrin 02 - START Butonuyla Kontakt\u00f6r Kumandas\u0131"
+  description: "\u015eebeke L1, N ve PE ile 24V DC g\u00fc\u00e7 kayna\u011f\u0131n\u0131 besleyin. F1 kontrol sigortas\u0131, START butonu ve K1 kontakt\u00f6r bobini \u00fczerinden kumanda devresini kurun. K1 23\u201324 NO yard\u0131mc\u0131 konta\u011f\u0131 ile sinyal lambas\u0131n\u0131 kontrol edin. Bas\u0131l\u0131 tutma, b\u0131rakma ve sigorta a\u00e7\u0131kken \u00e7al\u0131\u015fmama ko\u015fullar\u0131n\u0131 s\u0131nay\u0131n. Bu temrinde m\u00fch\u00fcrleme yoktur."
   difficulty: 0
   sceneName: Training_02_StartContactor
   availableEquipment:
+  - {fileID: 11400000, guid: 2063380e2c565b8499ba924598740076, type: 2}
   - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
   - {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
   - {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}

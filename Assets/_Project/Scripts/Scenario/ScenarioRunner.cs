@@ -22,6 +22,11 @@ public sealed class ScenarioRunner : MonoBehaviour
     [SerializeField] private SignalLampBehaviour functionalLamp;
     [SerializeField] private ElectricalSimulationSystem functionalSimulation;
 
+    [Header("Optional START / Contactor verification (Temrin 02+)")]
+    [SerializeField] private PushButtonDevice functionalStartButton;
+    [SerializeField] private PushButtonDevice functionalStopButton;
+    [SerializeField] private ContactorDevice functionalContactor;
+
     private int currentStepIndex;
     private bool isCompleted;
     private bool[] functionalPassed = Array.Empty<bool>();
@@ -64,6 +69,12 @@ public sealed class ScenarioRunner : MonoBehaviour
             functionalFuse.StateChanged += MarkFunctionalRefresh;
         if (functionalSimulation != null)
             functionalSimulation.SimulationChanged += HandleSimulationChanged;
+        if (functionalStartButton != null)
+            functionalStartButton.StateChanged += MarkFunctionalRefresh;
+        if (functionalStopButton != null)
+            functionalStopButton.StateChanged += MarkFunctionalRefresh;
+        if (functionalContactor != null)
+            functionalContactor.EnergizedChanged += HandleContactorStateChanged;
     }
 
     private void Start()
@@ -98,6 +109,12 @@ public sealed class ScenarioRunner : MonoBehaviour
             functionalFuse.StateChanged -= MarkFunctionalRefresh;
         if (functionalSimulation != null)
             functionalSimulation.SimulationChanged -= HandleSimulationChanged;
+        if (functionalStartButton != null)
+            functionalStartButton.StateChanged -= MarkFunctionalRefresh;
+        if (functionalStopButton != null)
+            functionalStopButton.StateChanged -= MarkFunctionalRefresh;
+        if (functionalContactor != null)
+            functionalContactor.EnergizedChanged -= HandleContactorStateChanged;
     }
 
     public void StartScenario()
@@ -117,6 +134,11 @@ public sealed class ScenarioRunner : MonoBehaviour
     }
 
     private void HandleSimulationChanged(ElectricalSimulationSnapshot snapshot)
+    {
+        MarkFunctionalRefresh();
+    }
+
+    private void HandleContactorStateChanged(bool energized)
     {
         MarkFunctionalRefresh();
     }
@@ -244,7 +266,10 @@ public sealed class ScenarioRunner : MonoBehaviour
         // Reject a FunctionalState step with all conditions left at Ignore.
         if (step.PowerSupplyState == ExpectedSwitchState.Ignore &&
             step.FuseState == ExpectedSwitchState.Ignore &&
-            step.LampState == ExpectedSwitchState.Ignore)
+            step.LampState == ExpectedSwitchState.Ignore &&
+            step.StartButtonState == ExpectedSwitchState.Ignore &&
+            step.StopButtonState == ExpectedSwitchState.Ignore &&
+            step.ContactorState == ExpectedSwitchState.Ignore)
             return false;
 
         // Never pass a functional test when a short circuit is present.
@@ -282,6 +307,41 @@ public sealed class ScenarioRunner : MonoBehaviour
 
             bool on = functionalLamp.IsOn;
             if (on != (step.LampState == ExpectedSwitchState.On))
+                return false;
+        }
+
+        if (step.StartButtonState != ExpectedSwitchState.Ignore)
+        {
+            if (functionalStartButton == null || !functionalStartButton.isActiveAndEnabled ||
+                !functionalStartButton.IsOperational)
+                return false;
+
+            bool pressed = functionalStartButton.IsPressed;
+            if (pressed != (step.StartButtonState == ExpectedSwitchState.On))
+                return false;
+        }
+
+        if (step.StopButtonState != ExpectedSwitchState.Ignore)
+        {
+            if (functionalStopButton == null || !functionalStopButton.isActiveAndEnabled ||
+                !functionalStopButton.IsOperational)
+                return false;
+
+            // For the normally-closed STOP device, On means the physical
+            // button is pressed (NC contact open); Off means released.
+            bool pressed = functionalStopButton.IsPressed;
+            if (pressed != (step.StopButtonState == ExpectedSwitchState.On))
+                return false;
+        }
+
+        if (step.ContactorState != ExpectedSwitchState.Ignore)
+        {
+            if (functionalContactor == null || !functionalContactor.isActiveAndEnabled ||
+                !functionalContactor.IsOperational)
+                return false;
+
+            bool energized = functionalContactor.IsEnergized;
+            if (energized != (step.ContactorState == ExpectedSwitchState.On))
                 return false;
         }
 

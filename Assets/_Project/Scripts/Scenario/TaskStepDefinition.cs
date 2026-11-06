@@ -26,6 +26,11 @@ public sealed class TaskStepDefinition
     [SerializeField] private ExpectedSwitchState fuseState = ExpectedSwitchState.Ignore;
     [SerializeField] private ExpectedSwitchState lampState = ExpectedSwitchState.Ignore;
 
+    [Header("START / Contactor (Temrin 02+, optional)")]
+    [SerializeField] private ExpectedSwitchState startButtonState = ExpectedSwitchState.Ignore;
+    [SerializeField] private ExpectedSwitchState stopButtonState = ExpectedSwitchState.Ignore;
+    [SerializeField] private ExpectedSwitchState contactorState = ExpectedSwitchState.Ignore;
+
     public string StepId => stepId;
     public string Instruction => instruction;
     public TaskStepType StepType => stepType;
@@ -36,4 +41,7 @@ public sealed class TaskStepDefinition
     public ExpectedSwitchState PowerSupplyState => powerSupplyState;
     public ExpectedSwitchState FuseState => fuseState;
     public ExpectedSwitchState LampState => lampState;
+    public ExpectedSwitchState StartButtonState => startButtonState;
+    public ExpectedSwitchState StopButtonState => stopButtonState;
+    public ExpectedSwitchState ContactorState => contactorState;
 }

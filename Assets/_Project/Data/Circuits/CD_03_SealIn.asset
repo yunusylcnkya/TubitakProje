@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: CD_03_SealIn
   m_EditorClassIdentifier: Assembly-CSharp::CircuitDefinition
   circuitId: CIRCUIT_03_SEAL_IN
-  displayName: "START-STOP M\xFCh\xFCrleme Devresi"
+  displayName: "START-STOP Mühürleme Devresi"
   requiredConnections:
+  - terminalIdA: SOURCE_L1
+    terminalIdB: PSU_AC_L
+  - terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+  - terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
   - terminalIdA: PSU_24V
     terminalIdB: F1_1
   - terminalIdA: F1_2

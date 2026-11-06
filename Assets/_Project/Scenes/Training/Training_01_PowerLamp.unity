@@ -444,10 +444,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF_InteractionPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 7802023825049017185, guid: febcc397f0220f2488d30490deb9bbdd, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -571,10 +567,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 122280541}
     m_Modifications:
-    - target: {fileID: 2217790902640431907, guid: a6f71033f3b1794448c407605f019c3b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2589369368192864955, guid: a6f71033f3b1794448c407605f019c3b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -655,37 +647,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2653506068521717975, guid: a6f71033f3b1794448c407605f019c3b, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.27272728
-      objectReference: {fileID: 0}
-    - target: {fileID: 2653506068521717975, guid: a6f71033f3b1794448c407605f019c3b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3346052638482404561, guid: a6f71033f3b1794448c407605f019c3b, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.27272728
-      objectReference: {fileID: 0}
-    - target: {fileID: 3346052638482404561, guid: a6f71033f3b1794448c407605f019c3b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3346052638482404561, guid: a6f71033f3b1794448c407605f019c3b, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.27272728
-      objectReference: {fileID: 0}
     - target: {fileID: 5241065280451528249, guid: a6f71033f3b1794448c407605f019c3b, type: 3}
       propertyPath: m_Name
       value: PF_SettingsPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 5241065280451528249, guid: a6f71033f3b1794448c407605f019c3b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8188524773036778079, guid: a6f71033f3b1794448c407605f019c3b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -792,6 +756,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4641607937740321257, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027479865045820495, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+    - target: {fileID: 6027479865045820495, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027479865045820495, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027479865045820495, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027479865045820495, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027479865045820495, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+    - target: {fileID: 6027479865045820495, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027479865045820495, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -985,10 +981,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF_PausePanel
       objectReference: {fileID: 0}
-    - target: {fileID: 6132814729528812234, guid: ac2972119f7575549bf8854956671e2e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6401456825852980920, guid: ac2972119f7575549bf8854956671e2e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1095,6 +1087,8 @@ MonoBehaviour:
   functionalFuse: {fileID: 871172250}
   functionalLamp: {fileID: 1173192564}
   functionalSimulation: {fileID: 1268906073}
+  functionalStartButton: {fileID: 0}
+  functionalContactor: {fileID: 0}
 --- !u!1001 &584575870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3173,10 +3167,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF_EquipmentInfoPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 8769126041108590729, guid: ec5d73cf5034b5946b125e4acc0c1606, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3497,10 +3487,6 @@ PrefabInstance:
     - target: {fileID: 7104980498172356557, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7145038759771011506, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
-      propertyPath: enableSpacing
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7145038759771011506, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: connectionManager

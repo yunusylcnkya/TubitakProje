@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: CD_02_StartContactor
   m_EditorClassIdentifier: Assembly-CSharp::CircuitDefinition
   circuitId: CIRCUIT_02_START_CONTACTOR
-  displayName: "START Butonu ile Kontakt\xF6r Kontrol\xFC"
+  displayName: "Temrin 02 - START Butonuyla Kontakt\u00f6r Kumandas\u0131"
   requiredConnections:
+  - terminalIdA: SOURCE_L1
+    terminalIdB: PSU_AC_L
+  - terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+  - terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
   - terminalIdA: PSU_24V
     terminalIdB: F1_1
   - terminalIdA: F1_2

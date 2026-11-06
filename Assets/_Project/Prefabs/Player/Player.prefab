@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55114942b765d1341b26b3bc021074bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WireChannelSpacingGuide
-  enableSpacing: 1
+  enableSpacing: 0
   connectionManager: {fileID: 0}
   minimumSeparation: 0.022
   candidateStep: 0.022
