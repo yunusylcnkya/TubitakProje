@@ -496,8 +496,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AssessmentUIController
   assessmentSystem: {fileID: 1392408054}
   reportHUD: {fileID: 1571520726}
-  requiredScenario: {fileID: 0}
-  requireScenarioCompletionForFinish: 0
+  requiredScenario: {fileID: 479999175}
+  requireScenarioCompletionForFinish: 1
   finishKey: 290
   resetKey: 291
 --- !u!114 &122280547

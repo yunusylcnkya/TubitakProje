@@ -12,98 +12,286 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af6ae2e3fed98d42b8166fa2fefcf74, type: 3}
   m_Name: SC_Training05_RelayLamp
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: SCENARIO_02_START_CONTACTOR
-  displayName: "START Butonu ile Kontakt\xF6r Kontrol\xFC"
-  description: 
+  scenarioId: SCENARIO_05_RELAY_LAMP
+  displayName: "Yard\u0131mc\u0131 R\u00f6le ile Lamba Kontrol\u00fc"
+  description: "R\u00f6le bobini ve normalde a\u00e7\u0131k konta\u011f\u0131n kontrol etti\u011fi lambay\u0131 kurun. START bas\u0131l\u0131yken lamba yanmal\u0131, b\u0131rak\u0131l\u0131nca s\u00f6nmeli. Sigortan\u0131n enerjiyi kesmesini de test edin."
   steps:
+  - stepId: STEP_PLACE_SOURCE
+    instruction: "\u00dc\u00e7 fazl\u0131 \u015febeke kayna\u011f\u0131n\u0131 panodaki kaynak yuvas\u0131na yerle\u015ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: 2063380e2c565b8499ba924598740076, type: 2}
+    slotId: SLOT_3PH_SOURCE
+    terminalIdA: 
+    terminalIdB: 
   - stepId: STEP_PLACE_PSU
-    instruction: "24V DC g\xFC\xE7 kayna\u011F\u0131n\u0131 yerle\u015Ftirin."
+    instruction: "24V DC g\u00fc\u00e7 kayna\u011f\u0131n\u0131 yerine yerle\u015ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
     slotId: SLOT_PSU
     terminalIdA: 
     terminalIdB: 
   - stepId: STEP_PLACE_F1
-    instruction: "Kontrol devresi sigortas\u0131n\u0131 yerle\u015Ftirin."
+    instruction: "F1 kontrol devresi sigortas\u0131n\u0131 yerine yerle\u015ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
     slotId: SLOT_F1
     terminalIdA: 
     terminalIdB: 
   - stepId: STEP_PLACE_START
-    instruction: "START butonunu yerle\u015Ftirin."
+    instruction: "START butonunu yerine yerle\u015ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
     slotId: SLOT_START
     terminalIdA: 
     terminalIdB: 
   - stepId: STEP_PLACE_R1
-    instruction: "Yard\u0131mc\u0131 r\xF6leyi yerle\u015Ftirin."
+    instruction: "R1 yard\u0131mc\u0131 r\u00f6lesini yerine yerle\u015ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: dbcc38c19a3ddef4b95c38821bbf80a8, type: 2}
     slotId: SLOT_R1
     terminalIdA: 
     terminalIdB: 
   - stepId: STEP_PLACE_LAMP
-    instruction: "Sinyal lambas\u0131n\u0131 yerle\u015Ftirin."
+    instruction: "Sinyal lambas\u0131n\u0131 yerine yerle\u015ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}
     slotId: SLOT_LAMP
     terminalIdA: 
     terminalIdB: 
-  - stepId: STEP_WIRE_PSU_F1
-    instruction: "PSU +24V terminalini F1 giri\u015Fine ba\u011Flay\u0131n."
+  - stepId: STEP_WIRE_01
+    instruction: "\u00dc\u00e7 fazl\u0131 kayna\u011f\u0131n L1 ucunu g\u00fc\u00e7 kayna\u011f\u0131n\u0131n AC L giri\u015fine ba\u011flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_L1
+    terminalIdB: PSU_AC_L
+  - stepId: STEP_WIRE_02
+    instruction: "\u00dc\u00e7 fazl\u0131 kayna\u011f\u0131n N ucunu g\u00fc\u00e7 kayna\u011f\u0131n\u0131n AC N giri\u015fine ba\u011flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+  - stepId: STEP_WIRE_03
+    instruction: "\u015eebeke PE ucunu g\u00fc\u00e7 kayna\u011f\u0131n\u0131n PE giri\u015fine ba\u011flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
+  - stepId: STEP_WIRE_04
+    instruction: "PSU +24V terminalini F1 sigortas\u0131n\u0131n 1 numaral\u0131 giri\u015fine ba\u011flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: PSU_24V
     terminalIdB: F1_1
-  - stepId: STEP_WIRE_F1_START
-    instruction: "F1 \xE7\u0131k\u0131\u015F\u0131n\u0131 START butonunun 13 terminaline ba\u011Flay\u0131n."
+  - stepId: STEP_WIRE_05
+    instruction: "F1 \u00e7\u0131k\u0131\u015f\u0131n\u0131 START butonunun 13 terminaline ba\u011flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: F1_2
     terminalIdB: S1_13
-  - stepId: STEP_WIRE_START_R1
-    instruction: "START butonunun 14 terminalini R\xF6lenin A1 bobin terminaline ba\u011Flay\u0131n."
+  - stepId: STEP_WIRE_06
+    instruction: "START 14 terminalini R1 r\u00f6lesinin A1 bobin ucuna ba\u011flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: S1_14
     terminalIdB: R1_A1
-  - stepId: STEP_WIRE_R1_RETURN
-    instruction: "R\xF6lenin A2 terminalini PSU 0V terminaline ba\u011Flay\u0131n."
+  - stepId: STEP_WIRE_07
+    instruction: "R1 A2 bobin terminalini PSU 0V hatt\u0131na ba\u011flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: R1_A2
     terminalIdB: PSU_0V
-  - stepId: STEP_WIRE_F1_R1_11
-    instruction: "F1 \xE7\u0131k\u0131\u015F\u0131n\u0131 r\xF6lenin 11 numaral\u0131 yard\u0131mc\u0131 konta\u011F\u0131na ba\u011Flay\u0131n."
+  - stepId: STEP_WIRE_08
+    instruction: "F1 \u00e7\u0131k\u0131\u015f\u0131n\u0131 R1'in 11 ortak kontak terminaline ba\u011flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: F1_2
     terminalIdB: R1_11
-  - stepId: STEP_WIRE_R1_LAMP
-    instruction: "R\xF6lenin 14 terminalini lamban\u0131n A1 terminaline ba\u011Flay\u0131n."
+  - stepId: STEP_WIRE_09
+    instruction: "R1 NO 14 terminalini lamban\u0131n A1 terminaline ba\u011flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: R1_14
     terminalIdB: LAMP_A1
-  - stepId: STEP_WIRE_LAMP_RETURN
-    instruction: "Lamban\u0131n A2 terminalini PSU 0V terminaline ba\u011Flay\u0131n."
+  - stepId: STEP_WIRE_10
+    instruction: "Lamban\u0131n A2 terminalini PSU 0V hatt\u0131na ba\u011flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: LAMP_A2
     terminalIdB: PSU_0V
   - stepId: STEP_VALIDATE
-    instruction: "Devre ba\u011Flant\u0131lar\u0131n\u0131 tamamlay\u0131n ve do\u011Frulay\u0131n."
+    instruction: "T\u00fcm 10 ba\u011flant\u0131y\u0131 tamamlay\u0131p devrenin do\u011fruland\u0131\u011f\u0131n\u0131 kontrol edin."
     stepType: 2
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: 
     terminalIdB: 
+  - stepId: STEP_TEST_PSU_ON_F1_OFF
+    instruction: "PSU ON, F1 OFF: START serbestken lamba s\u00f6n\u00fck olmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 2
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_TEST_F1_ON
+    instruction: "F1 ON: START serbestken R1 kontak a\u00e7\u0131k, lamba s\u00f6n\u00fck kalmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_TEST_START_HOLD
+    instruction: "START tu\u015funu bas\u0131l\u0131 tutun: R1 \u00e7ekmeli, NO 11-14 kapanmal\u0131 ve lamba yanmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 1
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_TEST_START_RELEASE
+    instruction: "START tu\u015funu b\u0131rak\u0131n: R1 b\u0131rakmal\u0131 ve lamba s\u00f6nmeli."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_TEST_F1_OPEN
+    instruction: "F1 sigortas\u0131n\u0131 a\u00e7\u0131n: START serbest, lamba s\u00f6n\u00fck."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 2
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_TEST_START_NO_FUSE
+    instruction: "F1 a\u00e7\u0131kken START tu\u015funu bas\u0131l\u0131 tutun: lamba yanmamal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 2
+    lampState: 2
+    startButtonState: 1
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_TEST_RELEASE_NO_FUSE
+    instruction: "START tu\u015funu b\u0131rak\u0131n: F1 a\u00e7\u0131kken lamba s\u00f6n\u00fck kalmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 2
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_TEST_F1_RESTORE
+    instruction: "F1 sigortas\u0131n\u0131 tekrar kapat\u0131n: START serbestken lamba s\u00f6n\u00fck."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_TEST_START_REPEAT
+    instruction: "START tu\u015funa tekrar bas\u0131n: lamba tekrar yanmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 1
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_TEST_RELEASE_FINAL
+    instruction: "START tu\u015funu b\u0131rak\u0131n: lamba s\u00f6ns\u00fcn; temrini tamamlay\u0131n."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0

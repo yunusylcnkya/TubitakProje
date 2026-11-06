@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrainingModuleDefinition
   moduleId: Training_05_RelayLamp
   order: 5
-  displayName: "Yard\u0131mc\u0131 R\xF6le ile Lamba Kontrol\xFC"
-  description: "24 V DC yard\u0131mc\u0131 r\xF6lenin bobin ve NO kontak\ndavran\u0131\u015F\u0131n\u0131 kullanarak sinyal lambas\u0131n\u0131 kontrol edin."
+  displayName: "Yard\u0131mc\u0131 R\u00f6le ile Lamba Kontrol\u00fc"
+  description: "\u00dc\u00e7 fazl\u0131 kaynaktan beslenen 24V DC g\u00fc\u00e7 kayna\u011f\u0131 ve yard\u0131mc\u0131 r\u00f6lenin NO konta\u011f\u0131yla sinyal lambas\u0131n\u0131 kumanda edin. START ve F1 durumlar\u0131n\u0131 i\u015flevsel olarak do\u011frulay\u0131n."
   difficulty: 0
   sceneName: Training_05_RelayLamp
   availableEquipment:
+  - {fileID: 11400000, guid: 2063380e2c565b8499ba924598740076, type: 2}
   - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
   - {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
   - {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
