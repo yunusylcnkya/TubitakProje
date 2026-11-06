@@ -465,6 +465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EquipmentInfoUIController
   playerInteractor: {fileID: 1956362895}
   equipmentInfoHUD: {fileID: 709428078}
+  hoverStabilitySeconds: 0.07
 --- !u!114 &122280545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,6 +496,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AssessmentUIController
   assessmentSystem: {fileID: 1392408054}
   reportHUD: {fileID: 1571520726}
+  requiredScenario: {fileID: 0}
+  requireScenarioCompletionForFinish: 0
   finishKey: 290
   resetKey: 291
 --- !u!114 &122280547
@@ -1971,6 +1974,13 @@ MonoBehaviour:
   connectionManager: {fileID: 888505117}
   circuitValidator: {fileID: 888505118}
   lockAfterCompletion: 1
+  functionalPowerSupply: {fileID: 0}
+  functionalFuse: {fileID: 0}
+  functionalLamp: {fileID: 0}
+  functionalSimulation: {fileID: 0}
+  functionalStartButton: {fileID: 0}
+  functionalStopButton: {fileID: 0}
+  functionalContactor: {fileID: 0}
 --- !u!1001 &555794318
 PrefabInstance:
   m_ObjectHideFlags: 0

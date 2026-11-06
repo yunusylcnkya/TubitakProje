@@ -27,6 +27,11 @@ public sealed class ScenarioRunner : MonoBehaviour
     [SerializeField] private PushButtonDevice functionalStopButton;
     [SerializeField] private ContactorDevice functionalContactor;
 
+    [Header("Optional motor + thermal protection (Temrin 04+)")]
+    [SerializeField] private ThreePoleBreakerDevice functionalBreaker;
+    [SerializeField] private ThermalRelayDevice functionalThermal;
+    [SerializeField] private ThreePhaseMotorDevice functionalMotor;
+
     private int currentStepIndex;
     private bool isCompleted;
     private bool[] functionalPassed = Array.Empty<bool>();
@@ -75,6 +80,12 @@ public sealed class ScenarioRunner : MonoBehaviour
             functionalStopButton.StateChanged += MarkFunctionalRefresh;
         if (functionalContactor != null)
             functionalContactor.EnergizedChanged += HandleContactorStateChanged;
+        if (functionalBreaker != null)
+            functionalBreaker.StateChanged += MarkFunctionalRefresh;
+        if (functionalThermal != null)
+            functionalThermal.StateChanged += MarkFunctionalRefresh;
+        if (functionalMotor != null)
+            functionalMotor.MotorStateChanged += HandleMotorStateChanged;
     }
 
     private void Start()
@@ -115,6 +126,12 @@ public sealed class ScenarioRunner : MonoBehaviour
             functionalStopButton.StateChanged -= MarkFunctionalRefresh;
         if (functionalContactor != null)
             functionalContactor.EnergizedChanged -= HandleContactorStateChanged;
+        if (functionalBreaker != null)
+            functionalBreaker.StateChanged -= MarkFunctionalRefresh;
+        if (functionalThermal != null)
+            functionalThermal.StateChanged -= MarkFunctionalRefresh;
+        if (functionalMotor != null)
+            functionalMotor.MotorStateChanged -= HandleMotorStateChanged;
     }
 
     public void StartScenario()
@@ -139,6 +156,11 @@ public sealed class ScenarioRunner : MonoBehaviour
     }
 
     private void HandleContactorStateChanged(bool energized)
+    {
+        MarkFunctionalRefresh();
+    }
+
+    private void HandleMotorStateChanged(MotorRotationDirection direction)
     {
         MarkFunctionalRefresh();
     }
@@ -269,7 +291,10 @@ public sealed class ScenarioRunner : MonoBehaviour
             step.LampState == ExpectedSwitchState.Ignore &&
             step.StartButtonState == ExpectedSwitchState.Ignore &&
             step.StopButtonState == ExpectedSwitchState.Ignore &&
-            step.ContactorState == ExpectedSwitchState.Ignore)
+            step.ContactorState == ExpectedSwitchState.Ignore &&
+            step.BreakerState == ExpectedSwitchState.Ignore &&
+            step.ThermalTripState == ExpectedSwitchState.Ignore &&
+            step.MotorState == ExpectedMotorState.Ignore)
             return false;
 
         // Never pass a functional test when a short circuit is present.
@@ -343,6 +368,54 @@ public sealed class ScenarioRunner : MonoBehaviour
             bool energized = functionalContactor.IsEnergized;
             if (energized != (step.ContactorState == ExpectedSwitchState.On))
                 return false;
+        }
+
+        if (step.BreakerState != ExpectedSwitchState.Ignore)
+        {
+            if (functionalBreaker == null || !functionalBreaker.isActiveAndEnabled ||
+                !functionalBreaker.IsOperational || functionalBreaker.IsTripped)
+                return false;
+
+            if (functionalBreaker.IsConducting !=
+                (step.BreakerState == ExpectedSwitchState.On))
+                return false;
+        }
+
+        if (step.ThermalTripState != ExpectedSwitchState.Ignore)
+        {
+            if (functionalThermal == null || !functionalThermal.isActiveAndEnabled ||
+                !functionalThermal.IsOperational)
+                return false;
+
+            if (functionalThermal.IsTripped !=
+                (step.ThermalTripState == ExpectedSwitchState.On))
+                return false;
+        }
+
+        if (step.MotorState != ExpectedMotorState.Ignore)
+        {
+            if (functionalMotor == null || !functionalMotor.isActiveAndEnabled ||
+                !functionalMotor.IsOperational)
+                return false;
+
+            MotorRotationDirection actual = functionalMotor.RotationDirection;
+            switch (step.MotorState)
+            {
+                case ExpectedMotorState.Stopped:
+                    if (actual != MotorRotationDirection.Stopped) return false;
+                    break;
+                case ExpectedMotorState.Forward:
+                    if (actual != MotorRotationDirection.Forward) return false;
+                    break;
+                case ExpectedMotorState.Reverse:
+                    if (actual != MotorRotationDirection.Reverse) return false;
+                    break;
+                case ExpectedMotorState.Invalid:
+                    if (actual != MotorRotationDirection.Invalid) return false;
+                    break;
+                default:
+                    return false;
+            }
         }
 
         return true;

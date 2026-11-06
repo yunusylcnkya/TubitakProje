@@ -1,6 +1,16 @@
 using System;
 using UnityEngine;
 
+// Values serialized into ScriptableObject training steps.
+public enum ExpectedMotorState
+{
+    Ignore = 0,
+    Stopped = 1,
+    Forward = 2,
+    Reverse = 3,
+    Invalid = 4
+}
+
 [Serializable]
 public sealed class TaskStepDefinition
 {
@@ -31,6 +41,11 @@ public sealed class TaskStepDefinition
     [SerializeField] private ExpectedSwitchState stopButtonState = ExpectedSwitchState.Ignore;
     [SerializeField] private ExpectedSwitchState contactorState = ExpectedSwitchState.Ignore;
 
+    [Header("3-phase breaker, thermal and motor (Temrin 04+, optional)")]
+    [SerializeField] private ExpectedSwitchState breakerState = ExpectedSwitchState.Ignore;
+    [SerializeField] private ExpectedSwitchState thermalTripState = ExpectedSwitchState.Ignore;
+    [SerializeField] private ExpectedMotorState motorState = ExpectedMotorState.Ignore;
+
     public string StepId => stepId;
     public string Instruction => instruction;
     public TaskStepType StepType => stepType;
@@ -44,4 +59,7 @@ public sealed class TaskStepDefinition
     public ExpectedSwitchState StartButtonState => startButtonState;
     public ExpectedSwitchState StopButtonState => stopButtonState;
     public ExpectedSwitchState ContactorState => contactorState;
+    public ExpectedSwitchState BreakerState => breakerState;
+    public ExpectedSwitchState ThermalTripState => thermalTripState;
+    public ExpectedMotorState MotorState => motorState;
 }
