@@ -17,23 +17,29 @@ public readonly struct ManualWireAnchor
     public readonly Vector3 Position;
     public readonly bool HorizontalFirst;
     public readonly bool Use45DegreeCorner;
+    public readonly bool IsChannelAnchor;
 
     public ManualWireAnchor(Vector3 position, bool horizontalFirst,
-        bool use45DegreeCorner)
+        bool use45DegreeCorner, bool isChannelAnchor = false)
     {
         Position = position;
         HorizontalFirst = horizontalFirst;
         Use45DegreeCorner = use45DegreeCorner;
+        IsChannelAnchor = isChannelAnchor;
     }
 }
 
 /// <summary>
-/// v19.20.7.4 - manual waypoints with a 3D ramp into/out of a cable tray.
+/// v19.20.7.6 - manual waypoints with optional symmetric 90-degree
+/// terminal-to-channel entry and channel-to-terminal exit.
 /// The player chooses the XY route. WireSurface chooses the channel-bed Z.
 /// No lane reservation, auto pathfinding, or electrical logic changes.
 /// </summary>
 public sealed class WireManualRouter : MonoBehaviour
 {
+    [Header("Optional channel spacing - v19.20.7.7")]
+    [SerializeField]
+    private WireChannelSpacingGuide channelSpacingGuide;
     [Header("Manual routing controls")]
     [SerializeField] private bool horizontalFirst = false;
     [SerializeField]
@@ -47,6 +53,20 @@ public sealed class WireManualRouter : MonoBehaviour
     [SerializeField, Range(10f, 80f)] private float entrySlopeAngle = 45f;
     [Tooltip("Keep some of the last XY segment for a visible slope.")]
     [SerializeField, Range(0.2f, 0.95f)] private float maxSlopeFraction = 0.85f;
+
+    [Header("Orthogonal terminal approaches")]
+    [Tooltip("From the source terminal, leave in a short straight line, " +
+             "turn 90 degrees towards the first chosen channel point, " +
+             "and enter the channel at its selected depth. " +
+             "Mirrors the final terminal approach.")]
+    [SerializeField] private bool useOrthogonalTerminalEntry = true;
+
+    [Tooltip("From the last chosen channel point, travel to the destination " +
+             "with 90-degree turns and a short straight terminal approach.")]
+    [SerializeField] private bool useOrthogonalTerminalExit = true;
+    [Tooltip("Length of the final straight segment before entering the terminal " +
+             "(world units; 0.025 = 2.5 cm if 1 unit = 1 meter).")]
+    [SerializeField, Min(0.005f)] private float terminalStraightLength = 0.025f;
 
     [Header("Free-space routing depth (world Z)")]
     [SerializeField, Min(0f)] private float frontOffset = 0.025f;
@@ -110,7 +130,13 @@ public sealed class WireManualRouter : MonoBehaviour
             position = new Vector3(clickedWorldPosition.x,
                 clickedWorldPosition.y, GetRoutingZ(start));
         }
-
+        if (surface != null &&
+            channelSpacingGuide != null &&
+            channelSpacingGuide.isActiveAndEnabled)
+        {
+            position = channelSpacingGuide.AdjustPoint(
+                surface, position, committed);
+        }
         Vector3 previous = committed != null && committed.Count > 0
             ? committed[committed.Count - 1].Position
             : start.ConnectionPosition;
@@ -120,7 +146,8 @@ public sealed class WireManualRouter : MonoBehaviour
         if (Vector3.Distance(position, previous) < minWaypointSpacing)
             return false;
 
-        anchor = new ManualWireAnchor(position, horizontalFirst, use45);
+        anchor = new ManualWireAnchor(position, horizontalFirst, use45,
+            surface != null);
         return true;
     }
 
@@ -162,34 +189,160 @@ public sealed class WireManualRouter : MonoBehaviour
         List<Vector3> points = new List<Vector3>();
         AddPoint(points, start.ConnectionPosition);
 
+        // The first channel waypoint uses a symmetric, 90-degree exit from
+        // the SOURCE terminal. All subsequent waypoints remain fully manual.
+        // This rule is also applied to the hover preview, so the clicked
+        // route matches what was shown before clicking.
+        bool isFirstWaypoint = true;
         if (committed != null)
         {
             for (int i = 0; i < committed.Count; i++)
             {
                 ManualWireAnchor a = committed[i];
-                AddStep(points, a.Position,
-                    a.HorizontalFirst, a.Use45DegreeCorner);
+                AppendManualWaypoint(points, a, isFirstWaypoint);
+                isFirstWaypoint = false;
             }
         }
 
         if (hovered.HasValue)
         {
-            ManualWireAnchor a = hovered.Value;
-            AddStep(points, a.Position,
-                a.HorizontalFirst, a.Use45DegreeCorner);
+            AppendManualWaypoint(points, hovered.Value, isFirstWaypoint);
         }
 
         if (end != null)
         {
-            // The final segment slopes back out of the channel to the
-            // destination terminal's actual depth.
-            AddStep(points, end.ConnectionPosition,
-                finalHorizontalFirst, finalUse45);
+            // Keep the existing sloped behavior for routes without a channel
+            // waypoint. For a channel exit, use the player's final channel
+            // waypoint and create an orthogonal terminal approach.
+            bool lastAnchorIsChannel = committed != null &&
+                committed.Count > 0 &&
+                committed[committed.Count - 1].IsChannelAnchor;
+
+            if (useOrthogonalTerminalExit && lastAnchorIsChannel)
+                AddOrthogonalTerminalExit(points, end.ConnectionPosition);
+            else
+                AddStep(points, end.ConnectionPosition,
+                    finalHorizontalFirst, finalUse45);
         }
 
         if (points.Count == 1)
             points.Add(points[0]);
         return points;
+    }
+
+    // First channel click: leave the SOURCE terminal using the exact
+    // reverse geometry of the existing orthogonal destination approach.
+    // The user's selected channel waypoint is not moved or lane-snapped.
+    private void AppendManualWaypoint(
+        List<Vector3> points,
+        ManualWireAnchor anchor,
+        bool isFirstWaypoint)
+    {
+        if (isFirstWaypoint &&
+            useOrthogonalTerminalEntry &&
+            anchor.IsChannelAnchor)
+        {
+            AddOrthogonalTerminalEntry(points, anchor.Position);
+            return;
+        }
+
+        AddStep(points, anchor.Position,
+            anchor.HorizontalFirst, anchor.Use45DegreeCorner);
+    }
+
+    private void AddOrthogonalTerminalEntry(
+        List<Vector3> points, Vector3 channelPosition)
+    {
+        if (points == null || points.Count == 0)
+            return;
+
+        Vector3 sourceTerminal = points[points.Count - 1];
+
+        // Build from channel back to the source with the existing,
+        // tested channel-to-terminal geometry. Reversing these points
+        // gives a matching source-to-channel entry without modifying
+        // any already-committed route segments.
+        List<Vector3> reverse = new List<Vector3> { channelPosition };
+        AddOrthogonalTerminalExit(reverse, sourceTerminal);
+
+        // Reverse ends at the original source terminal, already in points.
+        // Append remaining positions in reverse order to reach the channel.
+        for (int i = reverse.Count - 2; i >= 0; i--)
+            AddPoint(points, reverse[i]);
+    }
+
+    /// <summary>
+    /// From the last user-selected channel point, travel horizontally to the
+    /// terminal's X, turn 90 degrees up/down, change Z depth at the end of
+    /// the rise, then enter the terminal on a short straight XY segment.
+    /// No automatic channel selection or lane snapping is introduced.
+    /// </summary>
+    private void AddOrthogonalTerminalExit(
+        List<Vector3> points, Vector3 terminalPosition)
+    {
+        if (points.Count == 0)
+        {
+            AddPoint(points, terminalPosition);
+            return;
+        }
+
+        Vector3 from = points[points.Count - 1];
+        float verticalDistance = terminalPosition.y - from.y;
+        float horizontalDistance = terminalPosition.x - from.x;
+
+        // Normal electrical-panel case: the channel is above or below the
+        // terminal. The final visible approach is vertical (Y axis).
+        if (Mathf.Abs(verticalDistance) >= 0.015f)
+        {
+            float direction = Mathf.Sign(verticalDistance);
+            float straight = Mathf.Min(terminalStraightLength,
+                Mathf.Abs(verticalDistance) * 0.40f);
+
+            // Stay at channel-bed depth until directly in line with the
+            // destination terminal. This creates a 90-degree XY corner.
+            AddPoint(points, new Vector3(
+                terminalPosition.x, from.y, from.z));
+
+            Vector3 beforeTerminal = new Vector3(
+                terminalPosition.x,
+                terminalPosition.y - direction * straight,
+                from.z);
+            AddPoint(points, beforeTerminal);
+
+            // Rise from channel-bed Z to the actual terminal connection Z.
+            AddPoint(points, new Vector3(
+                beforeTerminal.x, beforeTerminal.y, terminalPosition.z));
+
+            // Last segment is perfectly straight into the terminal.
+            AddPoint(points, terminalPosition);
+            return;
+        }
+
+        // If the terminal is level with the last channel waypoint, make
+        // the last visible approach horizontal instead of a tiny Y kink.
+        if (Mathf.Abs(horizontalDistance) >= 0.015f)
+        {
+            float direction = Mathf.Sign(horizontalDistance);
+            float straight = Mathf.Min(terminalStraightLength,
+                Mathf.Abs(horizontalDistance) * 0.40f);
+            Vector3 beforeTerminal = new Vector3(
+                terminalPosition.x - direction * straight,
+                terminalPosition.y,
+                from.z);
+
+            AddPoint(points, new Vector3(
+                from.x, terminalPosition.y, from.z));
+            AddPoint(points, beforeTerminal);
+            AddPoint(points, new Vector3(
+                beforeTerminal.x, beforeTerminal.y, terminalPosition.z));
+            AddPoint(points, terminalPosition);
+            return;
+        }
+
+        // Very close terminals: no room for a visible orthogonal exit.
+        AddPoint(points, new Vector3(
+            terminalPosition.x, terminalPosition.y, from.z));
+        AddPoint(points, terminalPosition);
     }
 
     private void AddStep(List<Vector3> points, Vector3 destination,

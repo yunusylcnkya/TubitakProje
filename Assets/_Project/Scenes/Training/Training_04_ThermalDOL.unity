@@ -936,6 +936,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3023126591964109204, guid: 3c59bca0c3bf4e240b95575777e53a34, type: 3}
+      propertyPath: placementManager
+      value: 
+      objectReference: {fileID: 198317646}
     - target: {fileID: 8679418780512402231, guid: 3c59bca0c3bf4e240b95575777e53a34, type: 3}
       propertyPath: m_Name
       value: ThreePhaseFuseSlot
@@ -1974,13 +1978,16 @@ MonoBehaviour:
   connectionManager: {fileID: 888505117}
   circuitValidator: {fileID: 888505118}
   lockAfterCompletion: 1
-  functionalPowerSupply: {fileID: 0}
-  functionalFuse: {fileID: 0}
-  functionalLamp: {fileID: 0}
-  functionalSimulation: {fileID: 0}
-  functionalStartButton: {fileID: 0}
-  functionalStopButton: {fileID: 0}
-  functionalContactor: {fileID: 0}
+  functionalPowerSupply: {fileID: 1529535955}
+  functionalFuse: {fileID: 1655497933}
+  functionalLamp: {fileID: 1860515502}
+  functionalSimulation: {fileID: 1268906073}
+  functionalStartButton: {fileID: 1673541186}
+  functionalStopButton: {fileID: 2145528474}
+  functionalContactor: {fileID: 1987748979}
+  functionalBreaker: {fileID: 1369708423}
+  functionalThermal: {fileID: 1686831236}
+  functionalMotor: {fileID: 1235552514}
 --- !u!1001 &555794318
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2647,7 +2654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CircuitValidator
   connectionManager: {fileID: 888505117}
-  circuitDefinition: {fileID: 11400000, guid: 0a58ae230208efa4f92c91ef5d43dc6e, type: 2}
+  circuitDefinition: {fileID: 11400000, guid: 050c853a5a491db498539efde59474fc, type: 2}
 --- !u!114 &888505119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4503,6 +4510,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7145038759771011506, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: connectionManager
+      value: 
+      objectReference: {fileID: 888505117}
     - target: {fileID: 8530087540136623898, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: lanesPerChannel
       value: 1
@@ -5061,6 +5072,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8737852366515586431, guid: 3324c9ec1e7b5a74881c671a0ea77ca6, type: 3}
   m_PrefabInstance: {fileID: 1860515500}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1860515502 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3225667754416329101, guid: 3324c9ec1e7b5a74881c671a0ea77ca6, type: 3}
+  m_PrefabInstance: {fileID: 1860515500}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f8b04e8ba7ea734f95ccefda7ed33cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SignalLampBehaviour
 --- !u!1001 &1874194003
 PrefabInstance:
   m_ObjectHideFlags: 0

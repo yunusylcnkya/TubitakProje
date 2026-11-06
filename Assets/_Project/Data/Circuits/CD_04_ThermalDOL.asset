@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: CD_04_ThermalDOL
   m_EditorClassIdentifier: Assembly-CSharp::CircuitDefinition
   circuitId: CIRCUIT_MOTOR_SEAL_IN_V2
-  displayName: "\xDC\xE7 Fazl\u0131 Motor START-STOP M\xFCh\xFCrleme Devresi"
+  displayName: "QF1 ve Termik Korumalı Motor Kumandası"
   requiredConnections:
+  - terminalIdA: SOURCE_L1
+    terminalIdB: PSU_AC_L
+  - terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+  - terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
   - terminalIdA: PSU_24V
     terminalIdB: F1_1
   - terminalIdA: F1_2
@@ -38,10 +44,16 @@ MonoBehaviour:
   - terminalIdA: LAMP_A2
     terminalIdB: PSU_0V
   - terminalIdA: SOURCE_L1
-    terminalIdB: K1_1L1
+    terminalIdB: QF1_1L1
   - terminalIdA: SOURCE_L2
-    terminalIdB: K1_3L2
+    terminalIdB: QF1_1L2
   - terminalIdA: SOURCE_L3
+    terminalIdB: QF1_1L3
+  - terminalIdA: QF1_2T1
+    terminalIdB: K1_1L1
+  - terminalIdA: QF1_2T2
+    terminalIdB: K1_3L2
+  - terminalIdA: QF1_2T3
     terminalIdB: K1_5L3
   - terminalIdA: K1_2T1
     terminalIdB: FR1_1L1

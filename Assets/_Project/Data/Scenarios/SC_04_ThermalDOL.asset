@@ -13,58 +13,137 @@ MonoBehaviour:
   m_Name: SC_04_ThermalDOL
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
   scenarioId: SCENARIO_MOTOR_SEAL_IN
-  displayName: "\xDC\xE7 Fazl\u0131 Motor START-STOP Kumanda Devresi"
-  description: "\xDC\xE7 fazl\u0131 asenkron motorun kontakt\xF6r,\ntermik r\xF6le, START ve STOP butonlar\u0131\nkullan\u0131larak m\xFCh\xFCrleme y\xF6ntemiyle\nkumanda edilmesi."
+  displayName: "Termik Korumal\u0131 \xDC\xE7 Fazl\u0131 Motor Kumandas\u0131"
+  description: "10 yerle\u015Ftirme, 26 kablo ba\u011Flant\u0131s\u0131, 1 do\u011Frulama ve 21 s\u0131ral\u0131 i\u015Flev testi."
   steps:
-  - stepId: STEP_PLACE_PSU
-    instruction: "G\xFC\xE7 kayna\u011F\u0131n\u0131 yerle\u015Ftirin."
-    stepType: 0
-    equipment: {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
-    slotId: SLOT_PSU
-    terminalIdA: 
-    terminalIdB: 
-  - stepId: STEP_PLACE_3PH_SOURCE
-    instruction: "\xDC\xE7 faz g\xFC\xE7 kayna\u011F\u0131n\u0131 yerle\u015Ftirin."
+  - stepId: STEP_PLACE_SOURCE
+    instruction: "\xDC\xE7 fazl\u0131 \u015Febeke kayna\u011F\u0131n\u0131 yerle\u015Ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 2063380e2c565b8499ba924598740076, type: 2}
     slotId: SLOT_3PH_SOURCE
     terminalIdA: 
     terminalIdB: 
-  - stepId: STEP_PLACE_FUSE
-    instruction: "Kontrol devresi sigortas\u0131n\u0131 yerle\u015Ftirin."
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_PLACE_PSU
+    instruction: "24V DC g\xFC\xE7 kayna\u011F\u0131n\u0131 yerle\u015Ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
+    slotId: SLOT_PSU
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_PLACE_F1
+    instruction: "F1 DC kontrol sigortas\u0131n\u0131 yerle\u015Ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
     slotId: SLOT_F1
     terminalIdA: 
     terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_PLACE_QF1
+    instruction: "QF1 \xFC\xE7 kutuplu motor g\xFC\xE7 sigortas\u0131n\u0131 yerle\u015Ftirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: fbe2a4e5f978f9646b38df125a63dd46, type: 2}
+    slotId: SLOT_QF1
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
   - stepId: STEP_PLACE_STOP
-    instruction: "STOP butonunu yerle\u015Ftirin."
+    instruction: "STOP (NC 11-12) butonunu yerle\u015Ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: f39c6d29a8a2f9a439aa2fdaa0482641, type: 2}
     slotId: SLOT_STOP
     terminalIdA: 
     terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
   - stepId: STEP_PLACE_START
-    instruction: "START butonunu yerle\u015Ftirin."
+    instruction: "START (NO 13-14) butonunu yerle\u015Ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
     slotId: SLOT_START
     terminalIdA: 
     terminalIdB: 
-  - stepId: STEP_PLACE_CONTACTOR
-    instruction: "Kontakt\xF6r\xFC yerle\u015Ftirin."
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_PLACE_K1
+    instruction: "K1 kontakt\xF6r\xFCn\xFC yerle\u015Ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: ccd902fac2d76d9458a45263bcbdcb8d, type: 2}
     slotId: SLOT_K1
     terminalIdA: 
     terminalIdB: 
-  - stepId: STEP_PLACE_THERMAL
-    instruction: "Termik r\xF6leyi yerle\u015Ftirin."
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_PLACE_FR1
+    instruction: "FR1 termik r\xF6leyi yerle\u015Ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 9db288773986d234b874746ffb83d152, type: 2}
     slotId: SLOT_THERMAL
     terminalIdA: 
     terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
   - stepId: STEP_PLACE_LAMP
     instruction: "Sinyal lambas\u0131n\u0131 yerle\u015Ftirin."
     stepType: 0
@@ -72,157 +151,796 @@ MonoBehaviour:
     slotId: SLOT_LAMP
     terminalIdA: 
     terminalIdB: 
-  - stepId: STEP_PLACE_MOTOR
-    instruction: "\xDC\xE7 fazl\u0131 motoru yerle\u015Ftirin."
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_PLACE_M1
+    instruction: "\xDC\xE7 fazl\u0131 M1 motorunu yerle\u015Ftirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 2ffecd66b0912cf428453e7bfc80c50b, type: 2}
     slotId: SLOT_MOTOR
     terminalIdA: 
     terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_AC_L1
+    instruction: "\u015Eebeke L1 \u2192 PSU AC L beslemesini ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_L1
+    terminalIdB: PSU_AC_L
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_AC_N
+    instruction: "\u015Eebeke N \u2192 PSU AC N beslemesini ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_AC_PE
+    instruction: "\u015Eebeke PE \u2192 PSU PE koruma iletkenini ba\u011Flay\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
   - stepId: STEP_WIRE_PSU_F1
-    instruction: PSU_24V -> F1_1
+    instruction: "PSU +24V \u2192 F1 giri\u015Fini ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: PSU_24V
     terminalIdB: F1_1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
   - stepId: STEP_WIRE_F1_STOP
-    instruction: 
+    instruction: "F1 \xE7\u0131k\u0131\u015F\u0131 \u2192 STOP 11 ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: F1_2
     terminalIdB: S0_11
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
   - stepId: STEP_WIRE_STOP_START
-    instruction: 'S0_12 > S1_13 '
+    instruction: "STOP 12 \u2192 START 13 ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: S0_12
     terminalIdB: S1_13
-  - stepId: STEP_WIRE_START_THERMAL
-    instruction: S1_14 > FR1_95
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_START_FR1
+    instruction: "START 14 \u2192 FR1 95 ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: S1_14
     terminalIdB: FR1_95
-  - stepId: STEP_WIRE_STOP_AUX
-    instruction: S0_12 > K1_13
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_STOP_K1SEAL
+    instruction: "STOP 12 \u2192 K1 13 m\xFCh\xFCrleme giri\u015Fini ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: S0_12
     terminalIdB: K1_13
-  - stepId: STEP_WIRE_AUX_THERMAL
-    instruction: K1_14 > FR1_95
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_K1SEAL_FR1
+    instruction: "K1 14 \u2192 FR1 95 m\xFCh\xFCrleme \xE7\u0131k\u0131\u015F\u0131n\u0131 ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: K1_14
     terminalIdB: FR1_95
-  - stepId: STEP_WIRE_THERMAL_COIL
-    instruction: FR1_96 > K1_A1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_FR1_K1A1
+    instruction: "FR1 96 \u2192 K1 A1 bobin ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: FR1_96
     terminalIdB: K1_A1
-  - stepId: STEP_WIRE_COIL_ZERO
-    instruction: K1_A2 > PSU_0V
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_K1A2_PSU
+    instruction: "K1 A2 \u2192 PSU 0V bobin d\xF6n\xFC\u015F\xFCn\xFC ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: K1_A2
     terminalIdB: PSU_0V
-  - stepId: STEP_WIRE_F1_LAMP_CONTACT
-    instruction: 'F1_2 > K1_23 '
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_F1_K123
+    instruction: "F1 \xE7\u0131k\u0131\u015F\u0131 \u2192 K1 23 lamba konta\u011F\u0131n\u0131 ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: F1_2
     terminalIdB: K1_23
-  - stepId: STEP_WIRE_LAMP_CONTACT
-    instruction: 'K1_24 > LAMP_A1 '
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_K124_LAMP
+    instruction: "K1 24 \u2192 lamba A1 ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: K1_24
     terminalIdB: LAMP_A1
-  - stepId: STEP_WIRE_LAMP_ZERO
-    instruction: LAMP_A2 > PSU_0V
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_LAMP_PSU
+    instruction: "Lamba A2 \u2192 PSU 0V ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: LAMP_A2
     terminalIdB: PSU_0V
-  - stepId: STEP_WIRE_L1_CONTACTOR
-    instruction: SOURCE_L1 > K1_1L1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_SOURCE_L1_QF1
+    instruction: "\u015Eebeke L1 \u2192 QF1 1L1 g\xFC\xE7 giri\u015Fini ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: SOURCE_L1
-    terminalIdB: K1_1L1
-  - stepId: STEP_WIRE_L2_CONTACTOR
-    instruction: SOURCE_L2 > K1_3L2
+    terminalIdB: QF1_1L1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_SOURCE_L2_QF1
+    instruction: "\u015Eebeke L2 \u2192 QF1 1L2 g\xFC\xE7 giri\u015Fini ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: SOURCE_L2
-    terminalIdB: K1_3L2
-  - stepId: STEP_WIRE_L3_CONTACTOR
-    instruction: 'SOURCE_L3 > K1_5L3 '
+    terminalIdB: QF1_1L2
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_SOURCE_L3_QF1
+    instruction: "\u015Eebeke L3 \u2192 QF1 1L3 g\xFC\xE7 giri\u015Fini ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: SOURCE_L3
+    terminalIdB: QF1_1L3
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_QF1_T1_K1
+    instruction: "QF1 2T1 \u2192 K1 1L1 ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: QF1_2T1
+    terminalIdB: K1_1L1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_QF1_T2_K1
+    instruction: "QF1 2T2 \u2192 K1 3L2 ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: QF1_2T2
+    terminalIdB: K1_3L2
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_QF1_T3_K1
+    instruction: "QF1 2T3 \u2192 K1 5L3 ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: QF1_2T3
     terminalIdB: K1_5L3
-  - stepId: STEP_WIRE_K1_L1_THERMAL
-    instruction: 'K1_2T1 > FR1_1L1 '
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_K1_L1_FR1
+    instruction: "K1 2T1 \u2192 FR1 1L1 ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: K1_2T1
     terminalIdB: FR1_1L1
-  - stepId: STEP_WIRE_K1_L2_THERMAL
-    instruction: K1_4T2 > FR1_3L2
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_K1_L2_FR1
+    instruction: "K1 4T2 \u2192 FR1 3L2 ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: K1_4T2
     terminalIdB: FR1_3L2
-  - stepId: STEP_WIRE_K1_L3_THERMAL
-    instruction: K1_6T3 > FR1_5L3
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_K1_L3_FR1
+    instruction: "K1 6T3 \u2192 FR1 5L3 ba\u011Flant\u0131s\u0131n\u0131 yap\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: K1_6T3
     terminalIdB: FR1_5L3
-  - stepId: STEP_WIRE_THERMAL_U1
-    instruction: FR1_2T1 > M1_U1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_FR1_U1
+    instruction: "FR1 2T1 \u2192 M1 U1 motor faz\u0131n\u0131 ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: FR1_2T1
     terminalIdB: M1_U1
-  - stepId: STEP_WIRE_THERMAL_V1
-    instruction: FR1_4T2 > M1_V1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_FR1_V1
+    instruction: "FR1 4T2 \u2192 M1 V1 motor faz\u0131n\u0131 ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: FR1_4T2
     terminalIdB: M1_V1
-  - stepId: STEP_WIRE_THERMAL_W1
-    instruction: FR1_6T3 >M1_W1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_WIRE_FR1_W1
+    instruction: "FR1 6T3 \u2192 M1 W1 motor faz\u0131n\u0131 ba\u011Flay\u0131n."
     stepType: 1
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: FR1_6T3
     terminalIdB: M1_W1
-  - stepId: STEP_VALIDATE_MOTOR_CIRCUIT
-    instruction: "Devre ba\u011Flant\u0131lar\u0131n\u0131 tamamlay\u0131n ve\n\xFC\xE7 fazl\u0131 motor kumanda devresini do\u011Frulay\u0131n."
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_VALIDATE
+    instruction: "26 ba\u011Flant\u0131y\u0131 do\u011Frulay\u0131n; devreyi \xE7al\u0131\u015Ft\u0131rmadan \xF6nce eksik veya yanl\u0131\u015F ba\u011Flant\u0131 kalmamal\u0131."
     stepType: 2
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: 
     terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+  - stepId: STEP_TEST_ARM_PSU
+    instruction: "PSU a\xE7\u0131n; F1 ve QF1 a\xE7\u0131k kals\u0131n, motor durmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 2
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 2
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_ARM_F1
+    instruction: "F1 sigortas\u0131n\u0131 kapat\u0131n; QF1 h\xE2l\xE2 a\xE7\u0131k, motor durmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 2
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_ARM_QF1
+    instruction: "QF1 \xFC\xE7 kutuplu sigortay\u0131 kapat\u0131n; START \xF6ncesi motor durmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_START_RUN
+    instruction: "START butonunu bas\u0131l\u0131 tutun: K1 \xE7eksin, motor ileri d\xF6ns\xFCn, lamba yans\u0131n."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 1
+    stopButtonState: 2
+    contactorState: 1
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 2
+  - stepId: STEP_TEST_START_RELEASE
+    instruction: "START b\u0131rak\u0131n: K1 m\xFCh\xFCrlensin, motor ileri \xE7al\u0131\u015Fmaya devam etsin."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 1
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 2
+  - stepId: STEP_TEST_THERM_TRIP
+    instruction: "FR1 g\xF6vdesine bak\u0131p E ile termik TEST a\xE7mas\u0131n\u0131 yapt\u0131r\u0131n: motor durmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 1
+    thermalTripState: 1
+    motorState: 1
+  - stepId: STEP_TEST_THERM_RESET
+    instruction: "FR1 \xFCzerinde E ile RESET yap\u0131n; START olmadan motor yeniden ba\u015Flamas\u0131n."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_RESTART_HOLD
+    instruction: "START bas\u0131l\u0131: termik resetinden sonra motor tekrar \xE7al\u0131\u015Fmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 1
+    stopButtonState: 2
+    contactorState: 1
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 2
+  - stepId: STEP_TEST_RESTART_RELEASE
+    instruction: "START b\u0131rak\u0131n: K1 m\xFCh\xFCrleme devam etmeli."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 1
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 2
+  - stepId: STEP_TEST_OPEN_QF1
+    instruction: "QF1 a\xE7\u0131n: motor durmal\u0131; DC kontrol devresi ve K1 \xE7al\u0131\u015Fmaya devam eder."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 1
+    breakerState: 2
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_STOP_WITH_QF1_OFF
+    instruction: "QF1 a\xE7\u0131kken STOP bas\u0131l\u0131 tutun: K1 b\u0131rakmal\u0131, lamba s\xF6nmeli."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 1
+    contactorState: 2
+    breakerState: 2
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_RELEASE_STOP_QF1_OFF
+    instruction: "STOP b\u0131rak\u0131n: K1 \xE7ekmemeli, motor durmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 2
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_CLOSE_QF1_SAFE
+    instruction: "QF1 tekrar kapat\u0131n: START olmadan motor d\xF6nmemeli."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_RESTART_QF1
+    instruction: "START bas\u0131l\u0131: g\xFC\xE7 devresi yeniden enerjilensin ve motor ileri d\xF6ns\xFCn."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 1
+    stopButtonState: 2
+    contactorState: 1
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 2
+  - stepId: STEP_TEST_SEAL_QF1
+    instruction: "START b\u0131rak\u0131n: motor m\xFCh\xFCrlemeyle \xE7al\u0131\u015Fs\u0131n."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 1
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 2
+  - stepId: STEP_TEST_OPEN_F1
+    instruction: "F1 a\xE7\u0131n: K1 b\u0131rakmal\u0131; lamba ve motor durmal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 2
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_CLOSE_F1_SAFE
+    instruction: "F1 yeniden kapat\u0131n: START olmadan motor \xE7al\u0131\u015Fmamal\u0131."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_RESTART_F1
+    instruction: "START bas\u0131l\u0131 tutun: K1 \xE7ekmeli, motor ileri d\xF6nmeli."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 1
+    stopButtonState: 2
+    contactorState: 1
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 2
+  - stepId: STEP_TEST_RELEASE_F1
+    instruction: "START b\u0131rak\u0131n: motor yeniden m\xFCh\xFCrlenmeli."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 1
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 1
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 2
+  - stepId: STEP_TEST_STOP_LAST
+    instruction: "STOP bas\u0131l\u0131 tutun: motor ve lamba s\xF6ns\xFCn."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 1
+    contactorState: 2
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 1
+  - stepId: STEP_TEST_STOP_RELEASED
+    instruction: "STOP b\u0131rak\u0131n: motor durmaya devam etsin; temrin bitsin."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 2
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 1
+    thermalTripState: 2
+    motorState: 1

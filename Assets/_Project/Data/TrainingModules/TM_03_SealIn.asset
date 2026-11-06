@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrainingModuleDefinition
   moduleId: TRAINING_03_SEAL_IN
   order: 3
-  displayName: "START-STOP Mühürleme Devresi"
-  description: "24V DC kontaktör kumandasında START ve STOP butonlarını, 13-14 NO yardımcı kontakla mühürleme mantığını, enerji kesilip geldiğinde kendiliğinden başlamamayı test eder. 7 ekipman, 13 kablo ve 14 davranış testi."
+  displayName: "START-STOP M\xFCh\xFCrleme Devresi"
+  description: "24V DC kontakt\xF6r kumandas\u0131nda START ve STOP butonlar\u0131n\u0131, 13-14 NO yard\u0131mc\u0131 kontakla m\xFCh\xFCrleme mant\u0131\u011F\u0131n\u0131, enerji kesilip geldi\u011Finde kendili\u011Finden ba\u015Flamamay\u0131 test eder. 7 ekipman, 13 kablo ve 14 davran\u0131\u015F testi."
   difficulty: 1
   sceneName: Training_03_SealIn
   availableEquipment:
@@ -25,4 +25,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f39c6d29a8a2f9a439aa2fdaa0482641, type: 2}
   - {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
   - {fileID: 11400000, guid: ccd902fac2d76d9458a45263bcbdcb8d, type: 2}
-  - {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4, type: 2}
+  - {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}

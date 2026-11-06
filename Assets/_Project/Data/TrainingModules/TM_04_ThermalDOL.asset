@@ -15,17 +15,17 @@ MonoBehaviour:
   moduleId: TRAINING_04_THERMAL_DOL
   order: 4
   displayName: "Termik Korumal\u0131 \xDC\xE7 Fazl\u0131 Motor Kumandas\u0131"
-  description: "START ve STOP butonlar\u0131, kontakt\xF6r,\nm\xFCh\xFCrleme konta\u011F\u0131 ve termik r\xF6le kullan\u0131larak\n\xFC\xE7 fazl\u0131 asenkron motorun g\xFCvenli \u015Fekilde\nkumanda edilmesini ama\xE7layan uygulamad\u0131r."
+  description: "QF1 \xFC\xE7 kutuplu sigorta, K1 kontakt\xF6r\xFC, FR1 termik r\xF6le, START/STOP m\xFCh\xFCrleme, M1 motor ve 24V DC kontrol devresi. Termik TEST/RESET, motor y\xF6n\xFC ve g\xFC\xE7-kumanda ayr\u0131m\u0131 fonksiyonel olarak s\u0131nan\u0131r."
   difficulty: 2
   sceneName: Training_04_ThermalDOL
   availableEquipment:
-  - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
   - {fileID: 11400000, guid: 2063380e2c565b8499ba924598740076, type: 2}
+  - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
   - {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
+  - {fileID: 11400000, guid: fbe2a4e5f978f9646b38df125a63dd46, type: 2}
   - {fileID: 11400000, guid: f39c6d29a8a2f9a439aa2fdaa0482641, type: 2}
   - {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
   - {fileID: 11400000, guid: ccd902fac2d76d9458a45263bcbdcb8d, type: 2}
   - {fileID: 11400000, guid: 9db288773986d234b874746ffb83d152, type: 2}
   - {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}
   - {fileID: 11400000, guid: 2ffecd66b0912cf428453e7bfc80c50b, type: 2}
-  - {fileID: 11400000, guid: fbe2a4e5f978f9646b38df125a63dd46, type: 2}

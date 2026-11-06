@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlacementSlot
   placementManager: {fileID: 0}
   placementPoint: {fileID: 1917827592708270629}
-  slotId: SLOT_3PH_SOURCE
+  slotId: SLOT_QF1
   displayName: "\xDC\xE7 Faz Kaynak Yuvas\u0131"
   acceptedEquipment: {fileID: 11400000, guid: fbe2a4e5f978f9646b38df125a63dd46, type: 2}
 --- !u!65 &6837036454587413036
