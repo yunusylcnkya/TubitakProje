@@ -1061,6 +1061,7 @@ MonoBehaviour:
   functionalBreaker: {fileID: 0}
   functionalThermal: {fileID: 0}
   functionalMotor: {fileID: 0}
+  functionalTimeRelay: {fileID: 0}
 --- !u!1001 &584575870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1469,7 +1470,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2784280531576169870, guid: 6cbef6f3ee0f1174c95125d26f3ec6ac, type: 3}
       propertyPath: lineType
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3120611771956785931, guid: 6cbef6f3ee0f1174c95125d26f3ec6ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1513,7 +1514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5747796902983856891, guid: 6cbef6f3ee0f1174c95125d26f3ec6ac, type: 3}
       propertyPath: lineType
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8128588052752118794, guid: 6cbef6f3ee0f1174c95125d26f3ec6ac, type: 3}
       propertyPath: m_Name

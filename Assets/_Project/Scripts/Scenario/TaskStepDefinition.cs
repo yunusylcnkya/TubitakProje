@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-// Values serialized into ScriptableObject training steps.
+// Existing numeric values must remain unchanged: Unity serializes enum values.
 public enum ExpectedMotorState
 {
     Ignore = 0,
@@ -9,6 +9,15 @@ public enum ExpectedMotorState
     Forward = 2,
     Reverse = 3,
     Invalid = 4
+}
+
+// Added for Training 07. Keep all numeric values stable.
+public enum ExpectedTimeRelayState
+{
+    Ignore = 0,
+    Idle = 1,
+    Timing = 2,
+    Elapsed = 3
 }
 
 [Serializable]
@@ -46,6 +55,9 @@ public sealed class TaskStepDefinition
     [SerializeField] private ExpectedSwitchState thermalTripState = ExpectedSwitchState.Ignore;
     [SerializeField] private ExpectedMotorState motorState = ExpectedMotorState.Ignore;
 
+    [Header("TON Time Relay (Temrin 07+, optional)")]
+    [SerializeField] private ExpectedTimeRelayState timeRelayState = ExpectedTimeRelayState.Ignore;
+
     public string StepId => stepId;
     public string Instruction => instruction;
     public TaskStepType StepType => stepType;
@@ -62,4 +74,5 @@ public sealed class TaskStepDefinition
     public ExpectedSwitchState BreakerState => breakerState;
     public ExpectedSwitchState ThermalTripState => thermalTripState;
     public ExpectedMotorState MotorState => motorState;
+    public ExpectedTimeRelayState TimeRelayState => timeRelayState;
 }

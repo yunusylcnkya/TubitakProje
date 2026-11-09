@@ -14,9 +14,7 @@ public sealed class ScenarioRunner : MonoBehaviour
     [Header("Behaviour")]
     [SerializeField] private bool lockAfterCompletion = true;
 
-    // Optional: only assign these in scenarios containing FunctionalState.
-    // Other scenarios remain compatible with the original three task types.
-    [Header("Optional functional verification (v19.20.8.2)")]
+    [Header("Optional functional verification (Temrin 01+)")]
     [SerializeField] private DCPowerSource functionalPowerSupply;
     [SerializeField] private FuseDevice functionalFuse;
     [SerializeField] private SignalLampBehaviour functionalLamp;
@@ -31,6 +29,9 @@ public sealed class ScenarioRunner : MonoBehaviour
     [SerializeField] private ThreePoleBreakerDevice functionalBreaker;
     [SerializeField] private ThermalRelayDevice functionalThermal;
     [SerializeField] private ThreePhaseMotorDevice functionalMotor;
+
+    [Header("Optional TON Time Relay (Temrin 07+)")]
+    [SerializeField] private TimeRelayDevice functionalTimeRelay;
 
     private int currentStepIndex;
     private bool isCompleted;
@@ -86,6 +87,8 @@ public sealed class ScenarioRunner : MonoBehaviour
             functionalThermal.StateChanged += MarkFunctionalRefresh;
         if (functionalMotor != null)
             functionalMotor.MotorStateChanged += HandleMotorStateChanged;
+        if (functionalTimeRelay != null)
+            functionalTimeRelay.TimeRelayStateChanged += HandleTimeRelayStateChanged;
     }
 
     private void Start()
@@ -93,9 +96,7 @@ public sealed class ScenarioRunner : MonoBehaviour
         StartScenario();
     }
 
-    // Functional state is checked AFTER the simulation and lamp visual state
-    // have had a chance to process their events in this frame. No per-frame
-    // scanning occurs when electrical state has not changed.
+    // Check functional steps after simulation/lamp events have settled for the frame.
     private void LateUpdate()
     {
         if (!functionalRefreshPending)
@@ -132,6 +133,8 @@ public sealed class ScenarioRunner : MonoBehaviour
             functionalThermal.StateChanged -= MarkFunctionalRefresh;
         if (functionalMotor != null)
             functionalMotor.MotorStateChanged -= HandleMotorStateChanged;
+        if (functionalTimeRelay != null)
+            functionalTimeRelay.TimeRelayStateChanged -= HandleTimeRelayStateChanged;
     }
 
     public void StartScenario()
@@ -165,6 +168,11 @@ public sealed class ScenarioRunner : MonoBehaviour
         MarkFunctionalRefresh();
     }
 
+    private void HandleTimeRelayStateChanged(TimeRelayState state)
+    {
+        MarkFunctionalRefresh();
+    }
+
     private void MarkFunctionalRefresh()
     {
         functionalRefreshPending = true;
@@ -185,8 +193,6 @@ public sealed class ScenarioRunner : MonoBehaviour
         if (step == null)
             return false;
 
-        // Don't show future tests as completed just because their conditions
-        // happen to match the current state. They must be reached in order.
         if (step.StepType == TaskStepType.FunctionalState)
             return index < functionalPassed.Length && functionalPassed[index];
 
@@ -237,8 +243,7 @@ public sealed class ScenarioRunner : MonoBehaviour
 
             if (step.StepType == TaskStepType.FunctionalState)
             {
-                // Functional steps are sequential and latched: opening F1
-                // later must not invalidate an earlier successful lamp-ON test.
+                // Sequential/latched: prior functional successes stay recorded.
                 if (i >= functionalPassed.Length)
                     return i;
                 if (functionalPassed[i])
@@ -249,8 +254,7 @@ public sealed class ScenarioRunner : MonoBehaviour
                 continue;
             }
 
-            // Physical placement/wiring/validation are always checked live,
-            // preserving the old behavior when a wire is removed.
+            // Physical placement, wiring and validation remain live.
             if (!IsStepSatisfied(step))
                 return i;
         }
@@ -285,7 +289,7 @@ public sealed class ScenarioRunner : MonoBehaviour
 
     private bool IsFunctionalStateSatisfied(TaskStepDefinition step)
     {
-        // Reject a FunctionalState step with all conditions left at Ignore.
+        // At least one real condition is required for a functional step.
         if (step.PowerSupplyState == ExpectedSwitchState.Ignore &&
             step.FuseState == ExpectedSwitchState.Ignore &&
             step.LampState == ExpectedSwitchState.Ignore &&
@@ -294,10 +298,11 @@ public sealed class ScenarioRunner : MonoBehaviour
             step.ContactorState == ExpectedSwitchState.Ignore &&
             step.BreakerState == ExpectedSwitchState.Ignore &&
             step.ThermalTripState == ExpectedSwitchState.Ignore &&
-            step.MotorState == ExpectedMotorState.Ignore)
+            step.MotorState == ExpectedMotorState.Ignore &&
+            step.TimeRelayState == ExpectedTimeRelayState.Ignore)
             return false;
 
-        // Never pass a functional test when a short circuit is present.
+        // No functional test can pass while electrical shorts are present.
         if (functionalSimulation == null || functionalSimulation.LastSnapshot == null ||
             functionalSimulation.LastSnapshot.HasShortCircuit)
             return false;
@@ -352,8 +357,6 @@ public sealed class ScenarioRunner : MonoBehaviour
                 !functionalStopButton.IsOperational)
                 return false;
 
-            // For the normally-closed STOP device, On means the physical
-            // button is pressed (NC contact open); Off means released.
             bool pressed = functionalStopButton.IsPressed;
             if (pressed != (step.StopButtonState == ExpectedSwitchState.On))
                 return false;
@@ -412,6 +415,30 @@ public sealed class ScenarioRunner : MonoBehaviour
                     break;
                 case ExpectedMotorState.Invalid:
                     if (actual != MotorRotationDirection.Invalid) return false;
+                    break;
+                default:
+                    return false;
+            }
+        }
+
+        if (step.TimeRelayState != ExpectedTimeRelayState.Ignore)
+        {
+            if (functionalTimeRelay == null ||
+                !functionalTimeRelay.isActiveAndEnabled ||
+                !functionalTimeRelay.IsOperational ||
+                Mathf.Abs(functionalTimeRelay.DelaySeconds - 3f) > 0.01f)
+                return false;
+
+            switch (step.TimeRelayState)
+            {
+                case ExpectedTimeRelayState.Idle:
+                    if (functionalTimeRelay.State != TimeRelayState.Idle) return false;
+                    break;
+                case ExpectedTimeRelayState.Timing:
+                    if (functionalTimeRelay.State != TimeRelayState.Timing) return false;
+                    break;
+                case ExpectedTimeRelayState.Elapsed:
+                    if (functionalTimeRelay.State != TimeRelayState.Elapsed) return false;
                     break;
                 default:
                     return false;

@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c8d0c262ae7d246935fae0be50c970, type: 3}
   m_Name: CD_Training07_TimeRelayLamp
   m_EditorClassIdentifier: Assembly-CSharp::CircuitDefinition
-  circuitId: D_Training07_TimeRelayLamp
-  displayName: "START Butonu ile zaman r\xF6lesi kontrol\xFC"
+  circuitId: CIRCUIT_07_TIME_RELAY_LAMP
+  displayName: "TON 3 saniye açma gecikmeli lamba devresi"
   requiredConnections:
+  - terminalIdA: SOURCE_L1
+    terminalIdB: PSU_AC_L
+  - terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+  - terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
   - terminalIdA: PSU_24V
     terminalIdB: F1_1
   - terminalIdA: F1_2
