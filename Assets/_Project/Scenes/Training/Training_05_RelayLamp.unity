@@ -93,8 +93,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: cde80da66bc6d2249b24e2b8fd628b49, type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: e80a935c5f9b31d4a9acf12fd43ed947, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: fbd764f7c77fc074fb395c97e14b3729, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1415,6 +1415,10 @@ PrefabInstance:
     - target: {fileID: 6132814729528812234, guid: ac2972119f7575549bf8854956671e2e, type: 3}
       propertyPath: m_Name
       value: PF_PausePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6132814729528812234, guid: ac2972119f7575549bf8854956671e2e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6401456825852980920, guid: ac2972119f7575549bf8854956671e2e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3508,6 +3512,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3727164219250673214, guid: c14f3a08ce54b6d48adadaced4c1a871, type: 3}
   m_PrefabInstance: {fileID: 1707110578}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1734220670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1734220672}
+  - component: {fileID: 1734220671}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1734220671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734220670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 84b0ca0105d047041b88542b84f53ca7, type: 2}
+--- !u!4 &1734220672
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734220670}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.534, y: 1.439, z: 5.7840004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1734835812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4335,3 +4388,4 @@ SceneRoots:
   - {fileID: 122280541}
   - {fileID: 194146551}
   - {fileID: 1918047825}
+  - {fileID: 1734220672}
