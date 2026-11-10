@@ -12,37 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68c8d0c262ae7d246935fae0be50c970, type: 3}
   m_Name: CD_Training08_DelayedMotor
   m_EditorClassIdentifier: Assembly-CSharp::CircuitDefinition
-  circuitId: CIRCUIT_MOTOR_SEAL_IN_V2
-  displayName: "\xDC\xE7 Fazl\u0131 Motor START-STOP M\xFCh\xFCrleme Devresi"
+  circuitId: CIRCUIT_08_TON_DELAYED_MOTOR
+  displayName: "QF1 sonrası PSU beslemeli TON gecikmeli üç fazlı motor"
   requiredConnections:
-  - terminalIdA: PSU_24V
-    terminalIdB: F1_1
-  - terminalIdA: F1_2
-    terminalIdB: S0_11
-  - terminalIdA: S0_12
-    terminalIdB: S1_13
-  - terminalIdA: S1_14
-    terminalIdB: FR1_95
-  - terminalIdA: S0_12
-    terminalIdB: K1_13
-  - terminalIdA: K1_14
-    terminalIdB: FR1_95
-  - terminalIdA: FR1_96
-    terminalIdB: K1_A1
-  - terminalIdA: K1_A2
-    terminalIdB: PSU_0V
-  - terminalIdA: F1_2
-    terminalIdB: K1_23
-  - terminalIdA: K1_24
-    terminalIdB: LAMP_A1
-  - terminalIdA: LAMP_A2
-    terminalIdB: PSU_0V
   - terminalIdA: SOURCE_L1
-    terminalIdB: K1_1L1
+    terminalIdB: QF1_1L1
   - terminalIdA: SOURCE_L2
-    terminalIdB: K1_3L2
+    terminalIdB: QF1_1L2
   - terminalIdA: SOURCE_L3
+    terminalIdB: QF1_1L3
+  - terminalIdA: QF1_2T1
+    terminalIdB: K1_1L1
+  - terminalIdA: QF1_2T2
+    terminalIdB: K1_3L2
+  - terminalIdA: QF1_2T3
     terminalIdB: K1_5L3
+  - terminalIdA: QF1_2T1
+    terminalIdB: PSU_AC_L
+  - terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+  - terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
   - terminalIdA: K1_2T1
     terminalIdB: FR1_1L1
   - terminalIdA: K1_4T2
@@ -55,3 +45,31 @@ MonoBehaviour:
     terminalIdB: M1_V1
   - terminalIdA: FR1_6T3
     terminalIdB: M1_W1
+  - terminalIdA: PSU_24V
+    terminalIdB: F1_1
+  - terminalIdA: F1_2
+    terminalIdB: FR1_95
+  - terminalIdA: FR1_96
+    terminalIdB: S0_11
+  - terminalIdA: S0_12
+    terminalIdB: S1_13
+  - terminalIdA: S1_14
+    terminalIdB: R1_A1
+  - terminalIdA: S0_12
+    terminalIdB: R1_11
+  - terminalIdA: R1_14
+    terminalIdB: R1_A1
+  - terminalIdA: R1_A2
+    terminalIdB: PSU_0V
+  - terminalIdA: F1_2
+    terminalIdB: R1_21
+  - terminalIdA: R1_24
+    terminalIdB: KT1_A1
+  - terminalIdA: KT1_A2
+    terminalIdB: PSU_0V
+  - terminalIdA: F1_2
+    terminalIdB: KT1_15
+  - terminalIdA: KT1_18
+    terminalIdB: K1_A1
+  - terminalIdA: K1_A2
+    terminalIdB: PSU_0V

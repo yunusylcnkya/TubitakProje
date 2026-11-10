@@ -12,77 +12,1129 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af6ae2e3fed98d42b8166fa2fefcf74, type: 3}
   m_Name: SC_Training08_DelayedMotor
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: SCENARIO_MOTOR_SEAL_IN
-  displayName: "\xDC\xE7 Fazl\u0131 Motor START-STOP Kumanda Devresi"
-  description: "\xDC\xE7 fazl\u0131 asenkron motorun kontakt\xF6r,\ntermik r\xF6le, START ve STOP butonlar\u0131\nkullan\u0131larak m\xFCh\xFCrleme y\xF6ntemiyle\nkumanda edilmesi."
+  scenarioId: SCENARIO_08_TON_DELAYED_MOTOR
+  displayName: "TON 3 saniye gecikmeli mühürlemeli motor devresi"
+  description: "QF1 çıkışından beslenen PSU, termik güvenlik kontağından geçen R1 mühürleme devresi ve KT1 gecikmeli NO kontağı ile kontaktörü 3 saniye sonra çalıştırın."
   steps:
-  - stepId: STEP_PLACE_PSU
-    instruction: "G\xFC\xE7 kayna\u011F\u0131n\u0131 yerle\u015Ftirin."
-    stepType: 0
-    equipment: {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
-    slotId: SLOT_PSU
-    terminalIdA: 
-    terminalIdB: 
-  - stepId: STEP_PLACE_3PH_SOURCE
-    instruction: "\xDC\xE7 faz g\xFC\xE7 kayna\u011F\u0131n\u0131 yerle\u015Ftirin."
+  - stepId: STEP_PLACE_SOURCE
+    instruction: "Üç fazlı şebeke kaynağını panoya yerleştirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 2063380e2c565b8499ba924598740076, type: 2}
     slotId: SLOT_3PH_SOURCE
     terminalIdA: 
     terminalIdB: 
-  - stepId: STEP_PLACE_FUSE
-    instruction: "Kontrol devresi sigortas\u0131n\u0131 yerle\u015Ftirin."
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_PLACE_QF1
+    instruction: "QF1 üç kutuplu sigortayı yerleştirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: fbe2a4e5f978f9646b38df125a63dd46, type: 2}
+    slotId: SLOT_QF1
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_PLACE_PSU
+    instruction: "24V DC güç kaynağını yerleştirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
+    slotId: SLOT_PSU
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_PLACE_F1
+    instruction: "F1 kumanda sigortasını yerleştirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
     slotId: SLOT_F1
     terminalIdA: 
     terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
   - stepId: STEP_PLACE_STOP
-    instruction: "STOP butonunu yerle\u015Ftirin."
+    instruction: "STOP (NC) butonunu yerleştirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: f39c6d29a8a2f9a439aa2fdaa0482641, type: 2}
     slotId: SLOT_STOP
     terminalIdA: 
     terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
   - stepId: STEP_PLACE_START
-    instruction: "START butonunu yerle\u015Ftirin."
+    instruction: "START (NO) butonunu yerleştirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
     slotId: SLOT_START
     terminalIdA: 
     terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_PLACE_RELAY
+    instruction: "R1 yardımcı röleyi yerleştirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: dbcc38c19a3ddef4b95c38821bbf80a8, type: 2}
+    slotId: SLOT_R1
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_PLACE_TIMER
+    instruction: "KT1 TON zaman rölesini yerleştirin."
+    stepType: 0
+    equipment: {fileID: 11400000, guid: e9e9f98d70ef8d44881ce7af16783ecd, type: 2}
+    slotId: SLOT_KT1
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
   - stepId: STEP_PLACE_CONTACTOR
-    instruction: "Kontakt\xF6r\xFC yerle\u015Ftirin."
+    instruction: "K1 kontaktörünü yerleştirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: ccd902fac2d76d9458a45263bcbdcb8d, type: 2}
     slotId: SLOT_K1
     terminalIdA: 
     terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
   - stepId: STEP_PLACE_THERMAL
-    instruction: "Termik r\xF6leyi yerle\u015Ftirin."
+    instruction: "FR1 termik röleyi yerleştirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 9db288773986d234b874746ffb83d152, type: 2}
     slotId: SLOT_THERMAL
     terminalIdA: 
     terminalIdB: 
-  - stepId: STEP_PLACE_LAMP
-    instruction: "Sinyal lambas\u0131n\u0131 yerle\u015Ftirin."
-    stepType: 0
-    equipment: {fileID: 11400000, guid: d4e97b35414e2934f846cde3d5064a4a, type: 2}
-    slotId: SLOT_LAMP
-    terminalIdA: 
-    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
   - stepId: STEP_PLACE_MOTOR
-    instruction: "\xDC\xE7 fazl\u0131 motoru yerle\u015Ftirin."
+    instruction: "Üç fazlı motoru yerleştirin."
     stepType: 0
     equipment: {fileID: 11400000, guid: 2ffecd66b0912cf428453e7bfc80c50b, type: 2}
     slotId: SLOT_MOTOR
     terminalIdA: 
     terminalIdB: 
-  - stepId: STEP_VALIDATE_MOTOR_CIRCUIT
-    instruction: "Devre ba\u011Flant\u0131lar\u0131n\u0131 tamamlay\u0131n ve\n\xFC\xE7 fazl\u0131 motor kumanda devresini do\u011Frulay\u0131n."
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_01
+    instruction: "L1 şebeke fazını QF1 L1 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_L1
+    terminalIdB: QF1_1L1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_02
+    instruction: "L2 şebeke fazını QF1 L2 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_L2
+    terminalIdB: QF1_1L2
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_03
+    instruction: "L3 şebeke fazını QF1 L3 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_L3
+    terminalIdB: QF1_1L3
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_04
+    instruction: "QF1 L1 çıkışını kontaktör K1 L1 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: QF1_2T1
+    terminalIdB: K1_1L1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_05
+    instruction: "QF1 L2 çıkışını kontaktör K1 L2 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: QF1_2T2
+    terminalIdB: K1_3L2
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_06
+    instruction: "QF1 L3 çıkışını kontaktör K1 L3 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: QF1_2T3
+    terminalIdB: K1_5L3
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_07
+    instruction: "QF1 L1 çıkışını PSU AC L girişine de bağlayın (QF1 çıkışı dağıtılacak)."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: QF1_2T1
+    terminalIdB: PSU_AC_L
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_08
+    instruction: "Şebekenin N terminalini PSU AC N girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_N
+    terminalIdB: PSU_AC_N
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_09
+    instruction: "Şebeke PE terminalini PSU koruma topraklamasına bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: SOURCE_PE
+    terminalIdB: PSU_PE
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_10
+    instruction: "K1 T1 çıkışını FR1 L1 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: K1_2T1
+    terminalIdB: FR1_1L1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_11
+    instruction: "K1 T2 çıkışını FR1 L2 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: K1_4T2
+    terminalIdB: FR1_3L2
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_12
+    instruction: "K1 T3 çıkışını FR1 L3 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: K1_6T3
+    terminalIdB: FR1_5L3
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_13
+    instruction: "Termik FR1 T1 çıkışını motor U1 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: FR1_2T1
+    terminalIdB: M1_U1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_14
+    instruction: "Termik FR1 T2 çıkışını motor V1 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: FR1_4T2
+    terminalIdB: M1_V1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_15
+    instruction: "Termik FR1 T3 çıkışını motor W1 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: FR1_6T3
+    terminalIdB: M1_W1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_16
+    instruction: "PSU +24V çıkışını F1 girişine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: PSU_24V
+    terminalIdB: F1_1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_17
+    instruction: "F1 çıkışını termik FR1 95 NC terminaline bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: F1_2
+    terminalIdB: FR1_95
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_18
+    instruction: "FR1 96 NC çıkışını STOP 11 terminaline bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: FR1_96
+    terminalIdB: S0_11
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_19
+    instruction: "STOP 12 çıkışını START 13 terminaline bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: S0_12
+    terminalIdB: S1_13
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_20
+    instruction: "START 14 çıkışını R1 bobini A1 ucuna bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: S1_14
+    terminalIdB: R1_A1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_21
+    instruction: "STOP 12 çıkışını R1 11 ortak mühürleme kontağına bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: S0_12
+    terminalIdB: R1_11
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_22
+    instruction: "R1 14 NO çıkışını R1 A1 bobinine bağlayarak mühürleme yapın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: R1_14
+    terminalIdB: R1_A1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_23
+    instruction: "R1 A2 bobinini PSU 0V terminaline bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: R1_A2
+    terminalIdB: PSU_0V
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_24
+    instruction: "F1 çıkışını R1 21 ortak yardımcı kontağına bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: F1_2
+    terminalIdB: R1_21
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_25
+    instruction: "R1 24 NO çıkışını KT1 zaman rölesi A1 bobinine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: R1_24
+    terminalIdB: KT1_A1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_26
+    instruction: "KT1 A2 bobinini PSU 0V terminaline bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: KT1_A2
+    terminalIdB: PSU_0V
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_27
+    instruction: "F1 çıkışını KT1 15 ortak gecikme kontağına bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: F1_2
+    terminalIdB: KT1_15
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_28
+    instruction: "KT1 18 gecikmeli NO çıkışını kontaktör K1 A1 bobinine bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: KT1_18
+    terminalIdB: K1_A1
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_WIRE_29
+    instruction: "Kontaktör K1 A2 bobinini PSU 0V terminaline bağlayın."
+    stepType: 1
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: K1_A2
+    terminalIdB: PSU_0V
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_VALIDATE
+    instruction: "29 kabloyu bağlayın; QF1, kontrol ve güç hatlarını doğrulayın."
     stepType: 2
     equipment: {fileID: 0}
     slotId: 
     terminalIdA: 
     terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 0
+    timeRelayState: 0
+  - stepId: STEP_TEST_QF1_ON_PSU_OFF
+    instruction: "QF1 sigortasını kapatın. PSU ve F1 açık devre konumunda; motor duruyor olmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 2
+    fuseState: 2
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 1
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_PSU_ON_F1_OFF
+    instruction: "PSU anahtarını açın, F1 kapalı devre olmasın; motor durmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 2
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 1
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_F1_ON_IDLE
+    instruction: "F1 sigortasını kapatın. START ve STOP bırakılmış, KT1 beklemede ve motor durmuş olmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 1
+    fuseState: 1
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 0
+    breakerState: 1
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_START_HOLD_TIMING
+    instruction: "START tuşuna basılı tutun; KT1 3 saniyelik Timing evresinde olmalı, K1 bırakılmış ve motor durmuş kalmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 1
+    lampState: 0
+    startButtonState: 1
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 1
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 2
+  - stepId: STEP_TEST_START_RELEASE_TIMING
+    instruction: "START butonunu bırakın; R1 mühürlemesi sayesinde KT1 Timing durumunda kalmalı, motor henüz durmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 2
+  - stepId: STEP_TEST_WAIT_DELAY_MOTOR_ON
+    instruction: "3 saniye dolsun; KT1 Elapsed, K1 çekili ve motor ileri yönde çalışıyor olmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 1
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 2
+    timeRelayState: 3
+  - stepId: STEP_TEST_STOP_PRESS
+    instruction: "STOP butonuna basın; KT1 Idle konumuna dönmeli ve motor durmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 1
+    contactorState: 2
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_STOP_RELEASE_SAFE
+    instruction: "STOP butonunu bırakın; motor kendiliğinden yeniden başlamamalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_RESTART_PRESS
+    instruction: "START ile yeniden başlatın: KT1 sıfırdan Timing durumuna geçmeli, motor hâlâ durmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 1
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 2
+  - stepId: STEP_TEST_RESTART_RELEASE
+    instruction: "START bırakılınca R1 mühürleme devam etmeli, KT1 Timing kalmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 2
+  - stepId: STEP_TEST_RESTART_ELAPSED
+    instruction: "Süre dolunca motor tekrar ileri yönde çalışmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 1
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 2
+    timeRelayState: 3
+  - stepId: STEP_TEST_THERMAL_TRIP
+    instruction: "FR1 termiği Trip yapın; R1 mühürlemesi kesilmeli, KT1 Idle ve motor durmuş olmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 2
+    breakerState: 0
+    thermalTripState: 1
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_THERMAL_RESET_SAFE
+    instruction: "Termik resetle; START basılmadan motor yeniden çalışmamalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 2
+    breakerState: 0
+    thermalTripState: 2
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_AFTER_THERM_START
+    instruction: "Termik resetten sonra START basın; KT1 yeniden Timing durumuna geçmeli."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 1
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 2
+    motorState: 1
+    timeRelayState: 2
+  - stepId: STEP_TEST_AFTER_THERM_RELEASE
+    instruction: "START bırakıldıktan sonra 3 saniyelik süre sonunda motor çalışmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 1
+    breakerState: 0
+    thermalTripState: 2
+    motorState: 2
+    timeRelayState: 3
+  - stepId: STEP_TEST_F1_OFF
+    instruction: "Motor çalışırken F1 sigortasını açın; R1, KT1 ve motor durmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 2
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 2
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_F1_RESTORE_SAFE
+    instruction: "F1 sigortasını tekrar kapatın, START basılmadan motor çalışmamalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 1
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 2
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_AFTER_F1_START
+    instruction: "START basınca KT1 yeniden Timing durumuna geçmeli."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 1
+    lampState: 0
+    startButtonState: 1
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 2
+  - stepId: STEP_TEST_AFTER_F1_RELEASE
+    instruction: "START bırakıldıktan sonra 3 saniye geçince motor çalışmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 1
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 1
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 2
+    timeRelayState: 3
+  - stepId: STEP_TEST_QF1_OFF
+    instruction: "Motor çalışırken QF1 üç kutuplu sigortayı açın; motor ve KT1 durmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 0
+    contactorState: 2
+    breakerState: 2
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_QF1_RESTORE_SAFE
+    instruction: "QF1 sigortasını kapatın; START basılmadan motor yeniden çalışmamalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 2
+    breakerState: 1
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_FINAL_START
+    instruction: "START ile bir kez daha başlatın: KT1 Timing, motor durmuş olmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 1
+    stopButtonState: 0
+    contactorState: 0
+    breakerState: 1
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 2
+  - stepId: STEP_TEST_FINAL_RELEASE
+    instruction: "START bırakıldığında mühürleme devam etmeli ve süre dolunca motor çalışmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 0
+    contactorState: 1
+    breakerState: 1
+    thermalTripState: 0
+    motorState: 2
+    timeRelayState: 3
+  - stepId: STEP_TEST_FINAL_STOP
+    instruction: "STOP butonuna basıp motoru güvenli biçimde durdurun."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 0
+    stopButtonState: 1
+    contactorState: 2
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1
+  - stepId: STEP_TEST_FINAL_STOP_RELEASE
+    instruction: "STOP butonunu bırakın; motor durmuş, KT1 Idle konumunda kalmalı."
+    stepType: 3
+    equipment: {fileID: 0}
+    slotId: 
+    terminalIdA: 
+    terminalIdB: 
+    powerSupplyState: 0
+    fuseState: 0
+    lampState: 0
+    startButtonState: 2
+    stopButtonState: 2
+    contactorState: 2
+    breakerState: 0
+    thermalTripState: 0
+    motorState: 1
+    timeRelayState: 1

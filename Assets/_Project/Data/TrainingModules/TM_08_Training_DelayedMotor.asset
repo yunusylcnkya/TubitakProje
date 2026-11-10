@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd393cb4c6dd2b84e8ebebfee2f6e06a, type: 3}
   m_Name: TM_08_Training_DelayedMotor
   m_EditorClassIdentifier: Assembly-CSharp::TrainingModuleDefinition
-  moduleId: TM_Training08_DelayedMotor
+  moduleId: Training08_DelayedMotor
   order: 8
-  displayName: "TON Zaman R\xF6lesi ile Gecikmeli Motor \xC7al\u0131\u015Ft\u0131rma"
-  description: "START ve STOP butonlar\u0131, yard\u0131mc\u0131 r\xF6le,\nTON zaman r\xF6lesi, kontakt\xF6r ve termik\nkoruma kullanarak \xFC\xE7 fazl\u0131 motoru\ngecikmeli \xE7al\u0131\u015Ft\u0131ran bir kumanda\ndevresi olu\u015Fturun."
+  displayName: "TON ile gecikmeli üç fazlı motor çalıştırma"
+  description: "Üç fazlı şebekeyi önce QF1 sigortasından geçirip, QF1 L1 çıkışından PSU AC L girişini besleyin. R1 mühürleme, FR1 95-96 termik güvenlik kontağı ve KT1 3 saniye TON gecikmesiyle K1 üzerinden motoru çalıştırın."
   difficulty: 2
   sceneName: Training_08_DelayedMotor
   availableEquipment:
-  - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
   - {fileID: 11400000, guid: 2063380e2c565b8499ba924598740076, type: 2}
+  - {fileID: 11400000, guid: fbe2a4e5f978f9646b38df125a63dd46, type: 2}
+  - {fileID: 11400000, guid: 150a0d315440f3d48a18d885dad0b65b, type: 2}
   - {fileID: 11400000, guid: 125d863912481d540a07d62931934f88, type: 2}
   - {fileID: 11400000, guid: f39c6d29a8a2f9a439aa2fdaa0482641, type: 2}
   - {fileID: 11400000, guid: 203b7b6b61ab30c45acc398354ba87a9, type: 2}
