@@ -1532,6 +1532,7 @@ MonoBehaviour:
   functionalBreaker: {fileID: 0}
   functionalThermal: {fileID: 0}
   functionalMotor: {fileID: 0}
+  functionalTimeRelay: {fileID: 0}
 --- !u!1001 &559686975
 PrefabInstance:
   m_ObjectHideFlags: 0

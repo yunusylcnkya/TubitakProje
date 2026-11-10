@@ -274,7 +274,7 @@ Transform:
   m_GameObject: {fileID: 4902030295444155954}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.3887534}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -292,7 +292,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.0039216876, g: 1, b: 0, a: 1}
   m_Intensity: 1.5
-  m_Range: 0.12
+  m_Range: 0.3
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
@@ -524,9 +524,9 @@ MonoBehaviour:
   lampRenderer: {fileID: 6016757422033429417}
   offColor: {r: 0.014161599, g: 0.19245279, b: 0.052935317, a: 1}
   onColor: {r: 0.26121312, g: 1, b: 0, a: 1}
-  emissionIntensity: 3
+  emissionIntensity: 1.5
   pointLight: {fileID: 3124278557427996396}
-  lightIntensity: 1.5
+  lightIntensity: 0.8
   lightRange: 0.5
 --- !u!114 &3999906955620046546
 MonoBehaviour:

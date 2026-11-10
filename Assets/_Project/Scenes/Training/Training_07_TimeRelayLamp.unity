@@ -724,6 +724,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 141649374989521239, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: m_ClearFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 141649374989521239, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: field of view
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 284504096223259825, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: hud
       value: 
@@ -776,6 +784,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6862706510309413361, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: m_StopNaN
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6862706510309413361, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: m_Dithering
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6862706510309413361, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: m_Antialiasing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6862706510309413361, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+      propertyPath: m_VolumeTrigger
+      value: 
+      objectReference: {fileID: 1156197735}
     - target: {fileID: 7104980498172356557, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2908,6 +2932,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FaultAudioBridge
   faultSystem: {fileID: 1112561994}
+--- !u!4 &1156197735 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 141649374989521232, guid: 7de89cbc1978ef94b81d76ff0b832dba, type: 3}
+  m_PrefabInstance: {fileID: 135951015}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1179215387
 PrefabInstance:
   m_ObjectHideFlags: 0
