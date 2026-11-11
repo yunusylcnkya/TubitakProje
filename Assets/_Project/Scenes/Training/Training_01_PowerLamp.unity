@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 1.55
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.75294125, g: 0.7019608, b: 0.63529414, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -2517,7 +2517,7 @@ Light:
   serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 0.98396754, b: 0.9037736, a: 1}
-  m_Intensity: 0.8
+  m_Intensity: 0.9
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3270,6 +3270,10 @@ PrefabInstance:
     - target: {fileID: 7069969445767186824, guid: b519c7d2599c35b4cad18291f9e94eb7, type: 3}
       propertyPath: m_Name
       value: LampSlot
+      objectReference: {fileID: 0}
+    - target: {fileID: 7069969445767186824, guid: b519c7d2599c35b4cad18291f9e94eb7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7069969445767186824, guid: b519c7d2599c35b4cad18291f9e94eb7, type: 3}
       propertyPath: m_StaticEditorFlags

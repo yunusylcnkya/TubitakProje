@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 1.55
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -5662,10 +5662,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 694874493}
     m_Modifications:
-    - target: {fileID: 2879361191758820491, guid: b519c7d2599c35b4cad18291f9e94eb7, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: -7608422668731617957, guid: ae261dd46651dcc40bf45c582ef49784, type: 3}
     - target: {fileID: 7069969445767186824, guid: b519c7d2599c35b4cad18291f9e94eb7, type: 3}
       propertyPath: m_Name
       value: LampSlot

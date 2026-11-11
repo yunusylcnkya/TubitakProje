@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WireStyle
   lineType: 6
   wireColor: {r: 0.34117648, g: 0.70980394, b: 0.9607843, a: 1}
-  width: 0.015
+  width: 0.01
   material: {fileID: 2100000, guid: 607783d3b55e3f6418a2b750518d80fa, type: 2}
