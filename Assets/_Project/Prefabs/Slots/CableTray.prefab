@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: daf810322c5dc8d429b150b50413b506, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -156,7 +156,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: daf810322c5dc8d429b150b50413b506, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -246,7 +246,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: daf810322c5dc8d429b150b50413b506, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -371,3 +371,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f486cc2e11e91254099d13cd3d999095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WireSurface
+  useChannelBed: 1
+  frontIsNegativeZ: 1
+  insetFromBack: 0.015
+  channelBedReference: {fileID: 0}
+  sideInset: 0.006
+  showBedGizmo: 1
