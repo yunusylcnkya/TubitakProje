@@ -1726,8 +1726,8 @@ MonoBehaviour:
   isTripped: 0
   leverPivot: {fileID: 475944759033829576}
   rotationAxis: {x: 0, y: 1, z: 0}
-  openAngle: -40
-  closedAngle: 5
+  openAngle: 5
+  closedAngle: -40
   rotationSpeed: 240
 --- !u!1 &8590177362328987446
 GameObject:

@@ -886,7 +886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4641607937740321257, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1000
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 4641607937740321257, guid: aa4fca45eb56a3042a5669801c2b2596, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1564,7 +1564,7 @@ MonoBehaviour:
   functionalLamp: {fileID: 0}
   functionalSimulation: {fileID: 1268906073}
   functionalStartButton: {fileID: 2043255674}
-  functionalStopButton: {fileID: 2043255674}
+  functionalStopButton: {fileID: 1061675853}
   functionalContactor: {fileID: 1907786813}
   functionalBreaker: {fileID: 2016245283}
   functionalThermal: {fileID: 1340123809}
@@ -2540,7 +2540,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5253197448294231672, guid: 1df0874d69b1bba4b8189e048110cde7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.678
+      value: 7.83
       objectReference: {fileID: 0}
     - target: {fileID: 5253197448294231672, guid: 1df0874d69b1bba4b8189e048110cde7, type: 3}
       propertyPath: m_LocalPosition.y
